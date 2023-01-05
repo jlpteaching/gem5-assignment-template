@@ -1,0 +1,12 @@
+{
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "extensions": [
+        "ms-vscode.cpptools",
+        "streetsidesoftware.code-spell-checker",
+        "eamodio.gitlens",
+        "ms-python.vscode-pylance",
+        "ms-python.python"
+    ]
+}
