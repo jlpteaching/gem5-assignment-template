@@ -14,3 +14,5 @@ RUN scons -j`nproc` build/ALL/gem5.fast
 FROM gcr.io/gem5-test/ubuntu-20.04_all-dependencies:stable
 
 COPY --from=builder /gem5/build/ALL/gem5.fast /usr/local/bin/gem5
+
+RUN pip install -r requirements.txt
