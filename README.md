@@ -2,6 +2,9 @@
 
 This repository is set up so that you can easily use it as a template repository for gem5-based assignments.
 
+This repo contains all of the "general" requirements for gem5-based assignments.
+For each assignment, you should create a *fork* of this repository with the template code needed for that particular assignment.
+
 ## Using this to create assignments
 
 1. Fork this repository to an assignment-specific repository (e.g., "assign-1") under your classroom organization.
