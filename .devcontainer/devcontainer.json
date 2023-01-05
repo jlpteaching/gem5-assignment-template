@@ -7,6 +7,8 @@
         "streetsidesoftware.code-spell-checker",
         "eamodio.gitlens",
         "ms-python.vscode-pylance",
-        "ms-python.python"
-    ]
+        "ms-python.python",
+		"ms-toolsai.jupyter"
+    ],
+    "postCreateCommand": "pip install -r requirements.txt"
 }
