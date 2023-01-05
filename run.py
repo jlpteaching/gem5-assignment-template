@@ -28,32 +28,33 @@ import argparse
 
 from gem5.simulate.simulator import Simulator
 
-from processors import TeachingMinorCPU, TeachingTimingSimpleCPU
-from cache_hierarchies import TeachingMESITwoLevelCache
-from memories import (
-    TeachingDDR3_1600_8x8,
-    TeachingDDR3_2133_8x8,
-    TeachingLPDDR3_1600_1x32,
+from components.processors import HW1MinorCPU, HW1TimingSimpleCPU
+from components.cache_hierarchies import HW1MESITwoLevelCache
+from components.memories import (
+    HW1DDR3_1600_8x8,
+    HW1DDR3_2133_8x8,
+    HW1LPDDR3_1600_1x32,
 )
-from boards import TeachingRISCVBoard
-from workload import hello_workload, mm_workload
+from components.boards import HW1RISCVBoard
+
+from workloads import hello_workload, get_mm_workload
 
 def cpu_factory(cpu_type):
     if cpu_type == "TimingSimpleCPU":
-        return TeachingTimingSimpleCPU()
+        return HW1TimingSimpleCPU()
     elif cpu_type == "MinorCPU":
-        return TeachingMinorCPU()
+        return HW1MinorCPU()
     else:
         raise ValueError(f"CPU Type {cpu_type} not supported")
 
 
 def memory_factory(memory_type):
     if memory_type == "DDR3_1600_8x8":
-        return TeachingDDR3_1600_8x8()
+        return HW1DDR3_1600_8x8()
     elif memory_type == "DDR3_2133_8x8":
-        return TeachingDDR3_2133_8x8()
+        return HW1DDR3_2133_8x8()
     elif memory_type == "LPDDR3_1600_1x32":
-        return TeachingLPDDR3_1600_1x32()
+        return HW1LPDDR3_1600_1x32()
     else:
         raise ValueError(f"Memory Type {memory_type} not supported")
 
@@ -82,19 +83,14 @@ def get_inputs():
 if __name__ == "__m5_main__":
     cpu_type, cpu_freq, memory_type = get_inputs()
     cpu = cpu_factory(cpu_type)
-    cache = TeachingMESITwoLevelCache()
+    cache = HW1MESITwoLevelCache()
     memory = memory_factory(memory_type)
-    board = TeachingRISCVBoard(
+    board = HW1RISCVBoard(
         clk_freq=cpu_freq, processor=cpu, cache_hierarchy=cache, memory=memory
     )
 
-    board.set_se_binary_workload(hello_workload)
+    board.set_workload(hello_workload)
     simulator = Simulator(board=board, full_system=False)
     simulator.run()
 
-    print(
-        "Exiting @ tick {} because {}.".format(
-            simulator.get_current_tick(),
-            simulator.get_last_exit_event_cause(),
-        )
-    )
+    print("Finished simulation.")
