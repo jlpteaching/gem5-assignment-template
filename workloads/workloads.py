@@ -24,18 +24,32 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-from m5.objects import DDR3_1600_8x8, DDR3_2133_8x8, LPDDR3_1600_1x32
+import pathlib
 
-from gem5.components.memory.memory import ChanneledMemory
+from gem5.resources.resource import Resource, CustomResource
+from gem5.resources.workload import CustomWorkload
 
-class TeachingDDR3_1600_8x8(ChanneledMemory):
+
+class CustomSEWorkload(CustomWorkload):
+    def __init__(self, parameters: dict):
+        super().__init__(
+            function="set_se_binary_workload", parameters=parameters
+        )
+
+
+this_dir = pathlib.Path(__file__).parent.absolute()
+
+
+class HelloWorkload(CustomSEWorkload):
     def __init__(self):
-        super().__init__(DDR3_1600_8x8, 1, 128)
+        super().__init__(
+            parameters={"binary": Resource("riscv-hello"), "arguments": []}
+        )
 
-class TeachingDDR3_2133_8x8(ChanneledMemory):
-    def __init__(self):
-        super().__init__(DDR3_2133_8x8, 1, 128)
 
-class TeachingLPDDR3_1600_1x32(ChanneledMemory):
-    def __init__(self):
-        super().__init__(LPDDR3_1600_1x32, 1, 128)
+class MatMulWorkload(CustomSEWorkload):
+    def __init__(self, mat_size):
+        mm_bin = CustomResource(str(this_dir / "matmul/mm-gem5"))
+        super().__init__(
+            parameters={"binary": mm_bin, "arguments": [mat_size]}
+        )

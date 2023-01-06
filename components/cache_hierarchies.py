@@ -29,4 +29,4 @@ from gem5.components.cachehierarchies.ruby.mesi_two_level_cache_hierarchy \
 
 class HW1MESITwoLevelCache(MESITwoLevelCacheHierarchy):
     def __init__(self):
-        super().__init__("64KiB", "8", "64KiB", "8", "256KiB", "4", 16)
+        super().__init__("64KiB", 8, "64KiB", 8, "256KiB", 4, 16)
