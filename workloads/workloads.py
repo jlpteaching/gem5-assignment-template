@@ -29,18 +29,27 @@ import pathlib
 from gem5.resources.resource import Resource, CustomResource
 from gem5.resources.workload import CustomWorkload
 
+
+class CustomSEWorkload(CustomWorkload):
+    def __init__(self, parameters: dict):
+        super().__init__(
+            function="set_se_binary_workload", parameters=parameters
+        )
+
+
 this_dir = pathlib.Path(__file__).parent.absolute()
 
-hello_bin = Resource("riscv-hello")
-def hello_workload():
-    return CustomWorkload(
-        function="set_se_binary_workload",
-        parameters={"binary": hello_bin, "arguments": []}
-    )
 
-mm_bin = CustomResource(str(this_dir / "matmul/mm-gem5"))
-def mm_workload(mat_size: int):
-    return CustomWorkload(
-        function="set_se_binary_workload",
-        parameters={"binary": mm_bin, "arguments": [mat_size]},
-    )
+class HelloWorkload(CustomSEWorkload):
+    def __init__(self):
+        super().__init__(
+            parameters={"binary": Resource("riscv-hello"), "arguments": []}
+        )
+
+
+class MatMulWorkload(CustomSEWorkload):
+    def __init__(self, mat_size):
+        mm_bin = CustomResource(str(this_dir / "matmul/mm-gem5"))
+        super().__init__(
+            parameters={"binary": mm_bin, "arguments": [mat_size]}
+        )

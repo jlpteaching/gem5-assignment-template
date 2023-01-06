@@ -28,14 +28,6 @@ from m5.objects import DDR3_1600_8x8, DDR3_2133_8x8, LPDDR3_1600_1x32
 
 from gem5.components.memory.memory import ChanneledMemory
 
-class TeachingDDR3_1600_8x8(ChanneledMemory):
+class HW2DDR3_1600_8x8(ChanneledMemory):
     def __init__(self):
         super().__init__(DDR3_1600_8x8, 1, 128)
-
-class TeachingDDR3_2133_8x8(ChanneledMemory):
-    def __init__(self):
-        super().__init__(DDR3_2133_8x8, 1, 128)
-
-class TeachingLPDDR3_1600_1x32(ChanneledMemory):
-    def __init__(self):
-        super().__init__(LPDDR3_1600_1x32, 1, 128)

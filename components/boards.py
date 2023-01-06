@@ -28,4 +28,4 @@
 
 from gem5.components.boards.simple_board import SimpleBoard
 
-TeachingRISCVBoard = SimpleBoard
+HW2RISCVBoard = SimpleBoard
