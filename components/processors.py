@@ -30,12 +30,13 @@ from gem5.components.processors.simple_processor import SimpleProcessor
 from gem5.components.processors.base_cpu_core import BaseCPUCore
 from gem5.components.processors.base_cpu_processor import BaseCPUProcessor
 
-from m5.objects import MinorCPU, MinorFUPool
+from m5.objects import RiscvMinorCPU, MinorFUPool
 from m5.objects import MinorDefaultIntFU, MinorDefaultIntMulFU
 from m5.objects import MinorDefaultIntDivFU, MinorDefaultFloatSimdFU
 from m5.objects import MinorDefaultMemFU, MinorDefaultFloatSimdFU
 from m5.objects import MinorDefaultMiscFU
 
+from m5.objects import *
 
 class HW2TimingSimpleCPU(SimpleProcessor):
     def __init__(self):
@@ -76,7 +77,7 @@ class HW2MinorFUPool(MinorFUPool):
         ]
 
 
-class HW2MinorCPUCore(MinorCPU):
+class HW2MinorCPUCore(RiscvMinorCPU):
     def __init__(
         self,
         int_operation_latency: int,
