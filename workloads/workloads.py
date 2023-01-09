@@ -47,9 +47,9 @@ class HelloWorkload(CustomSEWorkload):
         )
 
 
-class MatMulWorkload(CustomSEWorkload):
-    def __init__(self, mat_size):
-        mm_bin = CustomResource(str(this_dir / "matmul/mm-gem5"))
+class DAXPYWorkload(CustomSEWorkload):
+    def __init__(self):
+        daxpy_bin = CustomResource(str(this_dir / "daxpy/daxpy-gem5"))
         super().__init__(
-            parameters={"binary": mm_bin, "arguments": [mat_size]}
+            parameters={"binary": daxpy_bin, "arguments": []}
         )
