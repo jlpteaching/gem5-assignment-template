@@ -48,7 +48,7 @@ class HelloWorkload(CustomSEWorkload):
 
 
 class MatMulWorkload(CustomSEWorkload):
-    def __init__(self, mat_size):
+    def __init__(self, mat_size: int):
         mm_bin = CustomResource(str(this_dir / "matmul/mm-gem5"))
         super().__init__(
             parameters={"binary": mm_bin, "arguments": [mat_size]}
