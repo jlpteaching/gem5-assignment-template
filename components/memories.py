@@ -24,10 +24,10 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-from m5.objects import DDR3_1600_8x8, DDR3_2133_8x8, LPDDR3_1600_1x32
+from m5.objects import DDR3_1600_8x8
 
 from gem5.components.memory.memory import ChanneledMemory
 
 class HW2DDR3_1600_8x8(ChanneledMemory):
     def __init__(self):
-        super().__init__(DDR3_1600_8x8, 1, 128)
+        super().__init__(DDR3_1600_8x8, 1, 128, size="1GiB")
