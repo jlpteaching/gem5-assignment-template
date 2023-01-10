@@ -24,7 +24,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-from gem5.resources.resource import Resource, CustomResource
+from gem5.resources.resource import Resource
 
 from custom_se_workload import CustomSEWorkload
 
