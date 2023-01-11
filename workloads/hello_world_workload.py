@@ -26,7 +26,7 @@
 
 from gem5.resources.resource import Resource
 
-from custom_se_workload import CustomSEWorkload
+from .custom_se_workload import CustomSEWorkload
 
 
 class HelloWorldWorkload(CustomSEWorkload):

@@ -28,6 +28,7 @@ from gem5.isas import ISA
 from gem5.components.processors.cpu_types import CPUTypes
 from gem5.components.processors.simple_processor import SimpleProcessor
 
+
 class HW0TimingSimpleCPU(SimpleProcessor):
     def __init__(self):
         super().__init__(CPUTypes.TIMING, num_cores=1, isa=ISA.RISCV)
