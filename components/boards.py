@@ -44,4 +44,6 @@ class SimpleBoard(AbstractSystemBoard, SEBinaryWorkload):
         cache_hierarchy: AbstractCacheHierarchy,
     )
 """
+
+
 HW0RISCVBoard = SimpleBoard
