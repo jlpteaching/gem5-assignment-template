@@ -28,12 +28,11 @@ from gem5.components.cachehierarchies.ruby.mesi_two_level_cache_hierarchy import
     MESITwoLevelCacheHierarchy,
 )
 
-"""
-HW0MESITwoLevelCache models a two-level cache hierarchy with MESI coherency
-protocol. The L1 cache is split into 64KiB of 8-way set associative instruction
-cache and 64KiB of 8-way set associative data cache. The L2 cache is a unified
-256KiB 4-way set associative cache.
-"""
+
+# HW0MESITwoLevelCache models a two-level cache hierarchy with MESI coherency
+# protocol. The L1 cache is split into 64KiB of 8-way set associative
+# instruction cache and 64KiB of 8-way set associative data cache. The L2 cache
+# is a unified 256KiB 4-way set associative cache.
 
 
 class HW0MESITwoLevelCache(MESITwoLevelCacheHierarchy):
