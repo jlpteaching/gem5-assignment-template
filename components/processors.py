@@ -28,10 +28,31 @@ from gem5.isas import ISA
 from gem5.components.processors.cpu_types import CPUTypes
 from gem5.components.processors.simple_processor import SimpleProcessor
 
+# Both models in this assignment model a single core CPU with support for the
+# RISC-V instruction set architecture (ISA). This model extends SimpleProcessor
+# class from gem5's standard librabry. Please refer to
+#     gem5/src/python/gem5/components/processors/simple_processor.py
+# for more documentation.
+# Below is the function signature for the constructor of SimpleProcessor class.
+
+# class SimpleProcessor(BaseCPUProcessor):
+#     def __init__(
+#         self, cpu_type: CPUTypes, num_cores: int, isa: Optional[ISA] = None
+#     )
+
+# CPUTypes.TIMING refers to TimingSimpleCPU which is an internal CPU model in
+# gem5. TimingSimpleCPU is a single-cycle like CPU that models the execution of
+# non-memory instruction as a single-cycle CPU. Please refer to
+#     https://www.gem5.org/documentation/general_docs/cpu_models/SimpleCPU
+# to learn more about TimingSimpleCPU and other SimpleCPU models.
 class HW1TimingSimpleCPU(SimpleProcessor):
     def __init__(self):
         super().__init__(CPUTypes.TIMING, num_cores=1, isa=ISA.RISCV)
 
+# CPUTypes.MINOR refers to TimingSimpleCPU which is an internal CPU model in
+# gem5. MinorCPU is an in-order pipelined CPU. Please refer to
+#     https://www.gem5.org/documentation/general_docs/cpu_models/SimpleCPU
+# to learn more about TimingSimpleCPU and other SimpleCPU models.
 class HW1MinorCPU(SimpleProcessor):
     def __init__(self):
         super().__init__(CPUTypes.MINOR, num_cores=1, isa=ISA.RISCV)

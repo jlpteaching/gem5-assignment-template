@@ -28,14 +28,37 @@ from m5.objects import DDR3_1600_8x8, DDR3_2133_8x8, LPDDR3_1600_1x32
 
 from gem5.components.memory.memory import ChanneledMemory
 
+
+# All the models listed below extend ChanneledMemory from gem5's
+# standard libary. Please refer to
+#     gem5/src/python/gem5/components/memory/memory.py
+# for documentation on ChanneledMemory.
+
+# Below is the function signature for the constructor of ChanneledMemory class.
+# class ChanneledMemory(AbstractMemorySystem):
+#     def __init__(
+#         self,
+#         dram_interface_class: Type[DRAMInterface],
+#         num_channels: Union[int, str],
+#         interleaving_size: Union[int, str],
+#         size: Optional[str] = None,
+#         addr_mapping: Optional[str] = None,
+#     )
+
+# HW1DDR3_1600_8x8 models a 1 GiB single channel DDR3 DRAM memory with a data
+# bus clocked at 1600MHz.
 class HW1DDR3_1600_8x8(ChanneledMemory):
     def __init__(self):
         super().__init__(DDR3_1600_8x8, 1, 128, size="1GiB")
 
+# HW1DDR3_2133_8x8 models a 1 GiB single channel DDR3 DRAM memory with a data
+# bus clocked at 2133MHz.
 class HW1DDR3_2133_8x8(ChanneledMemory):
     def __init__(self):
         super().__init__(DDR3_2133_8x8, 1, 128, size="1GiB")
 
+# HW1LPDDR3_1600_1x32 models a 1 GiB single channel LPDDR3 DRAM memory with a
+# data bus clocked at 2133MHz.
 class HW1LPDDR3_1600_1x32(ChanneledMemory):
     def __init__(self):
         super().__init__(LPDDR3_1600_1x32, 1, 128, size="1GiB")
