@@ -55,7 +55,20 @@ void multiply(double **A, double **B, double **C, int size)
 }
 ```
 
-You can find the definitions for the workload objects in gem5 under `workloads/workloads.py`. In this assignment, we will only be using `MatMulWorkload`. In order to create an object of `MatMulWorkload` you just need to pass matrix size (an integer) `mat_size` to its constructor (`__init__`) function. **In your configuration choose an appropriate value for `mat_size`**. It should be large enough that it makes your workload interesting. Since changing `mat_size` will influence simulation time, as a guideline, choose a value that results in simulation times less than 10 minutes (hostSeconds < 600). We found that setting mat_size to 160 will result in a simulation time of around 4.5 minutes which is a reasonable compromise.
+You can find the definitions for the workload objects in gem5 under `workloads/workloads.py`.
+In this assignment, we will only be using `MatMulWorkload`.
+In order to create an object of `MatMulWorkload` you just need to pass matrix size (an integer) `mat_size` to its constructor (`__init__`) function.
+**In your configuration choose an appropriate value for `mat_size`**. It should be large enough that it makes your workload interesting.
+Since changing `mat_size` will influence simulation time, as a guideline, choose a value that results in simulation times less than 10 minutes (hostSeconds < 600).
+We found that setting mat_size to 224 will result in a simulation time of around 5 minutes which is a reasonable compromise.
+
+**CAVEAT [PLEASE READ CAREFULLY]**: When using this workload with gem5, your simulation will output two sets of statistics in the same `stats.txt` file. Each set of statistics start with a line like below.
+
+```text
+---------- Begin Simulation Statistics ----------
+```
+
+Please make sure to **ignore** the **second** set of generated statistics in your analysis.
 
 ## Experimental setup
 
@@ -86,7 +99,7 @@ Before running any simulations try to answer these questions.
 In your configuration script allow for:
 
 - changing the CPU model between `HW1TimingSimpleCPU` and `HW1MinorCPU`
-- and changing the clock frequency between `1 GHz`, `2 GHz`, and `4 GHz`
+- and changing the clock frequency between `1GHz`, `2GHz`, and `4GHz`
 
 Use `HW1DDR3_1600_8x8` as the memory model.
 
@@ -104,7 +117,7 @@ In your configuration allow for:
 - changing the CPU model between `HW1TimingSimpleCPU` and `HW1MinorCPU`
 - and changine the memory model between `HW1DDR3_1600_8x8`, `HW1DDR3_2133_8x8`, and `HW1LPDDR3_1600_1x32`.
 
-Use `4 GHz` as the clock frequency.
+Use `4GHz` as the clock frequency.
 
 **NOTE**: To become familiar with the different memory models you will use in this assignment, please read through the documentation for the different memory models in `components/memories.py`.
 
@@ -126,7 +139,10 @@ As part of your submission, you should include any script/code/file that might b
 
 ### Part II: Report
 
-As mentioned before, you are allowed to submit your assignments in **pairs** and in **PDF** format. In your report answer the questions presented in [Analysis and simulation](#analysis-and-simulation), [Analysis and simulation: Step I](#step-i-changing-the-cpu-model-and-cpu-and-cache-clock-frequency), [Analysis and simulation: Step II](#step-ii-changing-the-cpu-and-memory-model),and [Analysis and simulation: Step III](#step-iii-general-questions). Use clear reasoning and visualization to drive your conclusions.
+As mentioned before, you are allowed to submit your assignments in **pairs** and in **PDF** format.
+You should submit your report on [gradescope](https://www.gradescope.com/courses/487868).
+In your report answer the questions presented in [Analysis and simulation](#analysis-and-simulation), [Analysis and simulation: Step I](#step-i-changing-the-cpu-model-and-cpu-and-cache-clock-frequency), [Analysis and simulation: Step II](#step-ii-changing-the-cpu-and-memory-model),and [Analysis and simulation: Step III](#step-iii-general-questions). Use clear reasoning and visualization to drive your conclusions.
+
 
 ## Grading
 
