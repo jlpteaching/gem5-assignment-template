@@ -26,25 +26,10 @@
 
 import pathlib
 
-from gem5.resources.resource import Resource, CustomResource
-from gem5.resources.workload import CustomWorkload
-
-
-class CustomSEWorkload(CustomWorkload):
-    def __init__(self, parameters: dict):
-        super().__init__(
-            function="set_se_binary_workload", parameters=parameters
-        )
-
+from gem5.resources.resource import CustomResource
+from .custom_se_workload import CustomSEWorkload
 
 this_dir = pathlib.Path(__file__).parent.absolute()
-
-
-class HelloWorkload(CustomSEWorkload):
-    def __init__(self):
-        super().__init__(
-            parameters={"binary": Resource("riscv-hello"), "arguments": []}
-        )
 
 
 class MatMulWorkload(CustomSEWorkload):
