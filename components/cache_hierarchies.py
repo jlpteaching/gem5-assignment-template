@@ -24,8 +24,15 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-from gem5.components.cachehierarchies.ruby.mesi_two_level_cache_hierarchy \
-    import MESITwoLevelCacheHierarchy
+from gem5.components.cachehierarchies.ruby.\
+    mesi_two_level_cache_hierarchy import MESITwoLevelCacheHierarchy
+
+
+# HW2MESITwoLevelCache models a two-level cache hierarchy with MESI coherency
+# protocol. The L1 cache is split into 64KiB of 8-way set associative
+# instruction cache and 64KiB of 8-way set associative data cache. The L2 cache
+# is a unified 256KiB 4-way set associative cache.
+
 
 class HW2MESITwoLevelCache(MESITwoLevelCacheHierarchy):
     def __init__(self):

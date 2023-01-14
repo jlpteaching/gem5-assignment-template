@@ -38,23 +38,83 @@ from m5.objects import MinorDefaultMiscFU
 
 from m5.objects import *
 
+
+# HW2TimingSimpleCPU models a single core CPU with support for the RISC-V
+# instruction set architecture (ISA). This model extends SimpleProcessor class
+# from gem5's standard librabry. Please refer to
+#     gem5/src/python/gem5/components/processors/simple_processor.py
+# for more documentation.
+# Below is the function signature for the constructor of SimpleProcessor class.
+
+# class SimpleProcessor(BaseCPUProcessor):
+#     def __init__(
+#         self, cpu_type: CPUTypes, num_cores: int, isa: Optional[ISA] = None
+#     )
+
+# CPUTypes.TIMING refers to TimingSimpleCPU which is an internal CPU model in
+# gem5. Please refer to
+#     https://www.gem5.org/documentation/general_docs/cpu_models/SimpleCPU
+# to learn more about TimingSimpleCPU and other SimpleCPU models.
+
 class HW2TimingSimpleCPU(SimpleProcessor):
     def __init__(self):
         super().__init__(CPUTypes.TIMING, num_cores=1, isa=ISA.RISCV)
 
+# HW2FloatSIMDFU extend MinorDefaultFloatSimdFU.MinorDefaultFloatSimdFU is an
+# internal gem5 model. Please refer to
+#   gem5/src/cpu/minor/BaseMinorCPU.py
+# for more information and documentation. HW2FloatSIMDFU implements a
+# floating point and SIMD functional units for gem5's MinorCPU.
+# MinorCPU is an internal gem5 model that models an in-order pipelined
+# processor. Please refer to
+#   https://www.gem5.org/documentation/general_docs/cpu_models/MinorCPU
+# to learn more about MinorCPU.
+
 
 class HW2FloatSIMDFU(MinorDefaultFloatSimdFU):
     def __init__(self, operation_latency: int, issue_latency: int):
+        """
+        :param operation_latency: number of cycles it takes to execute
+        a floating point/SIMD instruction
+        :param issue_latency: number of cycles it takes to decode and issue
+        a floating point/SIMD instruction
+        """
         super().__init__()
         self.opLat = operation_latency
         self.issueLat = issue_latency
+
+# HW2IntFU extend MinorDefaultIntFU.MinorDefaultIntFU is an internal gem5
+# model. Please refer to
+#   gem5/src/cpu/minor/BaseMinorCPU.py
+# for more information and documentation. HW2IntFU implements an integer
+# functional unit for gem5's MinorCPU. MinorCPU is an internal gem5 model that
+# models an in-order pipelined processor. Please refer to
+#   https://www.gem5.org/documentation/general_docs/cpu_models/MinorCPU
+# to learn more about MinorCPU.
 
 
 class HW2IntFU(MinorDefaultIntFU):
     def __init__(self, operation_latency: int, issue_latency: int):
+        """
+        :param operation_latency: number of cycles it takes to execute
+        an integer instruction
+        :param issue_latency: number of cycles it takes to decode and issue
+        an integer instruction
+        """
         super().__init__()
         self.opLat = operation_latency
         self.issueLat = issue_latency
+
+
+# HW2MinorFUPool extend MinorFUPool.MinorFUPool is an internal gem5
+# model. Please refer to
+#   gem5/src/cpu/minor/BaseMinorCPU.py
+# for more information and documentation. HW2MinorFUPool implements a pool of
+# functional units for gem5's MinorCPU. This pool includes two integer and one
+# floating point and SIMD functional units.  MinorCPU is an internal gem5 model
+# that models an in-order pipelined processor. Please refer to
+#   https://www.gem5.org/documentation/general_docs/cpu_models/MinorCPU
+# to learn more about MinorCPU.
 
 
 class HW2MinorFUPool(MinorFUPool):
