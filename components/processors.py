@@ -56,9 +56,11 @@ from m5.objects import *
 #     https://www.gem5.org/documentation/general_docs/cpu_models/SimpleCPU
 # to learn more about TimingSimpleCPU and other SimpleCPU models.
 
+
 class HW2TimingSimpleCPU(SimpleProcessor):
     def __init__(self):
         super().__init__(CPUTypes.TIMING, num_cores=1, isa=ISA.RISCV)
+
 
 # HW2FloatSIMDFU extend MinorDefaultFloatSimdFU.MinorDefaultFloatSimdFU is an
 # internal gem5 model. Please refer to
@@ -82,6 +84,8 @@ class HW2FloatSIMDFU(MinorDefaultFloatSimdFU):
         super().__init__()
         self.opLat = operation_latency
         self.issueLat = issue_latency
+        print(f"fp_op: {operation_latency}, fp_issue: {issue_latency}")
+
 
 # HW2IntFU extend MinorDefaultIntFU.MinorDefaultIntFU is an internal gem5
 # model. Please refer to
@@ -104,9 +108,10 @@ class HW2IntFU(MinorDefaultIntFU):
         super().__init__()
         self.opLat = operation_latency
         self.issueLat = issue_latency
+        print(f"int_op: {operation_latency}, int_issue: {issue_latency}")
 
 
-# HW2MinorFUPool extend MinorFUPool.MinorFUPool is an internal gem5
+# HW2MinorFUPool extend MinorFUPool. MinorFUPool is an internal gem5
 # model. Please refer to
 #   gem5/src/cpu/minor/BaseMinorCPU.py
 # for more information and documentation. HW2MinorFUPool implements a pool of
@@ -125,6 +130,16 @@ class HW2MinorFUPool(MinorFUPool):
         fp_operation_latency: int,
         fp_issue_latency: int,
     ):
+        """
+        :param int_operation_latency: number of cycles it takes to execute
+        an integer instruction
+        :param int_issue_latency: number of cycles it takes to decode and issue
+        an integer instruction
+        :param fp_operation_latency: number of cycles it takes to execute
+        a floating point/SIMD instruction
+        :param fp_issue_latency: number of cycles it takes to decode and issue
+        a floating point/SIMD instruction
+        """
         super().__init__()
         self.funcUnits = [
             HW2IntFU(int_operation_latency, int_issue_latency),
@@ -137,6 +152,13 @@ class HW2MinorFUPool(MinorFUPool):
         ]
 
 
+# HW2MinorCPUCore extends RiscvMinorCPU. It allows the user to modify certain
+# pipeline latencies in certain functional units. Please refer to the class
+# documentation below to understand the parameters better.
+# RiscvMinorCPU is one of gem5's internal models for the MinorCPU.
+# It implements MinorCPU for the RISC-V ISA.
+
+
 class HW2MinorCPUCore(RiscvMinorCPU):
     def __init__(
         self,
@@ -145,6 +167,16 @@ class HW2MinorCPUCore(RiscvMinorCPU):
         fp_operation_latency: int,
         fp_issue_latency: int,
     ):
+        """
+        :param int_operation_latency: number of cycles it takes to execute
+        an integer instruction
+        :param int_issue_latency: number of cycles it takes to decode and issue
+        an integer instruction
+        :param fp_operation_latency: number of cycles it takes to execute
+        a floating point/SIMD instruction
+        :param fp_issue_latency: number of cycles it takes to decode and issue
+        a floating point/SIMD instruction
+        """
         super().__init__()
         self.executeFuncUnits = HW2MinorFUPool(
             int_operation_latency,
@@ -152,6 +184,12 @@ class HW2MinorCPUCore(RiscvMinorCPU):
             fp_operation_latency,
             fp_issue_latency,
         )
+
+
+# HW2MinorCPUStdCore extend BaseCPUCore. It wraps HW2MinorCPUCore into a gem5
+# standard library core. Please refer to:
+#   gem5/src/python/gem5/components/processors/base_cpu_core.py
+# to learn more about BaseCPUCore.
 
 
 class HW2MinorCPUStdCore(BaseCPUCore):
@@ -162,6 +200,16 @@ class HW2MinorCPUStdCore(BaseCPUCore):
         fp_operation_latency: int,
         fp_issue_latency: int,
     ):
+        """
+        :param int_operation_latency: number of cycles it takes to execute
+        an integer instruction
+        :param int_issue_latency: number of cycles it takes to decode and issue
+        an integer instruction
+        :param fp_operation_latency: number of cycles it takes to execute
+        a floating point/SIMD instruction
+        :param fp_issue_latency: number of cycles it takes to decode and issue
+        a floating point/SIMD instruction
+        """
         core = HW2MinorCPUCore(
             int_operation_latency,
             int_issue_latency,
@@ -169,6 +217,18 @@ class HW2MinorCPUStdCore(BaseCPUCore):
             fp_issue_latency,
         )
         super().__init__(core, ISA.RISCV)
+
+
+# With the help of HWMinorCPUStdCore, HW2MinorCPU wraps MinorCPU into a
+# BaseCPUProcessor. BaseCPUProcessor is one of gem5's internal models from the
+# standard library. It allows the users to instantiate a MinorCPU for the
+# RISC-V ISA with certain modifiable pipeline latencies. All the latencies are
+# keyword (optional) arguments with default values. Please refer to
+#   https://www.geeksforgeeks.org/keyword-and-positional-argument-in-python/
+# to learn more about keyword and positional arguments in python.
+# Lastly, please refer to the class documentation below to better understand
+# what each argument means and how to use them to parameterize your models
+# for your simulations.
 
 
 class HW2MinorCPU(BaseCPUProcessor):
@@ -179,6 +239,16 @@ class HW2MinorCPU(BaseCPUProcessor):
         fp_operation_latency: int = 6,
         fp_issue_latency: int = 1,
     ):
+        """
+        :param int_operation_latency: number of cycles it takes to execute
+        an integer instruction
+        :param int_issue_latency: number of cycles it takes to decode and issue
+        an integer instruction
+        :param fp_operation_latency: number of cycles it takes to execute
+        a floating point/SIMD instruction
+        :param fp_issue_latency: number of cycles it takes to decode and issue
+        a floating point/SIMD instruction
+        """
         cores = [
             HW2MinorCPUStdCore(
                 int_operation_latency,

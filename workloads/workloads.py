@@ -50,6 +50,4 @@ class HelloWorkload(CustomSEWorkload):
 class DAXPYWorkload(CustomSEWorkload):
     def __init__(self):
         daxpy_bin = CustomResource(str(this_dir / "daxpy/daxpy-gem5"))
-        super().__init__(
-            parameters={"binary": daxpy_bin, "arguments": []}
-        )
+        super().__init__(parameters={"binary": daxpy_bin, "arguments": []})
