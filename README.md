@@ -172,7 +172,7 @@ Can you reason about why you would prefer optimizing one of the latencies over t
 
 For this step, modify your configuration script to allow for changing **integer operation latency** and **floating point operation latency**.
 Let's assume our processor has a very fast **decode** stage that can issue both **integer** and **floating point** instructions in `1 cycle`.
-Next, let's focus **integer operation latency** and **floating point operation latency**.
+Next, let's focus on **integer operation latency** and **floating point operation latency**.
 Let's assume an intial value of `4 cycles` for **integer operation latency** and an initial value of `8 cycles` for **floating point operation latency**.
 For your experimentation, suppose you can only reduce one of these latencies by a factor of 2.
 This means that you can build a processor with an **integer operation latency** of `2 cycles` and a **floating point operation latency** of `8 cycles` or a processor with an **integer operation latency** of `4 cycles` and a **floating point operation latency** of `4 cycles`.
