@@ -68,7 +68,7 @@ int main()
 }
 ```
 
-You can find the definitions for the workload objects in gem5 under `workloads/workloads.py`. In this assignment, we will only be using `DAXPYWorkload`. In order to create an object of `DAXPYWorkload` you just need to call its constructor (`__init__`) function.
+You can find the definitions for the workload objects in gem5 under `workloads/daxpy_workloads.py`. In this assignment, we will only be using `DAXPYWorkload`. In order to create an object of `DAXPYWorkload` you just need to call its constructor (`__init__`) function.
 
 ## Experimental setup
 
@@ -130,7 +130,8 @@ Make sure to track the simulation outputs for later use. In the statistics outpu
 This statistic represents a distribution of different operation classes executed by the processor.
 
 In your report, answer the same questions after simulation supported with data.
-A complete set of simulation data for this step should include **1 configuration**.
+Use `HelloWorldWorkload` from `workloads/hello_world_workload.py` as a second program to compare instruction mixes.
+A complete set of simulation data for this step should include **2 configuration** (1 for `DAXPYWorkload` and 1 for `HelloWorldWorkload`).
 
 ### Step II
 

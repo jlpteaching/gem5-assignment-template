@@ -27,6 +27,7 @@
 from .custom_se_workload import CustomSEWorkload
 from gem5.resources.resource import Resource
 
+
 class HelloWorkload(CustomSEWorkload):
     def __init__(self):
         super().__init__(
