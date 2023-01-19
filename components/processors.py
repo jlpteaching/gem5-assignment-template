@@ -234,27 +234,24 @@ class HW2MinorCPUStdCore(BaseCPUCore):
 class HW2MinorCPU(BaseCPUProcessor):
     def __init__(
         self,
+        issue_latency: int = 2,
         int_operation_latency: int = 3,
-        int_issue_latency: int = 1,
         fp_operation_latency: int = 6,
-        fp_issue_latency: int = 1,
     ):
         """
+        :param issue_latency: number of cycles it takes to decode and issue
+        an instruction
         :param int_operation_latency: number of cycles it takes to execute
         an integer instruction
-        :param int_issue_latency: number of cycles it takes to decode and issue
-        an integer instruction
         :param fp_operation_latency: number of cycles it takes to execute
-        a floating point/SIMD instruction
-        :param fp_issue_latency: number of cycles it takes to decode and issue
         a floating point/SIMD instruction
         """
         cores = [
             HW2MinorCPUStdCore(
                 int_operation_latency,
-                int_issue_latency,
+                issue_latency,
                 fp_operation_latency,
-                fp_issue_latency,
+                issue_latency,
             )
         ]
         super().__init__(cores)

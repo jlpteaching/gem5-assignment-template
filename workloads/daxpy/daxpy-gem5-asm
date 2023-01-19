@@ -331,10 +331,10 @@ main:
 	addi	sp,sp,-1904	#,,
 	.cfi_def_cfa_offset 1904
 	sd	s0,1888(sp)	#,
-	li	t0,-270336		#,
+	li	t0,-2105344		#,
 	.cfi_offset 8, -16
 # /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/basic_string.h:200: 	: allocator_type(__a), _M_p(__dat) { }
-	li	s0,270336		# tmp203,
+	li	s0,2105344		# tmp203,
 # daxpy.cpp:9: {
 	sd	ra,1896(sp)	#,
 	sd	s1,1880(sp)	#,
@@ -344,10 +344,10 @@ main:
 	sd	s5,1848(sp)	#,
 	fsd	fs0,1832(sp)	#,
 # /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/basic_string.h:200: 	: allocator_type(__a), _M_p(__dat) { }
-	li	a1,-131072		# tmp108,
+	li	a1,-1048576		# tmp108,
 # daxpy.cpp:9: {
 	add	sp,sp,t0	#,,
-	.cfi_def_cfa_offset 272240
+	.cfi_def_cfa_offset 2107248
 	.cfi_offset 1, -8
 	.cfi_offset 9, -24
 	.cfi_offset 18, -32
@@ -360,7 +360,7 @@ main:
 	add	a5,a5,a1	# tmp108, tmp202, tmp202
 	addi	a4,sp,16	#, tmp246,
 # /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.h:1621:     random_device() { _M_init("default"); }
-	li	a0,-270336		# tmp130,
+	li	a0,-2105344		# tmp130,
 # /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/basic_string.h:200: 	: allocator_type(__a), _M_p(__dat) { }
 	add	a1,a5,a4	# tmp246, tmp109, tmp202
 # /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.h:1621:     random_device() { _M_init("default"); }
@@ -396,7 +396,7 @@ main:
 	call	_ZNSt13random_device7_M_initERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE		#
 .LEHE0:
 # /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/basic_string.h:234:       { return _M_dataplus._M_p; }
-	li	a5,-131072		# tmp131,
+	li	a5,-1048576		# tmp131,
 	addi	a4,s0,1808	#, tmp207, tmp208
 	add	a4,a4,a5	# tmp131, tmp207, tmp207
 	addi	a5,sp,16	#, tmp244,
@@ -414,8 +414,8 @@ main:
 	call	_ZdlPvm		#
 .L30:
 # /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.h:1651:     { return this->_M_getval(); }
-	li	a0,-270336		# tmp142,
-	li	s0,270336		# tmp213,
+	li	a0,-2105344		# tmp142,
+	li	s0,2105344		# tmp213,
 	addi	a0,a0,-1808	#, tmp141, tmp142
 	addi	a5,s0,1808	#, tmp212, tmp213
 	add	a5,a5,a0	# tmp141, tmp212, tmp212
@@ -424,7 +424,7 @@ main:
 .LEHB1:
 	call	_ZNSt13random_device9_M_getvalEv		#
 # /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:330:       _M_x[0] = __detail::__mod<_UIntType,
-	li	a5,-266240		# tmp147,
+	li	a5,-2101248		# tmp147,
 	addi	a3,s0,1808	#, tmp214, tmp215
 # daxpy.cpp:12:   std::random_device rd; std::mt19937 gen(rd());
 	slli	a4,a0,32	#, __res, tmp196
@@ -475,15 +475,15 @@ main:
 	add	a2,a2,a1	# tmp235, tmp220, tmp220
 	li	a4,4096		# tmp161,
 	add	a4,a2,a4	# tmp161, tmp162, tmp220
-	li	a1,270336		# tmp223,
+	li	a1,2105344		# tmp223,
 # /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.h:1873: 	  return (__aurng() * (__p.b() - __p.a())) + __p.a();
 	lui	a2,%hi(.LC1)	# tmp194,
-	li	s0,-131072		# tmp165,
+	li	s0,-1048576		# tmp165,
 	fld	fs0,%lo(.LC1)(a2)	# tmp171,
 # /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:342:       _M_p = state_size;
-	li	a5,-266240		# tmp159,
+	li	a5,-2101248		# tmp159,
 	addi	a2,a1,1808	#, tmp222, tmp223
-	li	s5,131072		# tmp166,
+	li	s5,1048576		# tmp166,
 	addi	a0,sp,16	#, tmp239,
 	mv	s2,a4	# ivtmp.132, tmp162
 	add	a2,a2,s0	# tmp165, tmp222, tmp222
@@ -526,7 +526,7 @@ main:
 	li	a0,0		#,
 	call	m5_work_begin		#
 	lui	a5,%hi(.LC4)	# tmp195,
-	li	s1,131072		# tmp179,
+	li	s1,1048576		# tmp179,
 # daxpy.cpp:27:     Y[i] = alpha * X[i] + Y[i];
 	fld	fa3,%lo(.LC4)(a5)	# tmp181,
 	add	s1,s0,s1	# tmp179, _14, ivtmp.125
@@ -567,8 +567,8 @@ main:
 	call	printf		#
 .LEHE1:
 # /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.h:1628:     { _M_fini(); }
-	li	a0,-270336		# tmp188,
-	li	a5,270336		# tmp227,
+	li	a0,-2105344		# tmp188,
+	li	a5,2105344		# tmp227,
 	addi	a0,a0,-1808	#, tmp187, tmp188
 	addi	a5,a5,1808	#, tmp226, tmp227
 	addi	a4,sp,16	#, tmp237,
@@ -576,7 +576,7 @@ main:
 	add	a0,a5,a4	# tmp237,, tmp226
 	call	_ZNSt13random_device7_M_finiEv		#
 # daxpy.cpp:42: }
-	li	t0,270336		#,
+	li	t0,2105344		#,
 	add	sp,sp,t0	#,,
 	.cfi_remember_state
 	.cfi_def_cfa_offset 1904
@@ -603,10 +603,10 @@ main:
 .L39:
 	.cfi_restore_state
 # /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/basic_string.h:795:       { _M_dispose(); }
-	li	a5,270336		# tmp219,
+	li	a5,2105344		# tmp219,
 	mv	s0,a0	# tmp146, tmp197
 	addi	a5,a5,1808	#, tmp218, tmp219
-	li	a0,-131072		# tmp144,
+	li	a0,-1048576		# tmp144,
 	add	a5,a5,a0	# tmp144, tmp218, tmp218
 	addi	a4,sp,16	#, tmp242,
 	add	a0,a5,a4	# tmp242,, tmp218
@@ -618,8 +618,8 @@ main:
 .L38:
 # /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.h:1628:     { _M_fini(); }
 	mv	s0,a0	# tmp193, tmp200
-	li	a5,270336		# tmp229,
-	li	a0,-270336		# tmp192,
+	li	a5,2105344		# tmp229,
+	li	a0,-2105344		# tmp192,
 	addi	a0,a0,-1808	#, tmp191, tmp192
 	addi	a5,a5,1808	#, tmp228, tmp229
 	add	a5,a5,a0	# tmp191, tmp228, tmp228

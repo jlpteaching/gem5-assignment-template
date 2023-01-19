@@ -7,7 +7,7 @@
 
 int main()
 {
-  const int N = 16384;
+  const int N = 131072;
   double X[N], Y[N], alpha = 0.5;
   std::random_device rd; std::mt19937 gen(rd());
   std::uniform_real_distribution<> dis(1, 2);
