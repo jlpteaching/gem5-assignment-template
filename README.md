@@ -88,6 +88,7 @@ However, the main classes (models) you will need to use are `HW2TimingSimpleCPU`
 You will only use `HW2MESITwoLevelCache` in this assignment.
 - Memory models: You can find all the models you need to use for your memory under `components/memories.py`.
 You will only use `HW2DDR3_1600_8x8` in this assignment.
+- Clock frequency: You can use a clock frequency of `4 GHz` for all of your simulations.
 
 ### **IMPORTANT NOTE**
 
