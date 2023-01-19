@@ -24,30 +24,11 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-import pathlib
-
-from gem5.resources.resource import Resource, CustomResource
-from gem5.resources.workload import CustomWorkload
-
-
-class CustomSEWorkload(CustomWorkload):
-    def __init__(self, parameters: dict):
-        super().__init__(
-            function="set_se_binary_workload", parameters=parameters
-        )
-
-
-this_dir = pathlib.Path(__file__).parent.absolute()
-
+from .custom_se_workload import CustomSEWorkload
+from gem5.resources.resource import Resource
 
 class HelloWorkload(CustomSEWorkload):
     def __init__(self):
         super().__init__(
             parameters={"binary": Resource("riscv-hello"), "arguments": []}
         )
-
-
-class DAXPYWorkload(CustomSEWorkload):
-    def __init__(self):
-        daxpy_bin = CustomResource(str(this_dir / "daxpy/daxpy-gem5"))
-        super().__init__(parameters={"binary": daxpy_bin, "arguments": []})
