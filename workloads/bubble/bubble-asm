@@ -1,0 +1,454 @@
+	.file	"bubble.cpp"
+	.option nopic
+	.attribute arch, "rv64i2p0_m2p0_a2p0_f2p0_d2p0_c2p0"
+	.attribute unaligned_access, 0
+	.attribute stack_align, 16
+# GNU C++17 () version 12.2.0 (riscv64-unknown-linux-gnu)
+#	compiled by GNU C version 11.3.0, GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version none
+# GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+# options passed: -mtune=rocket -mabi=lp64d -misa-spec=2.2 -march=rv64imafdc -O2
+	.text
+	.section	.text._ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EE11_M_gen_randEv,"axG",@progbits,_ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EE11_M_gen_randEv,comdat
+	.align	1
+	.weak	_ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EE11_M_gen_randEv
+	.type	_ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EE11_M_gen_randEv, @function
+_ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EE11_M_gen_randEv:
+.LFB3552:
+	.cfi_startproc
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:409: 		       ^ ((__y & 0x01) ? __a : 0));
+	lui	a5,%hi(.LC0)	# tmp150,
+	ld	a1,0(a0)		# this___M_x_I_lsm0.83, MEM[(long unsigned int *)this_40(D)]
+	ld	t5,%lo(.LC0)(a5)		# tmp151,
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:406: 	  _UIntType __y = ((_M_x[__k] & __upper_mask)
+	li	t1,-2147483648		# tmp105,
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:408: 	  _M_x[__k] = (_M_x[__k + __m] ^ (__y >> 1)
+	li	a7,4096		# tmp111,
+	mv	a4,a0	# ivtmp.91, this
+	addi	t4,a0,1816	#, _45, this
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:397:     mersenne_twister_engine<_UIntType, __w, __n, __m, __r, __a, __u, __d,
+	mv	a3,a0	# ivtmp.99, this
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:407: 			   | (_M_x[__k + 1] & __lower_mask));
+	xori	t3,t1,-1	#, tmp107, tmp105
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:408: 	  _M_x[__k] = (_M_x[__k + __m] ^ (__y >> 1)
+	addi	a7,a7,-920	#, tmp110, tmp111
+.L3:
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:406: 	  _UIntType __y = ((_M_x[__k] & __upper_mask)
+	and	a2,a1,t1	# tmp105, _50, this___M_x_I_lsm0.83
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:407: 			   | (_M_x[__k + 1] & __lower_mask));
+	ld	a1,8(a3)		# this___M_x_I_lsm0.83, MEM[(long unsigned int *)_82 + 8B]
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:408: 	  _M_x[__k] = (_M_x[__k + __m] ^ (__y >> 1)
+	add	a5,a3,a7	# tmp110, tmp109, ivtmp.99
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:408: 	  _M_x[__k] = (_M_x[__k + __m] ^ (__y >> 1)
+	ld	a6,0(a5)		# MEM[(long unsigned int *)_36], MEM[(long unsigned int *)_36]
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:407: 			   | (_M_x[__k + 1] & __lower_mask));
+	and	a5,a1,t3	# tmp107, tmp106, this___M_x_I_lsm0.83
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:406: 	  _UIntType __y = ((_M_x[__k] & __upper_mask)
+	or	a5,a5,a2	# _50, __y, tmp106
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:408: 	  _M_x[__k] = (_M_x[__k + __m] ^ (__y >> 1)
+	srli	a2,a5,1	#, tmp112, __y
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:409: 		       ^ ((__y & 0x01) ? __a : 0));
+	andi	a5,a5,1	#, tmp114, __y
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:408: 	  _M_x[__k] = (_M_x[__k + __m] ^ (__y >> 1)
+	xor	a2,a2,a6	# MEM[(long unsigned int *)_36], _31, tmp112
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:409: 		       ^ ((__y & 0x01) ? __a : 0));
+	beq	a5,zero,.L2	#, tmp114,,
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:409: 		       ^ ((__y & 0x01) ? __a : 0));
+	xor	a2,a2,t5	# tmp151, _31, _31
+.L2:
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:408: 	  _M_x[__k] = (_M_x[__k + __m] ^ (__y >> 1)
+	sd	a2,0(a3)	# _31, MEM[(long unsigned int *)_82]
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:404:       for (size_t __k = 0; __k < (__n - __m); ++__k)
+	addi	a3,a3,8	#, ivtmp.99, ivtmp.99
+	bne	a3,t4,.L3	#, ivtmp.99, _45,
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:417: 		       ^ ((__y & 0x01) ? __a : 0));
+	lui	a5,%hi(.LC0)	# tmp148,
+	li	a6,4096		# tmp118,
+	ld	a2,1816(a0)		# this___M_x_I_lsm0.82, MEM[(long unsigned int *)this_40(D) + 1816B]
+	ld	t3,%lo(.LC0)(a5)		# tmp149,
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:414: 	  _UIntType __y = ((_M_x[__k] & __upper_mask)
+	li	a7,-2147483648		# tmp119,
+	addi	a6,a6,-928	#, tmp117, tmp118
+	add	a6,a0,a6	# tmp117, _17, this
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:415: 			   | (_M_x[__k + 1] & __lower_mask));
+	xori	t1,a7,-1	#, tmp121, tmp119
+.L5:
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:414: 	  _UIntType __y = ((_M_x[__k] & __upper_mask)
+	and	a3,a2,a7	# tmp119, _73, this___M_x_I_lsm0.82
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:415: 			   | (_M_x[__k + 1] & __lower_mask));
+	ld	a2,1824(a4)		# this___M_x_I_lsm0.82, MEM[(long unsigned int *)_16 + 1824B]
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:416: 	  _M_x[__k] = (_M_x[__k + (__m - __n)] ^ (__y >> 1)
+	ld	a1,0(a4)		# MEM[(long unsigned int *)_16], MEM[(long unsigned int *)_16]
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:415: 			   | (_M_x[__k + 1] & __lower_mask));
+	and	a5,a2,t1	# tmp121, tmp120, this___M_x_I_lsm0.82
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:414: 	  _UIntType __y = ((_M_x[__k] & __upper_mask)
+	or	a5,a5,a3	# _73, __y, tmp120
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:416: 	  _M_x[__k] = (_M_x[__k + (__m - __n)] ^ (__y >> 1)
+	srli	a3,a5,1	#, tmp123, __y
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:417: 		       ^ ((__y & 0x01) ? __a : 0));
+	andi	a5,a5,1	#, tmp125, __y
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:416: 	  _M_x[__k] = (_M_x[__k + (__m - __n)] ^ (__y >> 1)
+	xor	a3,a3,a1	# MEM[(long unsigned int *)_16], prephitmp_62, tmp123
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:417: 		       ^ ((__y & 0x01) ? __a : 0));
+	beq	a5,zero,.L4	#, tmp125,,
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:417: 		       ^ ((__y & 0x01) ? __a : 0));
+	xor	a3,a3,t3	# tmp149, prephitmp_62, prephitmp_62
+.L4:
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:416: 	  _M_x[__k] = (_M_x[__k + (__m - __n)] ^ (__y >> 1)
+	sd	a3,1816(a4)	# prephitmp_62, MEM[(long unsigned int *)_16 + 1816B]
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:412:       for (size_t __k = (__n - __m); __k < (__n - 1); ++__k)
+	addi	a4,a4,8	#, ivtmp.91, ivtmp.91
+	bne	a4,a6,.L5	#, ivtmp.91, _17,
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:420:       _UIntType __y = ((_M_x[__n - 1] & __upper_mask)
+	li	a4,4096		# tmp128,
+	add	a4,a0,a4	# tmp128, tmp129, this
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:420:       _UIntType __y = ((_M_x[__n - 1] & __upper_mask)
+	ld	a6,888(a4)		# this_40(D)->_M_x[623], this_40(D)->_M_x[623]
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:421: 		       | (_M_x[0] & __lower_mask));
+	ld	a3,0(a0)		# this_40(D)->_M_x[0], this_40(D)->_M_x[0]
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:420:       _UIntType __y = ((_M_x[__n - 1] & __upper_mask)
+	li	a5,-2147483648		# tmp130,
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:421: 		       | (_M_x[0] & __lower_mask));
+	xori	a1,a5,-1	#, tmp135, tmp130
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:422:       _M_x[__n - 1] = (_M_x[__m - 1] ^ (__y >> 1)
+	ld	a2,-928(a4)		# this_40(D)->_M_x[396], this_40(D)->_M_x[396]
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:420:       _UIntType __y = ((_M_x[__n - 1] & __upper_mask)
+	and	a5,a5,a6	# this_40(D)->_M_x[623], tmp131, tmp130
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:421: 		       | (_M_x[0] & __lower_mask));
+	and	a4,a3,a1	# tmp135, tmp133, this_40(D)->_M_x[0]
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:420:       _UIntType __y = ((_M_x[__n - 1] & __upper_mask)
+	or	a5,a5,a4	# tmp133, __y, tmp131
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:422:       _M_x[__n - 1] = (_M_x[__m - 1] ^ (__y >> 1)
+	srli	a4,a5,1	#, tmp139, __y
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:423: 		       ^ ((__y & 0x01) ? __a : 0));
+	andi	a5,a5,1	#, tmp141, __y
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:422:       _M_x[__n - 1] = (_M_x[__m - 1] ^ (__y >> 1)
+	xor	a4,a4,a2	# this_40(D)->_M_x[396], _29, tmp139
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:423: 		       ^ ((__y & 0x01) ? __a : 0));
+	beq	a5,zero,.L6	#, tmp141,,
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:423: 		       ^ ((__y & 0x01) ? __a : 0));
+	lui	a5,%hi(.LC0)	# tmp143,
+	ld	a5,%lo(.LC0)(a5)		# tmp142,
+	xor	a4,a4,a5	# tmp142, _29, _29
+.L6:
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:422:       _M_x[__n - 1] = (_M_x[__m - 1] ^ (__y >> 1)
+	li	a5,4096		# tmp144,
+	add	a0,a0,a5	# tmp144, tmp145, this
+	sd	a4,888(a0)	# _29, this_40(D)->_M_x[623]
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:424:       _M_p = 0;
+	sd	zero,896(a0)	#, this_40(D)->_M_p
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:425:     }
+	ret	
+	.cfi_endproc
+.LFE3552:
+	.size	_ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EE11_M_gen_randEv, .-_ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EE11_M_gen_randEv
+	.section	.text.startup,"ax",@progbits
+	.align	1
+	.globl	main
+	.type	main, @function
+main:
+.LFB2844:
+	.cfi_startproc
+	.cfi_personality 0x9b,DW.ref.__gxx_personality_v0
+	.cfi_lsda 0x1b,.LLSDA2844
+	addi	sp,sp,-1856	#,,
+	.cfi_def_cfa_offset 1856
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/basic_string.h:200: 	: allocator_type(__a), _M_p(__dat) { }
+	li	a3,8192		# tmp191,
+	li	a5,-4096		# tmp89,
+# bubble.cpp:11: {
+	li	t0,-8192		#,
+	sd	s0,1840(sp)	#,
+	sd	ra,1848(sp)	#,
+	sd	s1,1832(sp)	#,
+	sd	s2,1824(sp)	#,
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/basic_string.h:200: 	: allocator_type(__a), _M_p(__dat) { }
+	addi	a1,a5,-904	#, tmp92, tmp89
+# bubble.cpp:11: {
+	add	sp,sp,t0	#,,
+	.cfi_def_cfa_offset 10048
+	.cfi_offset 8, -16
+	.cfi_offset 1, -8
+	.cfi_offset 9, -24
+	.cfi_offset 18, -32
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/basic_string.h:200: 	: allocator_type(__a), _M_p(__dat) { }
+	addi	a4,a3,1808	#, tmp190, tmp191
+	addi	a2,sp,16	#, tmp260,
+	add	a4,a4,a1	# tmp92, tmp190, tmp190
+	add	a1,a4,a2	# tmp260, tmp91, tmp190
+	addi	a4,a3,1808	#, tmp193, tmp194
+	add	a4,a4,a5	# tmp89, tmp193, tmp193
+	add	a5,a4,a2	# tmp261, tmp90, tmp193
+	sd	a5,8(sp)	# tmp90, %sfp
+	ld	a4,8(sp)		# tmp90, %sfp
+	addi	a5,a1,16	#, tmp94, tmp91
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.h:1621:     random_device() { _M_init("default"); }
+	li	a0,-8192		# tmp114,
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/basic_string.h:200: 	: allocator_type(__a), _M_p(__dat) { }
+	sd	a5,-904(a4)	# tmp94, MEM[(struct _Alloc_hider *)_39]._M_p
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/char_traits.h:431: 	return static_cast<char_type*>(__builtin_memcpy(__s1, __s2, __n));
+	li	a4,1634099200		# tmp100,
+	addi	a4,a4,1380	#, tmp99, tmp100
+	sw	a4,16(a1)	# tmp99, MEM <char[1:7]> [(void *)_39]
+	li	a4,28672		# tmp102,
+	addi	a4,a4,-907	#, tmp101, tmp102
+	sh	a4,20(a1)	# tmp101, MEM <char[1:7]> [(void *)_39]
+	li	a4,116		# tmp103,
+	sb	a4,22(a1)	# tmp103, MEM <char[1:7]> [(void *)_39]
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.h:1621:     random_device() { _M_init("default"); }
+	addi	a0,a0,-1808	#, tmp113, tmp114
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/basic_string.h:229:       { _M_string_length = __length; }
+	ld	a4,8(sp)		# tmp90, %sfp
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.h:1621:     random_device() { _M_init("default"); }
+	addi	a5,a3,1808	#, tmp196, tmp197
+	add	a5,a5,a0	# tmp113, tmp196, tmp196
+	add	a0,a5,a2	# tmp259,, tmp196
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/basic_string.h:229:       { _M_string_length = __length; }
+	li	a5,7		# tmp106,
+	sd	a5,-896(a4)	# tmp106, MEM[(struct basic_string *)_39]._M_string_length
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/char_traits.h:354: 	__c1 = __c2;
+	sb	zero,-881(a4)	#, MEM[(char_type &)_39]
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.h:1621:     random_device() { _M_init("default"); }
+	mv	s0,a3	# tmp197, tmp197
+.LEHB0:
+	call	_ZNSt13random_device7_M_initERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE		#
+.LEHE0:
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/basic_string.h:234:       { return _M_dataplus._M_p; }
+	li	a3,4096		# tmp202,
+	addi	a2,sp,16	#, tmp250,
+	addi	a4,a3,904	#, tmp201, tmp202
+	add	a4,a4,a2	# tmp250, tmp201, tmp201
+	li	a5,-4096		# tmp115,
+	ld	a0,0(a4)		# _33, MEM[(struct basic_string *)_39]._M_dataplus._M_p
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/basic_string.h:285: 	if (!_M_is_local())
+	addi	a4,s0,1808	#, tmp203, tmp204
+	add	a4,a4,a5	# tmp115, tmp203, tmp203
+	add	a5,a4,a2	# tmp258, tmp117, tmp203
+	addi	a5,a5,-888	#, tmp120, tmp117
+	beq	a0,a5,.L20	#, _33, tmp120,
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/basic_string.h:292:       { _Alloc_traits::deallocate(_M_get_allocator(), _M_data(), __size + 1); }
+	addi	a5,a3,920	#, tmp206, tmp207
+	add	a5,a5,a2	# tmp249, tmp206, tmp206
+	ld	a1,0(a5)		# MEM[(struct basic_string *)_39].D.32614._M_allocated_capacity, MEM[(struct basic_string *)_39].D.32614._M_allocated_capacity
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/new_allocator.h:158: 	_GLIBCXX_OPERATOR_DELETE(_GLIBCXX_SIZED_DEALLOC(__p, __n));
+	addi	a1,a1,1	#,, MEM[(struct basic_string *)_39].D.32614._M_allocated_capacity
+	call	_ZdlPvm		#
+.L20:
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.h:1651:     { return this->_M_getval(); }
+	li	a0,-8192		# tmp127,
+	li	s0,8192		# tmp209,
+	addi	a0,a0,-1808	#, tmp126, tmp127
+	addi	a5,s0,1808	#, tmp208, tmp209
+	add	a5,a5,a0	# tmp126, tmp208, tmp208
+	addi	a4,sp,16	#, tmp257,
+	add	a0,a5,a4	# tmp257,, tmp208
+.LEHB1:
+	call	_ZNSt13random_device9_M_getvalEv		#
+.LEHE1:
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:330:       _M_x[0] = __detail::__mod<_UIntType,
+	li	a5,-4096		# tmp133,
+	addi	a4,s0,1808	#, tmp210, tmp211
+# bubble.cpp:15:     std::mt19937 gen(rd());
+	slli	a3,a0,32	#, gen__M_x_I_lsm0.108, tmp186
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:330:       _M_x[0] = __detail::__mod<_UIntType,
+	add	a4,a4,a5	# tmp133, tmp210, tmp210
+	addi	a2,sp,16	#, tmp255,
+	add	a4,a4,a2	# tmp255, tmp134, tmp210
+# bubble.cpp:15:     std::mt19937 gen(rd());
+	srli	a3,a3,32	#, gen__M_x_I_lsm0.108, gen__M_x_I_lsm0.108
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:337: 	  __x *= __f;
+	li	a0,1812434944		# tmp140,
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.h:143: 	    __res %= __m;
+	li	a1,-1		# tmp143,
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:330:       _M_x[0] = __detail::__mod<_UIntType,
+	sd	a3,-904(a4)	# gen__M_x_I_lsm0.108, MEM[(struct mersenne_twister_engine *)_39]._M_x[0]
+	addi	a2,a4,-896	#, ivtmp.122, tmp135
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:333:       for (size_t __i = 1; __i < state_size; ++__i)
+	li	a5,1		# __i,
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:337: 	  __x *= __f;
+	addi	a0,a0,-1691	#, tmp139, tmp140
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.h:143: 	    __res %= __m;
+	srli	a1,a1,32	#, tmp142, tmp143
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:333:       for (size_t __i = 1; __i < state_size; ++__i)
+	li	a6,624		# tmp144,
+.L23:
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:336: 	  __x ^= __x >> (__w - 2);
+	srli	a4,a3,30	#, tmp138, gen__M_x_I_lsm0.108
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:336: 	  __x ^= __x >> (__w - 2);
+	xor	a4,a4,a3	# gen__M_x_I_lsm0.108, __x, tmp138
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:337: 	  __x *= __f;
+	mul	a4,a4,a0	# __x, __x, tmp139
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:333:       for (size_t __i = 1; __i < state_size; ++__i)
+	addi	a2,a2,8	#, ivtmp.122, ivtmp.122
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:338: 	  __x += __detail::__mod<_UIntType, __n>(__i);
+	add	a4,a4,a5	# __i, __x, __x
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.h:143: 	    __res %= __m;
+	and	a3,a4,a1	# tmp142, gen__M_x_I_lsm0.108, __x
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:339: 	  _M_x[__i] = __detail::__mod<_UIntType,
+	sd	a3,-8(a2)	# gen__M_x_I_lsm0.108, MEM[(long unsigned int *)_65]
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:333:       for (size_t __i = 1; __i < state_size; ++__i)
+	addi	a5,a5,1	#, __i, __i
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:333:       for (size_t __i = 1; __i < state_size; ++__i)
+	bne	a5,a6,.L23	#, __i, tmp144,
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:342:       _M_p = state_size;
+	li	a3,8192		# tmp218,
+	addi	a2,sp,16	#, tmp248,
+	addi	a4,a3,1800	#, tmp217, tmp218
+	add	a4,a4,a2	# tmp248, tmp217, tmp217
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:459: 	_M_gen_rand();
+	li	s2,-4096		# tmp183,
+	addi	s2,s2,-904	#, tmp184, tmp183
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:342:       _M_p = state_size;
+	sd	a5,0(a4)	# __i, MEM[(struct mersenne_twister_engine *)_39]._M_p
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:459: 	_M_gen_rand();
+	addi	a4,a3,1808	#, tmp219, tmp220
+	add	a4,a4,s2	# tmp184, tmp219, tmp219
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:342:       _M_p = state_size;
+	li	s0,1048576		# ivtmp_72,
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:458:       if (_M_p >= state_size)
+	li	s1,623		# tmp162,
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:459: 	_M_gen_rand();
+	add	s2,a4,a2	# tmp253, tmp185, tmp219
+.L24:
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:458:       if (_M_p >= state_size)
+	bgtu	a5,s1,.L35	#, __i, tmp162,
+.L26:
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:462:       result_type __z = _M_x[_M_p++];
+	li	a4,8192		# tmp232,
+	addi	a4,a4,1800	#, tmp231, tmp232
+	addi	a3,sp,16	#, tmp244,
+	addi	a5,a5,1	#, _52, __i
+	add	a4,a4,a3	# tmp244, tmp231, tmp231
+	sd	a5,0(a4)	# _52, MEM[(struct mersenne_twister_engine *)_39]._M_p
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:458:       if (_M_p >= state_size)
+	bgtu	a5,s1,.L36	#, _52, tmp162,
+.L28:
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:462:       result_type __z = _M_x[_M_p++];
+	li	a4,8192		# tmp226,
+	addi	a4,a4,1800	#, tmp225, tmp226
+	addi	a3,sp,16	#, tmp246,
+	addi	a5,a5,1	#, __i, _52
+	add	a4,a4,a3	# tmp246, tmp225, tmp225
+	sd	a5,0(a4)	# __i, MEM[(struct mersenne_twister_engine *)_39]._M_p
+# bubble.cpp:18:     for (int i = 0; i < ARRAY_SIZE; i++) {
+	addiw	s0,s0,-1	#, ivtmp_72, ivtmp_72
+	bne	s0,zero,.L24	#, ivtmp_72,,
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.h:1628:     { _M_fini(); }
+	li	a0,-8192		# tmp177,
+	li	a5,8192		# tmp234,
+	addi	a0,a0,-1808	#, tmp176, tmp177
+	addi	a5,a5,1808	#, tmp233, tmp234
+	addi	a4,sp,16	#, tmp252,
+	add	a5,a5,a0	# tmp176, tmp233, tmp233
+	add	a0,a5,a4	# tmp252,, tmp233
+	call	_ZNSt13random_device7_M_finiEv		#
+# bubble.cpp:41: }
+	li	t0,8192		#,
+	add	sp,sp,t0	#,,
+	.cfi_remember_state
+	.cfi_def_cfa_offset 1856
+	ld	ra,1848(sp)		#,
+	.cfi_restore 1
+	ld	s0,1840(sp)		#,
+	.cfi_restore 8
+	ld	s1,1832(sp)		#,
+	.cfi_restore 9
+	ld	s2,1824(sp)		#,
+	.cfi_restore 18
+	li	a0,0		#,
+	addi	sp,sp,1856	#,,
+	.cfi_def_cfa_offset 0
+	jr	ra		#
+.L36:
+	.cfi_restore_state
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:459: 	_M_gen_rand();
+	mv	a0,s2	#, tmp185
+	call	_ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EE11_M_gen_randEv		#
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:462:       result_type __z = _M_x[_M_p++];
+	li	a5,8192		# tmp223,
+	addi	a5,a5,1800	#, tmp222, tmp223
+	addi	a4,sp,16	#, tmp247,
+	add	a5,a5,a4	# tmp247, tmp222, tmp222
+	ld	a5,0(a5)		# _52, MEM[(struct mersenne_twister_engine *)_39]._M_p
+	j	.L28		#
+.L35:
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:459: 	_M_gen_rand();
+	mv	a0,s2	#, tmp185
+	call	_ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EE11_M_gen_randEv		#
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.tcc:462:       result_type __z = _M_x[_M_p++];
+	li	a5,8192		# tmp229,
+	addi	a5,a5,1800	#, tmp228, tmp229
+	addi	a4,sp,16	#, tmp245,
+	add	a5,a5,a4	# tmp245, tmp228, tmp228
+	ld	a5,0(a5)		# __i, MEM[(struct mersenne_twister_engine *)_39]._M_p
+	j	.L26		#
+.L31:
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/basic_string.h:795:       { _M_dispose(); }
+	mv	s0,a0	# tmp132, tmp187
+	li	a5,8192		# tmp215,
+	li	a0,-4096		# tmp131,
+	addi	a0,a0,-904	#, tmp130, tmp131
+	addi	a5,a5,1808	#, tmp214, tmp215
+	add	a5,a5,a0	# tmp130, tmp214, tmp214
+	addi	a4,sp,16	#, tmp256,
+	add	a0,a5,a4	# tmp256,, tmp214
+	call	_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_disposeEv		#
+	mv	a0,s0	#, tmp132
+.LEHB2:
+	call	_Unwind_Resume		#
+.LEHE2:
+.L30:
+# /scr/riscv/riscv64-unknown-linux-gnu/include/c++/12.2.0/bits/random.h:1628:     { _M_fini(); }
+	mv	s0,a0	# tmp182, tmp188
+	li	a5,8192		# tmp236,
+	li	a0,-8192		# tmp181,
+	addi	a0,a0,-1808	#, tmp180, tmp181
+	addi	a5,a5,1808	#, tmp235, tmp236
+	add	a5,a5,a0	# tmp180, tmp235, tmp235
+	addi	a4,sp,16	#, tmp251,
+	add	a0,a5,a4	# tmp251,, tmp235
+	call	_ZNSt13random_device7_M_finiEv		#
+	mv	a0,s0	#, tmp182
+.LEHB3:
+	call	_Unwind_Resume		#
+.LEHE3:
+	.cfi_endproc
+.LFE2844:
+	.globl	__gxx_personality_v0
+	.section	.gcc_except_table,"a",@progbits
+.LLSDA2844:
+	.byte	0xff
+	.byte	0xff
+	.byte	0x3
+	.byte	0x34
+	.4byte	.LEHB0-.LFB2844
+	.4byte	.LEHE0-.LEHB0
+	.4byte	.L31-.LFB2844
+	.byte	0
+	.4byte	.LEHB1-.LFB2844
+	.4byte	.LEHE1-.LEHB1
+	.4byte	.L30-.LFB2844
+	.byte	0
+	.4byte	.LEHB2-.LFB2844
+	.4byte	.LEHE2-.LEHB2
+	.4byte	0
+	.byte	0
+	.4byte	.LEHB3-.LFB2844
+	.4byte	.LEHE3-.LEHB3
+	.4byte	0
+	.byte	0
+	.section	.text.startup
+	.size	main, .-main
+	.section	.srodata.cst8,"aM",@progbits,8
+	.align	3
+.LC0:
+	.dword	2567483615
+	.hidden	DW.ref.__gxx_personality_v0
+	.weak	DW.ref.__gxx_personality_v0
+	.section	.sdata.DW.ref.__gxx_personality_v0,"awG",@progbits,DW.ref.__gxx_personality_v0,comdat
+	.align	3
+	.type	DW.ref.__gxx_personality_v0, @object
+	.size	DW.ref.__gxx_personality_v0, 8
+DW.ref.__gxx_personality_v0:
+	.dword	__gxx_personality_v0
+	.ident	"GCC: () 12.2.0"
+	.section	.note.GNU-stack,"",@progbits
