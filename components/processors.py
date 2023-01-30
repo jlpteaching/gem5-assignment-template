@@ -29,18 +29,11 @@ from gem5.components.processors.base_cpu_core import BaseCPUCore
 from gem5.components.processors.base_cpu_processor import BaseCPUProcessor
 
 from m5.objects import RiscvO3CPU
-from m5.objects.BranchPredictor import *
-
-SimpleBranchPredictor = TournamentBP
-LTAGEBranchPredictor = TAGE_SC_L_TAGE_64KB
-PerceptronBranchPredictor = MultiperspectivePerceptron64KB
-ComplexBranchPredictor = MultiperspectivePerceptronTAGE64KB
+from m5.objects.BranchPredictor import MultiperspectivePerceptronTAGE64KB
 
 
 class HW3O3CPUCore(RiscvO3CPU):
-    def __init__(
-        self, width, rob_size, num_int_regs, num_fp_regs, branch_predictor_cls
-    ):
+    def __init__(self, width, rob_size, num_int_regs, num_fp_regs):
         super().__init__()
         self.fetchWidth = width
         self.decodeWidth = width
@@ -54,38 +47,16 @@ class HW3O3CPUCore(RiscvO3CPU):
         self.numPhysIntRegs = num_int_regs
         self.numPhysFloatRegs = num_fp_regs
 
-        self.branchPred = branch_predictor_cls()
+        self.branchPred = MultiperspectivePerceptronTAGE64KB()
 
 
 class HW3O3CPUStdCore(BaseCPUCore):
-    def __init__(
-        self, width, rob_size, num_int_regs, num_fp_regs, branch_predictor_cls
-    ):
-        core = HW3O3CPUCore(
-            width, rob_size, num_int_regs, num_fp_regs, branch_predictor_cls
-        )
+    def __init__(self, width, rob_size, num_int_regs, num_fp_regs):
+        core = HW3O3CPUCore(width, rob_size, num_int_regs, num_fp_regs)
         super().__init__(core, ISA.RISCV)
 
 
 class HW3O3CPU(BaseCPUProcessor):
-    def __init__(
-        self, width, rob_size, num_int_regs, num_fp_regs, branch_predictor_cls
-    ):
-        cores = [
-            HW3O3CPUStdCore(
-                width,
-                rob_size,
-                num_int_regs,
-                num_fp_regs,
-                branch_predictor_cls,
-            )
-        ]
+    def __init__(self, width, rob_size, num_int_regs, num_fp_regs):
+        cores = [HW3O3CPUStdCore(width, rob_size, num_int_regs, num_fp_regs)]
         super().__init__(cores)
-
-class HW3LittleCore(HW3O3CPU):
-    def __init__(self):
-        super().__init__(4, 256, 216, 208, ComplexBranchPredictor)
-
-class HW3BigCore(HW3O3CPU):
-    def __init__(self):
-        super().__init__(8, 672, 352, 384, ComplexBranchPredictor)

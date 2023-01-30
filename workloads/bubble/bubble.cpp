@@ -1,23 +1,15 @@
 
-#include <random>
+#include <iostream>
+
+#include "array.h"
 
 #ifdef GEM5
 #include "gem5/m5ops.h"
 #endif
 
-#define ARRAY_SIZE 1 << 20
-
 int main()
 {
-    int data [ARRAY_SIZE];
-
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_real_distribution<> dis(0, 1);
-
-    for (int i = 0; i < ARRAY_SIZE; i++) {
-        data[i] = dis(gen);
-    }
+    std::cout << "Beginning bubble sort ... " << std::endl;
 
 #ifdef GEM5
     m5_work_begin(0,0);
@@ -36,6 +28,8 @@ int main()
 #ifdef GEM5
     m5_work_end(0,0);
 #endif
+
+    std::cout << "Finished bubble sort." << std::endl;
 
     return 0;
 }
