@@ -24,31 +24,27 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+from gem5.utils.override import overrides
+from gem5.components.boards.abstract_board import AbstractBoard
 from gem5.components.cachehierarchies.ruby.mesi_two_level_cache_hierarchy import (
     MESITwoLevelCacheHierarchy,
 )
 
 
-class HW3LittleCache(MESITwoLevelCacheHierarchy):
+class HW3Cache(MESITwoLevelCacheHierarchy):
     def __init__(self):
         super().__init__(
-            l1i_size="32 KiB",
-            l1i_assoc=8,
-            l1d_size="32 KiB",
-            l1d_assoc=8,
-            l2_size="256 KiB",
-            l2_assoc=16,
-            num_l2_banks=4,
-        )
-
-class HW3BigCache(MESITwoLevelCacheHierarchy):
-    def __init__(self):
-        super().__init__(
-                l1i_size="48 KiB",
+                l1i_size="32 KiB",
                 l1i_assoc=8,
                 l1d_size="32 KiB",
                 l1d_assoc=8,
-                l2_size="512 KiB",
+                l2_size="64 KiB",
                 l2_assoc=16,
                 num_l2_banks=4,
             )
+
+    # @overrides(MESITwoLevelCacheHierarchy)
+    # def incorporate_cache(self, board: AbstractBoard):
+    #     super().incorporate_cache(board)
+    #     for controller in self._l1_controllers:
+    #         controller.transitions_per_cycle = 32

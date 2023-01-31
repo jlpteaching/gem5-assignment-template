@@ -28,4 +28,21 @@
 
 from gem5.components.boards.simple_board import SimpleBoard
 
+
+# A board class designed to be flexible and general. For this assignment, it
+# has been renamed to HW3RISCVBoard. Please refer to
+#     gem5/src/python/components/boards/simple_board.py
+# for more detailed documentation. Below is the function signature for
+# the constructor to the SimpleBoard class.
+#
+# class SimpleBoard(AbstractSystemBoard, SEBinaryWorkload):
+#     def __init__(
+#         self,
+#         clk_freq: str,
+#         processor: AbstractProcessor,
+#         memory: AbstractMemorySystem,
+#         cache_hierarchy: AbstractCacheHierarchy,
+#     )
+
+
 HW3RISCVBoard = SimpleBoard
