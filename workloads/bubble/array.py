@@ -1,12 +1,13 @@
-
 import argparse
 from numpy.random import randint
+
 
 def get_inputs():
     argparser = argparse.ArgumentParser()
     argparser.add_argument("array_size", type=int)
     args = argparser.parse_args()
     return args.array_size
+
 
 if __name__ == "__main__":
     array_size = get_inputs()
@@ -32,12 +33,13 @@ if __name__ == "__main__":
 
     lines.append("#endif // __BUBBLE_ARRAY_H__\n")
 
-    lines = ["#ifndef __BUBBLE_ARRAY_H__\n",
-            "#define __BUBBLE_ARRAY_H__\n",
-            "\n",
-            f"#define ARRAY_SIZE {array_size}\n",
-            "\n"
-            ] + lines
+    lines = [
+        "#ifndef __BUBBLE_ARRAY_H__\n",
+        "#define __BUBBLE_ARRAY_H__\n",
+        "\n",
+        f"#define ARRAY_SIZE {array_size}\n",
+        "\n",
+    ] + lines
 
     with open("array.h", "w") as header_file:
         header_file.writelines(lines)

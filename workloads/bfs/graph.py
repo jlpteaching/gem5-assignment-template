@@ -1,10 +1,12 @@
 import argparse
 
+
 def get_inputs():
     argparser = argparse.ArgumentParser()
     argparser.add_argument("graph_name", type=str)
     args = argparser.parse_args()
     return args.graph_name
+
 
 if __name__ == "__main__":
     graph_name = get_inputs()
@@ -65,12 +67,13 @@ if __name__ == "__main__":
     lines.append("\n")
     lines.append("#endif // __BFS_GRAPH_H__\n")
 
-    lines = ["#ifndef __BFS_GRAPH_H__\n",
-            "#define __BFS__GRAPH_H__\n",
-            "\n",
-            f"int visited [{len(columns) - 1}] = {{0}};\n",
-            "\n"
-            ] + lines
+    lines = [
+        "#ifndef __BFS_GRAPH_H__\n",
+        "#define __BFS__GRAPH_H__\n",
+        "\n",
+        f"int visited [{len(columns) - 1}] = {{0}};\n",
+        "\n",
+    ] + lines
 
     with open("graph.h", "w") as header_file:
         header_file.writelines(lines)

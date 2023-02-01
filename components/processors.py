@@ -30,7 +30,10 @@ from gem5.components.processors.base_cpu_processor import BaseCPUProcessor
 
 from m5.objects import RiscvO3CPU
 from m5.objects.FuncUnitConfig import *
-from m5.objects.BranchPredictor import TournamentBP, MultiperspectivePerceptronTAGE64KB
+from m5.objects.BranchPredictor import (
+    TournamentBP,
+    MultiperspectivePerceptronTAGE64KB,
+)
 
 
 # HW3O3CPUCore extends RiscvO3CPU. RiscvO3CPU is one of gem5's internal models
@@ -116,7 +119,12 @@ class HW3O3CPU(BaseCPUProcessor):
         :returns the area score of a pipeline using its parameters width,
         rob_size, num_int_regs, and num_fp_regs.
         """
-        score = self._width * \
-            (2 * self._rob_size + self._num_int_regs + self._num_fp_regs) + \
-            4 * self._width + 2 * self._rob_size + self._num_int_regs + self._num_fp_regs
+        score = (
+            self._width
+            * (2 * self._rob_size + self._num_int_regs + self._num_fp_regs)
+            + 4 * self._width
+            + 2 * self._rob_size
+            + self._num_int_regs
+            + self._num_fp_regs
+        )
         return score

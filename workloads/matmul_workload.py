@@ -31,9 +31,8 @@ from .custom_se_workload import CustomSEWorkload
 
 this_dir = pathlib.Path(__file__).parent.absolute()
 
+
 class MatMulWorkload(CustomSEWorkload):
     def __init__(self):
         mm_bin = CustomResource(str(this_dir / "matmul/mm-gem5"))
-        super().__init__(
-            parameters={"binary": mm_bin, "arguments": []}
-        )
+        super().__init__(parameters={"binary": mm_bin, "arguments": []})
