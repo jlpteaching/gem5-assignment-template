@@ -30,8 +30,12 @@ from gem5.components.cachehierarchies.ruby.mesi_two_level_cache_hierarchy import
     MESITwoLevelCacheHierarchy,
 )
 
+# HW3MESICache models a two-level cache hierarchy with MESI coherency
+# protocol. The L1 cache is split into 64KiB of 8-way set associative
+# instruction cache and 64KiB of 8-way set associative data cache. The L2 cache
+# is a unified 256KiB (4 banks of 64 KiB) 16-way set associative cache.
 
-class HW3Cache(MESITwoLevelCacheHierarchy):
+class HW3MESICache(MESITwoLevelCacheHierarchy):
     def __init__(self):
         super().__init__(
                 l1i_size="32 KiB",
@@ -42,9 +46,3 @@ class HW3Cache(MESITwoLevelCacheHierarchy):
                 l2_assoc=16,
                 num_l2_banks=4,
             )
-
-    # @overrides(MESITwoLevelCacheHierarchy)
-    # def incorporate_cache(self, board: AbstractBoard):
-    #     super().incorporate_cache(board)
-    #     for controller in self._l1_controllers:
-    #         controller.transitions_per_cycle = 32
