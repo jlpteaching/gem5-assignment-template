@@ -35,28 +35,47 @@ this_dir = pathlib.Path(__file__).parent.absolute()
 class IJKMatMulWorkload(CustomSEWorkload):
     def __init__(self, matrix_size: int):
         mm_bin = CustomResource(str(this_dir / "matmul/mm-ijk-gem5"))
-        super().__init__(parameters={"binary": mm_bin, "arguments": [matrix_size]})
+        super().__init__(
+            parameters={"binary": mm_bin, "arguments": [matrix_size]}
+        )
 
 
 class IKJMatMulWorkload(CustomSEWorkload):
     def __init__(self, matrix_size: int):
         mm_bin = CustomResource(str(this_dir / "matmul/mm-ikj-gem5"))
-        super().__init__(parameters={"binary": mm_bin, "arguments": [matrix_size]})
+        super().__init__(
+            parameters={"binary": mm_bin, "arguments": [matrix_size]}
+        )
 
 
 class BlockIJMatMulWorkload(CustomSEWorkload):
     def __init__(self, matrix_size: int, block_size: int):
         mm_bin = CustomResource(str(this_dir / "matmul/mm-block-ij-gem5"))
-        super().__init__(parameters={"binary": mm_bin, "arguments": [matrix_size, block_size]})
+        super().__init__(
+            parameters={
+                "binary": mm_bin,
+                "arguments": [matrix_size, block_size],
+            }
+        )
 
 
 class BlockIKMatMulWorkload(CustomSEWorkload):
     def __init__(self, matrix_size: int, block_size: int):
         mm_bin = CustomResource(str(this_dir / "matmul/mm-block-ik-gem5"))
-        super().__init__(parameters={"binary": mm_bin, "arguments": [matrix_size, block_size]})
+        super().__init__(
+            parameters={
+                "binary": mm_bin,
+                "arguments": [matrix_size, block_size],
+            }
+        )
 
 
 class BlockKJMatMulWorkload(CustomSEWorkload):
     def __init__(self, matrix_size: int, block_size: int):
         mm_bin = CustomResource(str(this_dir / "matmul/mm-block-kj-gem5"))
-        super().__init__(parameters={"binary": mm_bin, "arguments": [matrix_size, block_size]})
+        super().__init__(
+            parameters={
+                "binary": mm_bin,
+                "arguments": [matrix_size, block_size],
+            }
+        )

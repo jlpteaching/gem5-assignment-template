@@ -68,7 +68,9 @@ class VizParams:
                 print(f"Deleting everything in {output_path}")
                 for delete in os.scandir(output_path):
                     os.remove(delete.path)
-            print(f"{output_path} is ready to be filled with animation frames.")
+            print(
+                f"{output_path} is ready to be filled with animation frames."
+            )
         else:
             output_path = os.path.join(os.getcwd(), self.outdir)
             if not os.path.exists(output_path):
@@ -80,7 +82,9 @@ class VizParams:
                 print(f"Deleting everything in {output_path}")
                 for delete in os.scandir(output_path):
                     os.remove(delete.path)
-            print(f"{output_path} is ready to be filled with animation frames.")
+            print(
+                f"{output_path} is ready to be filled with animation frames."
+            )
             self.outdir = output_path
 
 
@@ -189,6 +193,7 @@ def print_madd_operation(A, B, C, i, j, k, vis_params, vis_axes):
         fontweight="bold",
         xycoords="data",
     )
+
 
 def print_wb_result(A, B, C, i, j, k, vis_params, vis_axes):
     vis_axes.t_ax.annotate(
