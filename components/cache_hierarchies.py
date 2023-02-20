@@ -30,16 +30,13 @@ from gem5.components.cachehierarchies.ruby.mesi_two_level_cache_hierarchy import
     MESITwoLevelCacheHierarchy,
 )
 
-# HW4MESICache models a two-level cache hierarchy with MESI coherency
-# protocol. The L1 cache is split into 64KiB of 8-way set associative
-# instruction cache and 64KiB of 8-way set associative data cache. The L2 cache
-# is a unified 256KiB (4 banks of 64 KiB) 16-way set associative cache.
+# HW4MESICache models a two-level cache hierarchy with MESI coherency protocol.
+# It allows for changing size of the L1D cache
 
 
 class HW4MESICache(MESITwoLevelCacheHierarchy):
     def __init__(
-        self, l1d_size: str, l1_tag_lat: int, l1_fwd_lat: int, l1_resp_lat: int
-    ):
+        self, l1d_size: str, l1_tag_lat: int, l1_data_lat: int):
         super().__init__(
             l1i_size="32 KiB",
             l1i_assoc=8,
@@ -50,37 +47,31 @@ class HW4MESICache(MESITwoLevelCacheHierarchy):
             num_l2_banks=4,
         )
         self._l1_tag_lat = l1_tag_lat
-        self._l1_fwd_lat = l1_fwd_lat
-        self._l1_resp_lat = l1_resp_lat
+        self._l1_data_lat = l1_data_lat
+
 
     def incorporate_cache(self, board: AbstractBoard):
         super().incorporate_cache(board)
         for controller in self._l1_controllers:
-            controller.l1_request_latency = self._l1_tag_lat
-            controller.l1_response_latency = self._l1_resp_lat
-            controller.to_l2_latency = self._l1_fwd_lat
+            controller.L1Dcache.tagAccessLatency = self._l1_tag_lat
+            controller.L1Dcache.dataAccessLatency = self._l1_data_lat
         for controller in self._l2_controllers:
-            controller.l2_request_latency = 5
-            controller.l2_response_latency = 2
-            controller.to_l1_latency = 2
-
+            controller.L2cache.tagAccessLatency = 8
+            controller.L2cache.dataAccessLatency = 4
 
 class HW4SmallCache(HW4MESICache):
     def __init__(self):
         super().__init__(
-            l1d_size="16KiB", l1_tag_lat=1, l1_fwd_lat=1, l1_resp_lat=1
-        )
+            l1d_size="16KiB", l1_tag_lat=1, l1_data_lat=1)
 
 
 class HW4MediumCache(HW4MESICache):
     def __init__(self):
         super().__init__(
-            l1d_size="32KiB", l1_tag_lat=2, l1_fwd_lat=2, l1_resp_lat=1
-        )
+            l1d_size="32KiB", l1_tag_lat=1, l1_data_lat=3)
 
 
 class HW4LargeCache(HW4MESICache):
     def __init__(self):
         super().__init__(
-            l1d_size="48KiB", l1_tag_lat=4, l1_fwd_lat=3, l1_resp_lat=1
-        )
+            l1d_size="48KiB", l1_tag_lat=3, l1_data_lat=3)
