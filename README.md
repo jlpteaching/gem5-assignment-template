@@ -73,7 +73,7 @@ void multiply(double **A, double **B, double **C, int size)
 
 The animation below shows how the order of operations during the multiplication operation.
 
-![matrix multiplication]({{ '/img/mm_ijk.gif' | relative_url }})
+![matrix multiplication](util/mm_ijk.gif)
 
 You can import this workload into your configuration script from `workloads/matmul_workload.py` as `IJKMatMulWorkload`.
 
@@ -115,7 +115,7 @@ void multiply(double **A, double **B, double **C, int size)
 As you can see, two for loops have been interchanged (*j* and *k*) from our previous implementation.
 The animation below shows how the order of operations during the multiplication operation.
 
-![matrix multiplication]({{ '/img/mm_ikj.gif' | relative_url }})
+![matrix multiplication](util/mm_ikj.gif)
 
 You can import this workload into your configuration script from `workloads/matmul_workload.py` as `IKJMatMulWorkload`.
 
@@ -138,7 +138,7 @@ Look at [this short article](https://csapp.cs.cmu.edu/public/waside/waside-block
 Similar to loop interchange, there are multiple different ways you can choose to block accesses to your matrices in the matrix multiplication algorithm.
 One example is shown below where `k` and `j` are blocked and `i` is streamed.
 
-![blocked matrix multiplication]({{ '/img/mm_blocked.png' | relative_url }})
+![blocked matrix multiplication](util/mm_blocked.gif)
 
 For this assignment, you need to implement three different variants of the blocking scheme.
 
