@@ -100,5 +100,5 @@ class HW4O3CPUStdCore(BaseCPUCore):
 
 class HW4O3CPU(BaseCPUProcessor):
     def __init__(self):
-        cores = [HW3O3CPUStdCore(8, 672, 352, 384)]
+        cores = [HW4O3CPUStdCore(8, 672, 352, 384)]
         super().__init__(cores)

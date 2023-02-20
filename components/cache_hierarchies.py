@@ -51,7 +51,7 @@ class HW4MESICache(MESITwoLevelCacheHierarchy):
         )
         self._l1_tag_lat = l1_tag_lat
         self._l1_fwd_lat = l1_fwd_lat
-        self._l1_resp_lat = l1_rep_lat
+        self._l1_resp_lat = l1_resp_lat
 
     def incorporate_cache(self, board: AbstractBoard):
         super().incorporate_cache(board)
