@@ -25,3 +25,21 @@ block-race-opt-native: array_sum.cpp
 
 all-opt-native: array_sum.cpp
 	g++ array_sum.cpp -o all-opt-native -static -DALL_OPT -lpthread
+
+naive-gem5: array_sum.cpp
+	g++ array_sum.cpp -o naive-gem5 -static -DNAIVE -lpthread -DGEM5 -I../include -L../lib/x86 -lm5
+
+chunking-gem5: array_sum.cpp
+	g++ array_sum.cpp -o chunking-gem5 -static -DCHUNKING -lpthread -DGEM5 -I../include -L../lib/x86 -lm5
+
+res-race-opt-gem5: array_sum.cpp
+	g++ array_sum.cpp -o res-race-opt-gem5 -static -DRES_RACE_OPT -lpthread -DGEM5 -I../include -L../lib/x86 -lm5
+
+chunking-res-race-opt-gem5: array_sum.cpp
+	g++ array_sum.cpp -o chunking-res-race-opt-gem5 -static -DCHUNKING_RES_RACE_OPT -lpthread -DGEM5 -I../include -L../lib/x86 -lm5
+
+block-race-opt-gem5: array_sum.cpp
+	g++ array_sum.cpp -o block-race-opt-gem5 -static -DBLOCK_RACE_OPT -lpthread -DGEM5 -I../include -L../lib/x86 -lm5
+
+all-opt-gem5: array_sum.cpp
+	g++ array_sum.cpp -o all-opt-gem5 -static -DALL_OPT -lpthread -DGEM5 -I../include -L../lib/x86 -lm5
