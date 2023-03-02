@@ -41,5 +41,5 @@ class HW5O3CPU(SimpleProcessor):
         :param num_cores: Number of cores in the processor.
         """
         super().__init__(
-            cpu_type=CPUTypes.O3, num_cores=num_cores+1, isa=ISA.X86
+            cpu_type=CPUTypes.O3, num_cores=num_cores + 1, isa=ISA.X86
         )

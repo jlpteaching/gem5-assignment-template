@@ -25,19 +25,33 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-from gem5.components.cachehierarchies.ruby.abstract_ruby_cache_hierarchy import AbstractRubyCacheHierarchy
-from gem5.components.cachehierarchies.abstract_two_level_cache_hierarchy import AbstractTwoLevelCacheHierarchy
+from gem5.components.cachehierarchies.ruby.abstract_ruby_cache_hierarchy import (
+    AbstractRubyCacheHierarchy,
+)
+from gem5.components.cachehierarchies.abstract_two_level_cache_hierarchy import (
+    AbstractTwoLevelCacheHierarchy,
+)
 from gem5.coherence_protocol import CoherenceProtocol
 from gem5.isas import ISA
 from gem5.components.boards.abstract_board import AbstractBoard
 from gem5.runtime import get_runtime_isa
 from gem5.utils.requires import requires
 
-from gem5.components.cachehierarchies.ruby.topologies.simple_pt2pt import SimplePt2Pt
-from gem5.components.cachehierarchies.ruby.caches.mesi_two_level.l1_cache import L1Cache
-from gem5.components.cachehierarchies.ruby.caches.mesi_two_level.l2_cache import L2Cache
-from gem5.components.cachehierarchies.ruby.caches.mesi_two_level.directory import Directory
-from gem5.components.cachehierarchies.ruby.caches.mesi_two_level.dma_controller import DMAController
+from gem5.components.cachehierarchies.ruby.topologies.simple_pt2pt import (
+    SimplePt2Pt,
+)
+from gem5.components.cachehierarchies.ruby.caches.mesi_two_level.l1_cache import (
+    L1Cache,
+)
+from gem5.components.cachehierarchies.ruby.caches.mesi_two_level.l2_cache import (
+    L2Cache,
+)
+from gem5.components.cachehierarchies.ruby.caches.mesi_two_level.directory import (
+    Directory,
+)
+from gem5.components.cachehierarchies.ruby.caches.mesi_two_level.dma_controller import (
+    DMAController,
+)
 
 from itertools import zip_longest
 from m5.objects import SimpleNetwork, Switch, SimpleExtLink, SimpleIntLink
@@ -84,7 +98,9 @@ class HW5MESITwoLevelCacheHierarchy(
         # MESI_Two_Level needs 5 virtual networks
         self.ruby_system.number_of_virtual_networks = 5
 
-        self.ruby_system.network = L1L2ClusterTree(self.ruby_system, self._xbar_latency)
+        self.ruby_system.network = L1L2ClusterTree(
+            self.ruby_system, self._xbar_latency
+        )
         self.ruby_system.network.number_of_virtual_networks = 5
 
         self._num_l2_banks = len(board.get_processor().get_cores()) - 1
@@ -177,7 +193,9 @@ class HW5MESITwoLevelCacheHierarchy(
 
         # Create the network and connect the controllers.
         self.ruby_system.network.connectControllers(
-            self._l1_controllers, self._l2_controllers, self._directory_controllers[0]
+            self._l1_controllers,
+            self._l2_controllers,
+            self._directory_controllers[0],
         )
         # self.ruby_system.network.connectControllers(
         #     self._l1_controllers + self._l2_controllers +self._directory_controllers
@@ -252,13 +270,13 @@ class L1L2ClusterTree(SimpleNetwork):
         int_links = []
         ext_links = []
 
-        self.xbar = Switch(router_id = self._getRouterId())
+        self.xbar = Switch(router_id=self._getRouterId())
         routers.append(self.xbar)
 
         # for every l1/l2 pair create a connection. Then, connect this to a
         # xbar.
         for i, (l1, l2) in enumerate(zip(l1_ctrls[1:], l2_ctrls)):
-        # for i, (l1, l2) in enumerate(zip(l1_ctrls, l2_ctrls)):
+            # for i, (l1, l2) in enumerate(zip(l1_ctrls, l2_ctrls)):
             # Create the router/switch
             l1_switch = Switch(router_id=self._getRouterId())
             setattr(self, f"l1_switch_{i}", l1_switch)
@@ -268,7 +286,9 @@ class L1L2ClusterTree(SimpleNetwork):
                 self,
                 f"l1_link_{i}",
                 SimpleExtLink(
-                    link_id=self._getExtLinkId(), ext_node=l1, int_node=l1_switch
+                    link_id=self._getExtLinkId(),
+                    ext_node=l1,
+                    int_node=l1_switch,
                 ),
             )
             ext_links.append(getattr(self, f"l1_link_{i}"))
@@ -282,7 +302,9 @@ class L1L2ClusterTree(SimpleNetwork):
                 self,
                 f"l2_link_{i}",
                 SimpleExtLink(
-                    link_id=self._getExtLinkId(), ext_node=l2, int_node=l2_switch
+                    link_id=self._getExtLinkId(),
+                    ext_node=l2,
+                    int_node=l2_switch,
                 ),
             )
             ext_links.append(getattr(self, f"l2_link_{i}"))
@@ -341,7 +363,9 @@ class L1L2ClusterTree(SimpleNetwork):
 
         # HACK: Connect first L1 directory to the xbar
         self.hack_ext_link = SimpleExtLink(
-            link_id=self._getExtLinkId(), ext_node=l1_ctrls[0], int_node=self.xbar
+            link_id=self._getExtLinkId(),
+            ext_node=l1_ctrls[0],
+            int_node=self.xbar,
         )
         ext_links.append(self.hack_ext_link)
 
