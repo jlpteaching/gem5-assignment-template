@@ -33,7 +33,7 @@ this_dir = pathlib.Path(__file__).parent.absolute()
 
 
 class NaiveArraySumWorkload(CustomSEWorkload):
-    def __init__(self, matrix_size: int):
+    def __init__(self, array_size: int, num_threads: int):
         array_sum_bin = CustomResource(str(this_dir / "array_sum/naive-gem5"))
         super().__init__(
             parameters={
@@ -44,7 +44,7 @@ class NaiveArraySumWorkload(CustomSEWorkload):
 
 
 class ChunkingArraySumWorkload(CustomSEWorkload):
-    def __init__(self, matrix_size: int):
+    def __init__(self, array_size: int, num_threads: int):
         array_sum_bin = CustomResource(
             str(this_dir / "array_sum/chunking-gem5")
         )
@@ -57,7 +57,7 @@ class ChunkingArraySumWorkload(CustomSEWorkload):
 
 
 class NoResultRaceArraySumWorkload(CustomSEWorkload):
-    def __init__(self, matrix_size: int):
+    def __init__(self, array_size: int, num_threads: int):
         array_sum_bin = CustomResource(
             str(this_dir / "array_sum/res-race-opt-gem5")
         )
@@ -70,7 +70,7 @@ class NoResultRaceArraySumWorkload(CustomSEWorkload):
 
 
 class ChunkingNoResultRaceArraySumWorkload(CustomSEWorkload):
-    def __init__(self, matrix_size: int):
+    def __init__(self, array_size: int, num_threads: int):
         array_sum_bin = CustomResource(
             str(this_dir / "array_sum/chunking-res-race-opt-gem5")
         )
@@ -83,7 +83,7 @@ class ChunkingNoResultRaceArraySumWorkload(CustomSEWorkload):
 
 
 class NoCacheBlockRaceArraySumWorkload(CustomSEWorkload):
-    def __init__(self, matrix_size: int):
+    def __init__(self, array_size: int, num_threads: int):
         array_sum_bin = CustomResource(
             str(this_dir / "array_sum/block-race-opt-gem5")
         )
@@ -96,7 +96,7 @@ class NoCacheBlockRaceArraySumWorkload(CustomSEWorkload):
 
 
 class ChunkingNoBlockRaceArraySumWorkload(CustomSEWorkload):
-    def __init__(self, matrix_size: int):
+    def __init__(self, array_size: int, num_threads: int):
         array_sum_bin = CustomResource(
             str(this_dir / "array_sum/all-opt-gem5")
         )

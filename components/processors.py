@@ -43,3 +43,6 @@ class HW5O3CPU(SimpleProcessor):
         super().__init__(
             cpu_type=CPUTypes.O3, num_cores=num_cores + 1, isa=ISA.X86
         )
+
+    def get_actual_num_cores(self):
+        return len(self.cores) - 1
