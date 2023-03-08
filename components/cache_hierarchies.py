@@ -32,7 +32,6 @@ from gem5.components.cachehierarchies.\
 from gem5.coherence_protocol import CoherenceProtocol
 from gem5.isas import ISA
 from gem5.components.boards.abstract_board import AbstractBoard
-from gem5.runtime import get_runtime_isa
 from gem5.utils.requires import requires
 
 from .network import L1L2ClusterTree
@@ -51,7 +50,6 @@ from m5.objects import (
     DMASequencer,
     RubyPortProxy,
 )
-
 
 class HW5MESITwoLevelCacheHierarchy(
     AbstractRubyCacheHierarchy, AbstractTwoLevelCacheHierarchy
@@ -95,6 +93,8 @@ class HW5MESITwoLevelCacheHierarchy(
         self.ruby_system.network.number_of_virtual_networks = 5
 
         self._num_l2_banks = board.get_processor().get_actual_num_cores()
+        runtime_isa = board.get_processor().get_isa()
+
         self._l1_controllers = []
         for i, core in enumerate(board.get_processor().get_cores()):
             cache = L1Cache(
@@ -106,7 +106,7 @@ class HW5MESITwoLevelCacheHierarchy(
                 core,
                 self._num_l2_banks,
                 cache_line_size,
-                get_runtime_isa(),
+                runtime_isa,
                 board.get_clock_domain(),
             )
 
@@ -129,7 +129,7 @@ class HW5MESITwoLevelCacheHierarchy(
             )
 
             # Connect the interrupt ports
-            if get_runtime_isa() == ISA.X86:
+            if runtime_isa == ISA.X86:
                 int_req_port = cache.sequencer.interrupt_out_port
                 int_resp_port = cache.sequencer.in_ports
                 core.connect_interrupt(int_req_port, int_resp_port)
