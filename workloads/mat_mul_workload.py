@@ -24,10 +24,17 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-from gem5.resources.workload import WorkloadResource
+import pathlib
 
-class CustomSEWorkload(WorkloadResource):
-    def __init__(self, parameters: dict):
+from gem5.resources.resource import FileResource
+from .custom_se_workload import CustomSEWorkload
+
+this_dir = pathlib.Path(__file__).parent.absolute()
+
+
+class MatMulWorkload(CustomSEWorkload):
+    def __init__(self, mat_size: int):
+        mm_bin = FileResource(str(this_dir / "matmul/mm"))
         super().__init__(
-            function="set_se_binary_workload", parameters=parameters
+            parameters={"binary": mm_bin, "arguments": [mat_size]}
         )

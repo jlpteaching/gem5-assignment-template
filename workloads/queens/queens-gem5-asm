@@ -1,0 +1,595 @@
+	.file	"queens.cpp"
+	.option pic
+# GNU C++17 (Ubuntu 11.4.0-1ubuntu1~22.04) version 11.4.0 (riscv64-linux-gnu)
+#	compiled by GNU C version 11.4.0, GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version isl-0.24-GMP
+
+# GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+# options passed: -mabi=lp64d -misa-spec=2.2 -march=rv64imafdc -O2 -fstack-protector-strong
+	.text
+	.section	.rodata.str1.8,"aMS",@progbits,1
+	.align	3
+.LC0:
+	.string	" %d "
+	.text
+	.align	1
+	.globl	_Z13printSolutionPPii
+	.type	_Z13printSolutionPPii, @function
+_Z13printSolutionPPii:
+.LFB9888:
+	.cfi_startproc
+# queens.cpp:8:     for (int i = 0; i < N; i++) {
+	ble	a1,zero,.L7	#, N,,
+# queens.cpp:7: void printSolution(int **board, int N) {
+	addi	sp,sp,-48	#,,
+	.cfi_def_cfa_offset 48
+	sd	s4,0(sp)	#,
+	.cfi_offset 20, -48
+	addiw	s4,a1,-1	#, tmp89, N
+	slli	a5,s4,32	#, tmp100, tmp89
+	srli	s4,a5,29	#, tmp91, tmp100
+	addi	a5,a0,8	#, tmp92, ivtmp.27
+	add	s4,s4,a5	# tmp92, _37, tmp91
+	slli	a5,a1,32	#, tmp101, N
+	sd	s1,24(sp)	#,
+	sd	s2,16(sp)	#,
+	sd	s3,8(sp)	#,
+	sd	ra,40(sp)	#,
+	sd	s0,32(sp)	#,
+	.cfi_offset 9, -24
+	.cfi_offset 18, -32
+	.cfi_offset 19, -40
+	.cfi_offset 1, -8
+	.cfi_offset 8, -16
+	mv	s1,a0	# ivtmp.27, board
+	srli	s2,a5,30	#, _20, tmp101
+# /usr/riscv64-linux-gnu/include/bits/stdio2.h:112:   return __printf_chk (__USE_FORTIFY_LEVEL - 1, __fmt, __va_arg_pack ());
+	lla	s3,.LC0	# tmp97,
+.L3:
+# queens.cpp:7: void printSolution(int **board, int N) {
+	li	s0,0		# ivtmp.21,
+.L4:
+# queens.cpp:10:             printf(" %d ", board[i][j]);
+	ld	a5,0(s1)		# MEM[(int * *)_38], MEM[(int * *)_38]
+# /usr/riscv64-linux-gnu/include/bits/stdio2.h:112:   return __printf_chk (__USE_FORTIFY_LEVEL - 1, __fmt, __va_arg_pack ());
+	mv	a1,s3	#, tmp97
+	li	a0,1		#,
+# queens.cpp:10:             printf(" %d ", board[i][j]);
+	add	a5,a5,s0	# ivtmp.21, tmp95, MEM[(int * *)_38]
+# /usr/riscv64-linux-gnu/include/bits/stdio2.h:112:   return __printf_chk (__USE_FORTIFY_LEVEL - 1, __fmt, __va_arg_pack ());
+	lw	a2,0(a5)		#, *_7
+# queens.cpp:9:         for (int j = 0; j < N; j++)
+	addi	s0,s0,4	#, ivtmp.21, ivtmp.21
+# /usr/riscv64-linux-gnu/include/bits/stdio2.h:112:   return __printf_chk (__USE_FORTIFY_LEVEL - 1, __fmt, __va_arg_pack ());
+	call	__printf_chk@plt	#
+# queens.cpp:9:         for (int j = 0; j < N; j++)
+	bne	s2,s0,.L4	#, _20, ivtmp.21,
+# queens.cpp:8:     for (int i = 0; i < N; i++) {
+	addi	s1,s1,8	#, ivtmp.27, ivtmp.27
+# /usr/riscv64-linux-gnu/include/bits/stdio2.h:112:   return __printf_chk (__USE_FORTIFY_LEVEL - 1, __fmt, __va_arg_pack ());
+	li	a0,10		#,
+	call	putchar@plt	#
+# queens.cpp:8:     for (int i = 0; i < N; i++) {
+	bne	s1,s4,.L3	#, ivtmp.27, _37,
+# queens.cpp:13: }
+	ld	ra,40(sp)		#,
+	.cfi_restore 1
+	ld	s0,32(sp)		#,
+	.cfi_restore 8
+	ld	s1,24(sp)		#,
+	.cfi_restore 9
+	ld	s2,16(sp)		#,
+	.cfi_restore 18
+	ld	s3,8(sp)		#,
+	.cfi_restore 19
+	ld	s4,0(sp)		#,
+	.cfi_restore 20
+	addi	sp,sp,48	#,,
+	.cfi_def_cfa_offset 0
+	jr	ra		#
+.L7:
+	ret	
+	.cfi_endproc
+.LFE9888:
+	.size	_Z13printSolutionPPii, .-_Z13printSolutionPPii
+	.align	1
+	.globl	_Z6isSafePPiiii
+	.type	_Z6isSafePPiiii, @function
+_Z6isSafePPiiii:
+.LFB9889:
+	.cfi_startproc
+# queens.cpp:15: bool isSafe(int **board, int row, int col, int N) {
+	mv	t5,a0	# board, tmp169
+# queens.cpp:16:     for (int i = 0; i < col; i++)
+	ble	a2,zero,.L12	#, col,,
+# queens.cpp:17:         if (board[row][i])
+	slli	t1,a1,3	#, tmp165, row
+	add	a5,a0,t1	# tmp165, tmp127, board
+	ld	a4,0(a5)		# _4, *_3
+	addiw	t3,a2,-1	#, tmp128, col
+	slli	a5,t3,32	#, tmp173, tmp128
+	srli	t3,a5,30	#, tmp130, tmp173
+	add	t3,t3,a4	# _4, _90, tmp130
+	mv	a5,a4	# ivtmp.72, _4
+	j	.L14		#
+.L33:
+# queens.cpp:16:     for (int i = 0; i < col; i++)
+	beq	a5,t3,.L32	#, ivtmp.72, _90,
+	mv	a5,a7	# ivtmp.72, ivtmp.72
+.L14:
+# queens.cpp:17:         if (board[row][i])
+	lw	a6,0(a5)		# MEM[(int *)_84], MEM[(int *)_84]
+# queens.cpp:16:     for (int i = 0; i < col; i++)
+	addi	a7,a5,4	#, ivtmp.72, ivtmp.72
+# queens.cpp:17:         if (board[row][i])
+	beq	a6,zero,.L33	#, MEM[(int *)_84],,
+.L27:
+# queens.cpp:18:             return false;
+	li	a0,0		# <retval>,
+	ret	
+.L32:
+# queens.cpp:20:     for (int i=row, j=col; i>=0 && j>=0; i--, j--)
+	blt	a1,zero,.L17	#, row,,
+.L20:
+	add	a6,t5,t1	# tmp165, ivtmp.63, board
+	slli	t3,a2,2	#, ivtmp.59, col
+	mv	a7,a1	# i, row
+	li	t4,-1		# tmp167,
+	subw	t1,a2,a1	# tmp168, col, row
+	j	.L18		#
+.L34:
+	beq	a7,t4,.L17	#, i, tmp167,
+	addi	a6,a6,-8	#, ivtmp.63, ivtmp.63
+	addi	t3,t3,-4	#, ivtmp.59, ivtmp.59
+	blt	a5,zero,.L17	#, j,,
+# queens.cpp:21:         if (board[i][j])
+	ld	a4,0(a6)		# _4, MEM[(int * *)_69]
+.L18:
+# queens.cpp:21:         if (board[i][j])
+	add	a4,a4,t3	# ivtmp.59, tmp138, _4
+# queens.cpp:21:         if (board[i][j])
+	lw	a4,0(a4)		# *_28, *_28
+# queens.cpp:20:     for (int i=row, j=col; i>=0 && j>=0; i--, j--)
+	addiw	a7,a7,-1	#,, i
+# queens.cpp:20:     for (int i=row, j=col; i>=0 && j>=0; i--, j--)
+	addw	a5,t1,a7	# tmp142, j, tmp168
+# queens.cpp:21:         if (board[i][j])
+	beq	a4,zero,.L34	#, *_28,,
+	j	.L27		#
+.L16:
+# queens.cpp:24:     for (int i=row, j=col; j>=0 && i<N; i++, j--)
+	bne	a2,zero,.L28	#, col,,
+.L17:
+	bge	a1,a3,.L28	#, row, N,
+	slli	a5,a1,3	#, tmp150, row
+	subw	a1,a1,a3	# tmp151, row, N
+	add	a0,t5,a5	# tmp150, ivtmp.41, board
+	slli	a4,a2,2	#, ivtmp.42, col
+	addw	a1,a1,a2	# col, _47, tmp151
+	li	a3,-1		# tmp166,
+	j	.L19		#
+.L35:
+	beq	a2,a3,.L28	#, col, tmp166,
+	beq	a2,a1,.L28	#, col, _47,
+.L19:
+# queens.cpp:25:         if (board[i][j])
+	ld	a5,0(a0)		# MEM[(int * *)_58], MEM[(int * *)_58]
+# queens.cpp:24:     for (int i=row, j=col; j>=0 && i<N; i++, j--)
+	addiw	a2,a2,-1	#, col, col
+# queens.cpp:24:     for (int i=row, j=col; j>=0 && i<N; i++, j--)
+	addi	a0,a0,8	#, ivtmp.41, ivtmp.41
+# queens.cpp:25:         if (board[i][j])
+	add	a5,a5,a4	# ivtmp.42, tmp154, MEM[(int * *)_58]
+# queens.cpp:25:         if (board[i][j])
+	lw	a5,0(a5)		# *_40, *_40
+# queens.cpp:24:     for (int i=row, j=col; j>=0 && i<N; i++, j--)
+	addi	a4,a4,-4	#, ivtmp.42, ivtmp.42
+# queens.cpp:25:         if (board[i][j])
+	beq	a5,zero,.L35	#, *_40,,
+	j	.L27		#
+.L28:
+# queens.cpp:28:     return true;
+	li	a0,1		# <retval>,
+	ret	
+.L12:
+# queens.cpp:20:     for (int i=row, j=col; i>=0 && j>=0; i--, j--)
+	blt	a1,zero,.L16	#, row,,
+# queens.cpp:28:     return true;
+	li	a0,1		# <retval>,
+# queens.cpp:20:     for (int i=row, j=col; i>=0 && j>=0; i--, j--)
+	bne	a2,zero,.L29	#, col,,
+# queens.cpp:17:         if (board[row][i])
+	slli	t1,a1,3	#, tmp165, row
+	add	a5,t5,t1	# tmp165, tmp136, board
+	ld	a4,0(a5)		# _4, *_70
+	j	.L20		#
+.L29:
+# queens.cpp:29: }
+	ret	
+	.cfi_endproc
+.LFE9889:
+	.size	_Z6isSafePPiiii, .-_Z6isSafePPiiii
+	.align	1
+	.type	_Z11solveNQUtilPPiii.part.0, @function
+_Z11solveNQUtilPPiii.part.0:
+.LFB11582:
+	.cfi_startproc
+	addi	sp,sp,-96	#,,
+	.cfi_def_cfa_offset 96
+	sd	ra,88(sp)	#,
+	sd	s0,80(sp)	#,
+	sd	s1,72(sp)	#,
+	sd	s2,64(sp)	#,
+	sd	s3,56(sp)	#,
+	sd	s4,48(sp)	#,
+	sd	s5,40(sp)	#,
+	sd	s6,32(sp)	#,
+	sd	s7,24(sp)	#,
+	sd	s8,16(sp)	#,
+	sd	s9,8(sp)	#,
+	.cfi_offset 1, -8
+	.cfi_offset 8, -16
+	.cfi_offset 9, -24
+	.cfi_offset 18, -32
+	.cfi_offset 19, -40
+	.cfi_offset 20, -48
+	.cfi_offset 21, -56
+	.cfi_offset 22, -64
+	.cfi_offset 23, -72
+	.cfi_offset 24, -80
+	.cfi_offset 25, -88
+# queens.cpp:35:     for (int i = 0; i < N; i++) {
+	ble	a2,zero,.L37	#, N,,
+	mv	s2,a2	# N, tmp102
+	mv	s4,a0	# board, tmp100
+	mv	s5,a1	# col, tmp101
+# queens.cpp:37:             board[i][col] = 1;
+	slli	s9,a1,2	#, _11, col
+	mv	s3,a0	# ivtmp.82, board
+# queens.cpp:35:     for (int i = 0; i < N; i++) {
+	li	s1,0		# i,
+# queens.cpp:37:             board[i][col] = 1;
+	li	s8,1		# tmp97,
+# queens.cpp:39:             if (solveNQUtil(board, col + 1, N))
+	addiw	s7,a1,1	#, _13, col
+	j	.L42		#
+.L38:
+# queens.cpp:35:     for (int i = 0; i < N; i++) {
+	addi	s3,s3,8	#, ivtmp.82, ivtmp.82
+	beq	s2,s1,.L37	#, N, i,
+.L42:
+# queens.cpp:36:         if (isSafe(board, i, col, N)) {
+	mv	a1,s1	#, i
+	mv	a3,s2	#, N
+	mv	a2,s5	#, col
+	mv	a0,s4	#, board
+	call	_Z6isSafePPiiii		#
+	mv	s0,a0	# <retval>, tmp103
+# queens.cpp:35:     for (int i = 0; i < N; i++) {
+	addiw	s1,s1,1	#, i, i
+# queens.cpp:36:         if (isSafe(board, i, col, N)) {
+	beq	a0,zero,.L38	#, <retval>,,
+# queens.cpp:37:             board[i][col] = 1;
+	ld	s6,0(s3)		# MEM[(int * *)_29], MEM[(int * *)_29]
+	mv	a2,s2	#, N
+	mv	a1,s7	#, _13
+	add	s6,s6,s9	# _11, _12, MEM[(int * *)_29]
+# queens.cpp:37:             board[i][col] = 1;
+	sw	s8,0(s6)	# tmp97, *_12
+	mv	a0,s4	#, board
+# queens.cpp:32:     if (col >= N)
+	ble	s2,s7,.L40	#, N, _13,
+	call	_Z11solveNQUtilPPiii.part.0		#
+# queens.cpp:39:             if (solveNQUtil(board, col + 1, N))
+	bne	a0,zero,.L40	#, tmp104,,
+# queens.cpp:42:             board[i][col] = 0;
+	sw	zero,0(s6)	#, *_12
+# queens.cpp:35:     for (int i = 0; i < N; i++) {
+	addi	s3,s3,8	#, ivtmp.82, ivtmp.82
+	bne	s2,s1,.L42	#, N, i,
+.L37:
+# queens.cpp:46:     return false;
+	li	s0,0		# <retval>,
+.L40:
+# queens.cpp:47: }
+	ld	ra,88(sp)		#,
+	.cfi_restore 1
+	mv	a0,s0	#, <retval>
+	ld	s0,80(sp)		#,
+	.cfi_restore 8
+	ld	s1,72(sp)		#,
+	.cfi_restore 9
+	ld	s2,64(sp)		#,
+	.cfi_restore 18
+	ld	s3,56(sp)		#,
+	.cfi_restore 19
+	ld	s4,48(sp)		#,
+	.cfi_restore 20
+	ld	s5,40(sp)		#,
+	.cfi_restore 21
+	ld	s6,32(sp)		#,
+	.cfi_restore 22
+	ld	s7,24(sp)		#,
+	.cfi_restore 23
+	ld	s8,16(sp)		#,
+	.cfi_restore 24
+	ld	s9,8(sp)		#,
+	.cfi_restore 25
+	addi	sp,sp,96	#,,
+	.cfi_def_cfa_offset 0
+	jr	ra		#
+	.cfi_endproc
+.LFE11582:
+	.size	_Z11solveNQUtilPPiii.part.0, .-_Z11solveNQUtilPPiii.part.0
+	.align	1
+	.globl	_Z11solveNQUtilPPiii
+	.type	_Z11solveNQUtilPPiii, @function
+_Z11solveNQUtilPPiii:
+.LFB9890:
+	.cfi_startproc
+# queens.cpp:32:     if (col >= N)
+	bge	a1,a2,.L49	#, tmp80, tmp81,
+	tail	_Z11solveNQUtilPPiii.part.0		#
+.L49:
+# queens.cpp:47: }
+	li	a0,1		#,
+	ret	
+	.cfi_endproc
+.LFE9890:
+	.size	_Z11solveNQUtilPPiii, .-_Z11solveNQUtilPPiii
+	.section	.rodata.str1.8
+	.align	3
+.LC1:
+	.string	"Solution does not exist"
+	.text
+	.align	1
+	.globl	_Z7solveNQPPii
+	.type	_Z7solveNQPPii, @function
+_Z7solveNQPPii:
+.LFB9891:
+	.cfi_startproc
+	addi	sp,sp,-32	#,,
+	.cfi_def_cfa_offset 32
+	sd	s0,16(sp)	#,
+	sd	s2,0(sp)	#,
+	sd	ra,24(sp)	#,
+	sd	s1,8(sp)	#,
+	.cfi_offset 8, -16
+	.cfi_offset 18, -32
+	.cfi_offset 1, -8
+	.cfi_offset 9, -24
+# queens.cpp:49: bool solveNQ(int **board, int N) {
+	mv	s0,a1	# N, tmp79
+	mv	s2,a0	# board, tmp78
+# queens.cpp:32:     if (col >= N)
+	ble	a1,zero,.L51	#, N,,
+	mv	a2,a1	#, N
+	li	a1,0		#,
+	call	_Z11solveNQUtilPPiii.part.0		#
+	mv	s1,a0	# <retval>, tmp80
+# queens.cpp:52:     if (solveNQUtil(board, 0, N) == false) {
+	beq	a0,zero,.L54	#, <retval>,,
+.L51:
+# queens.cpp:57:     printSolution(board, N);
+	mv	a0,s2	#, board
+	mv	a1,s0	#, N
+	call	_Z13printSolutionPPii		#
+# queens.cpp:59: }
+	ld	ra,24(sp)		#,
+	.cfi_remember_state
+	.cfi_restore 1
+	ld	s0,16(sp)		#,
+	.cfi_restore 8
+# queens.cpp:58:     return true;
+	li	s1,1		# <retval>,
+# queens.cpp:59: }
+	ld	s2,0(sp)		#,
+	.cfi_restore 18
+	mv	a0,s1	#, <retval>
+	ld	s1,8(sp)		#,
+	.cfi_restore 9
+	addi	sp,sp,32	#,,
+	.cfi_def_cfa_offset 0
+	jr	ra		#
+.L54:
+	.cfi_restore_state
+# /usr/riscv64-linux-gnu/include/bits/stdio2.h:112:   return __printf_chk (__USE_FORTIFY_LEVEL - 1, __fmt, __va_arg_pack ());
+	lla	a1,.LC1	#,
+	li	a0,1		#,
+	call	__printf_chk@plt	#
+# queens.cpp:59: }
+	ld	ra,24(sp)		#,
+	.cfi_restore 1
+	ld	s0,16(sp)		#,
+	.cfi_restore 8
+	ld	s2,0(sp)		#,
+	.cfi_restore 18
+	mv	a0,s1	#, <retval>
+	ld	s1,8(sp)		#,
+	.cfi_restore 9
+	addi	sp,sp,32	#,,
+	.cfi_def_cfa_offset 0
+	jr	ra		#
+	.cfi_endproc
+.LFE9891:
+	.size	_Z7solveNQPPii, .-_Z7solveNQPPii
+	.section	.rodata.str1.8
+	.align	3
+.LC2:
+	.string	"N-Queens program. Usage \n $ ./queens <chess-board-size>"
+	.section	.text.startup,"ax",@progbits
+	.align	1
+	.globl	main
+	.type	main, @function
+main:
+.LFB9892:
+	.cfi_startproc
+	addi	sp,sp,-64	#,,
+	.cfi_def_cfa_offset 64
+	sd	ra,56(sp)	#,
+	sd	s0,48(sp)	#,
+	sd	s1,40(sp)	#,
+	sd	s2,32(sp)	#,
+	sd	s3,24(sp)	#,
+	sd	s4,16(sp)	#,
+	sd	s5,8(sp)	#,
+	sd	s6,0(sp)	#,
+	.cfi_offset 1, -8
+	.cfi_offset 8, -16
+	.cfi_offset 9, -24
+	.cfi_offset 18, -32
+	.cfi_offset 19, -40
+	.cfi_offset 20, -48
+	.cfi_offset 21, -56
+	.cfi_offset 22, -64
+# queens.cpp:63:     if (argc == 2) {
+	li	a5,2		# tmp97,
+	beq	a0,a5,.L66	#, tmp117, tmp97,
+# /usr/riscv64-linux-gnu/include/bits/stdio2.h:112:   return __printf_chk (__USE_FORTIFY_LEVEL - 1, __fmt, __va_arg_pack ());
+	lla	a0,.LC2	#,
+	call	puts@plt	#
+.L62:
+# queens.cpp:88: }
+	ld	ra,56(sp)		#,
+	.cfi_remember_state
+	.cfi_restore 1
+	ld	s0,48(sp)		#,
+	.cfi_restore 8
+	ld	s1,40(sp)		#,
+	.cfi_restore 9
+	ld	s2,32(sp)		#,
+	.cfi_restore 18
+	ld	s3,24(sp)		#,
+	.cfi_restore 19
+	ld	s4,16(sp)		#,
+	.cfi_restore 20
+	ld	s5,8(sp)		#,
+	.cfi_restore 21
+	ld	s6,0(sp)		#,
+	.cfi_restore 22
+	li	a0,0		#,
+	addi	sp,sp,64	#,,
+	.cfi_def_cfa_offset 0
+	jr	ra		#
+.L66:
+	.cfi_restore_state
+# /usr/riscv64-linux-gnu/include/stdlib.h:364:   return (int) strtol (__nptr, (char **) NULL, 10);
+	ld	a0,8(a1)		#, MEM[(char * *)argv_21(D) + 8B]
+	li	a2,10		#,
+	li	a1,0		#,
+	call	strtol@plt	#
+# queens.cpp:67:         int **board = new int*[size];
+	li	a5,-1		# tmp102,
+# /usr/riscv64-linux-gnu/include/stdlib.h:364:   return (int) strtol (__nptr, (char **) NULL, 10);
+	sext.w	s5,a0	# _39, _38
+# queens.cpp:67:         int **board = new int*[size];
+	srli	a5,a5,4	#, tmp101, tmp102
+# /usr/riscv64-linux-gnu/include/stdlib.h:364:   return (int) strtol (__nptr, (char **) NULL, 10);
+	mv	s0,a0	# _38, tmp119
+# queens.cpp:67:         int **board = new int*[size];
+	bgtu	s5,a5,.L57	#, _39, tmp101,
+# queens.cpp:67:         int **board = new int*[size];
+	slli	a0,s5,3	#,, _39
+	call	_Znam@plt	#
+	mv	s4,a0	# _26, tmp120
+# queens.cpp:68:         for (int i = 0 ; i < size; i++)
+	ble	s5,zero,.L59	#, _39,,
+	addiw	s0,s0,-1	#, tmp106, _38
+	slli	s1,s0,32	#, _59, tmp106
+	srli	s1,s1,32	#, _59, _59
+	addi	s2,s1,1	#, tmp116, _59
+	slli	s3,s2,3	#, tmp108, tmp116
+# queens.cpp:69:             board[i] = new int[size];
+	slli	s6,s5,2	#, iftmp.4_33, _39
+	mv	s0,a0	# ivtmp.98, _26
+	add	s3,s3,a0	# _26, _63, tmp108
+	mv	s1,a0	# ivtmp.103, _26
+.L60:
+# queens.cpp:69:             board[i] = new int[size];
+	mv	a0,s6	#, iftmp.4_33
+	call	_Znam@plt	#
+# queens.cpp:69:             board[i] = new int[size];
+	sd	a0,0(s1)	# tmp121, MEM[(int * *)_46]
+# queens.cpp:68:         for (int i = 0 ; i < size; i++)
+	addi	s1,s1,8	#, ivtmp.103, ivtmp.103
+	bne	s1,s3,.L60	#, ivtmp.103, _63,
+# queens.cpp:73:                 board[i][j] = 0;
+	slli	s2,s2,2	#, _44, tmp116
+.L61:
+	ld	a0,0(s0)		#, MEM[(int * *)_10]
+	mv	a2,s2	#, _44
+# queens.cpp:71:         for (int i = 0 ; i < size ; i++) {
+	addi	s0,s0,8	#, ivtmp.98, ivtmp.98
+# queens.cpp:73:                 board[i][j] = 0;
+	li	a1,0		#,
+	call	memset@plt	#
+# queens.cpp:71:         for (int i = 0 ; i < size ; i++) {
+	bne	s0,s3,.L61	#, ivtmp.98, _63,
+.L59:
+# queens.cpp:77:     m5_work_begin(0,0);
+	li	a1,0		#,
+	li	a0,0		#,
+	call	m5_work_begin@plt	#
+# queens.cpp:79:         solveNQ(board, size);
+	mv	a1,s5	#, _39
+	mv	a0,s4	#, _26
+	call	_Z7solveNQPPii		#
+# queens.cpp:81:     m5_work_end(0,0);
+	li	a1,0		#,
+	li	a0,0		#,
+	call	m5_work_end@plt	#
+	j	.L62		#
+.L57:
+# queens.cpp:67:         int **board = new int*[size];
+	call	__cxa_throw_bad_array_new_length@plt	#
+	.cfi_endproc
+.LFE9892:
+	.size	main, .-main
+	.align	1
+	.type	_GLOBAL__sub_I__Z13printSolutionPPii, @function
+_GLOBAL__sub_I__Z13printSolutionPPii:
+.LFB11580:
+	.cfi_startproc
+	addi	sp,sp,-16	#,,
+	.cfi_def_cfa_offset 16
+	sd	s0,0(sp)	#,
+	.cfi_offset 8, -16
+# /usr/riscv64-linux-gnu/include/c++/11/iostream:74:   static ios_base::Init __ioinit;
+	lla	s0,.LANCHOR0	# tmp72,
+	mv	a0,s0	#, tmp72
+# queens.cpp:88: }
+	sd	ra,8(sp)	#,
+	.cfi_offset 1, -8
+# /usr/riscv64-linux-gnu/include/c++/11/iostream:74:   static ios_base::Init __ioinit;
+	call	_ZNSt8ios_base4InitC1Ev@plt	#
+	mv	a1,s0	#, tmp72
+# queens.cpp:88: }
+	ld	s0,0(sp)		#,
+	.cfi_restore 8
+	ld	ra,8(sp)		#,
+	.cfi_restore 1
+# /usr/riscv64-linux-gnu/include/c++/11/iostream:74:   static ios_base::Init __ioinit;
+	lla	a2,__dso_handle	#,
+# queens.cpp:88: }
+# /usr/riscv64-linux-gnu/include/c++/11/iostream:74:   static ios_base::Init __ioinit;
+	la	a0,_ZNSt8ios_base4InitD1Ev		#,
+# queens.cpp:88: }
+	addi	sp,sp,16	#,,
+	.cfi_def_cfa_offset 0
+# /usr/riscv64-linux-gnu/include/c++/11/iostream:74:   static ios_base::Init __ioinit;
+	tail	__cxa_atexit@plt	#
+	.cfi_endproc
+.LFE11580:
+	.size	_GLOBAL__sub_I__Z13printSolutionPPii, .-_GLOBAL__sub_I__Z13printSolutionPPii
+	.section	.init_array,"aw"
+	.align	3
+	.dword	_GLOBAL__sub_I__Z13printSolutionPPii
+	.bss
+	.align	3
+	.set	.LANCHOR0,. + 0
+	.type	_ZStL8__ioinit, @object
+	.size	_ZStL8__ioinit, 1
+_ZStL8__ioinit:
+	.zero	1
+	.hidden	__dso_handle
+	.ident	"GCC: (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0"
+	.section	.note.GNU-stack,"",@progbits
