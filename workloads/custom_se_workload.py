@@ -1,4 +1,4 @@
-# Copyright (c) 2022 The Regents of the University of California
+# Copyright (c) 2022-24 The Regents of the University of California
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -24,10 +24,9 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-from gem5.resources.workload import CustomWorkload
+from gem5.resources.workload import WorkloadResource
 
-
-class CustomSEWorkload(CustomWorkload):
+class CustomSEWorkload(WorkloadResource):
     def __init__(self, parameters: dict):
         super().__init__(
             function="set_se_binary_workload", parameters=parameters
