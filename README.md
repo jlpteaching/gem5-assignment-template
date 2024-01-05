@@ -372,7 +372,7 @@ Before running any simulations answer the following questions in your report.
 
 ### Step I: Performance comparison
 
-Now that you have completed the design process of `HW3BigCore` and `HW3LittleCore`, let's compare their performances using our 4 workloads as benchmarks.
+Now that you have completed the design process of `HW3BigCore` and `HW3LittleCore`, let's compare their performances using our four workloads as benchmarks.
 Simulate each workload with each core.
 For each workload compare the performance of `HW3BigCore` with the performance of `HW3LittleCore`.
 
@@ -408,7 +408,7 @@ You can also get the area score for a pipeline design by calling the method `get
 Now that we have our cost function, let's devise a method for measuring our gains.
 In you report answer the following question.
 
-1. If you were to use the speed up under only one workload from the 4 workloads you used before, which workload would you choose? Why?
+1. If you were to use the speed up under only one workload from the four workloads you used before, which workload would you choose? Why?
 
 Now that we have devised functions to measure costs and gains, configure 4 middle ground designs for the pipeline.
 Not all of these designs will have the "best" cost-gain tradeoff.
