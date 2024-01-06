@@ -2,14 +2,18 @@
     "build": {
         "dockerfile": "Dockerfile"
     },
-    "extensions": [
-        "ms-vscode.cpptools",
-        "streetsidesoftware.code-spell-checker",
-        "eamodio.gitlens",
-        "ms-python.vscode-pylance",
-        "ms-python.python",
-		"ms-toolsai.jupyter"
-    ],
+        "customizations": {
+            "vscode": {
+                "extensions": [
+                    "ms-vscode.cpptools",
+                    "streetsidesoftware.code-spell-checker",
+                    "eamodio.gitlens",
+                    "ms-python.vscode-pylance",
+                    "ms-python.python",
+                    "ms-toolsai.jupyter"
+                ]
+            }
+        },
     "postCreateCommand": {
         "python-deps": "pip install -r requirements.txt",
         "fetch-gem5": "git submodule update --init"
