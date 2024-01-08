@@ -1,4 +1,4 @@
-# Copyright (c) 2022 The Regents of the University of California
+# Copyright (c) 2022-24 The Regents of the University of California
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -24,13 +24,29 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-from gem5.simulate.exit_event import ExitEvent
+from m5.objects import DDR4_2400_8x8
+
+from gem5.components.memory.memory import ChanneledMemory
 
 
-def handle_workend():
-    while True:
-        m5.stats.dump()
-        yield True
+# HW2DDR4_2400_8x8 models a 1 GiB single channel DDR4 DRAM memory with a data
+# bus clocked at 2400MHz. This model extends ChanneledMemory from gem5's
+# standard libary. Please refer to
+#     gem5/src/python/gem5/components/memory/memory.py
+# for documentation on ChanneledMemory.
+
+# Below is the function signature for the constructor of ChanneledMemory class.
+# class ChanneledMemory(AbstractMemorySystem):
+#     def __init__(
+#         self,
+#         dram_interface_class: Type[DRAMInterface],
+#         num_channels: Union[int, str],
+#         interleaving_size: Union[int, str],
+#         size: Optional[str] = None,
+#         addr_mapping: Optional[str] = None,
+#     )
 
 
-exit_event_handler = {ExitEvent.WORKEND: handle_workend()}
+class HW2DDR4_2400_8x8(ChanneledMemory):
+    def __init__(self):
+        super().__init__(DDR4_2400_8x8, 1, 128, size="1GiB")

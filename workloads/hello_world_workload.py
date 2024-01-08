@@ -1,4 +1,4 @@
-# Copyright (c) 2022 The Regents of the University of California
+# Copyright (c) 2022-24 The Regents of the University of California
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -24,13 +24,12 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-from gem5.simulate.exit_event import ExitEvent
+from .custom_se_workload import CustomSEWorkload
+from gem5.resources.resource import obtain_resource
 
 
-def handle_workend():
-    while True:
-        m5.stats.dump()
-        yield True
-
-
-exit_event_handler = {ExitEvent.WORKEND: handle_workend()}
+class HelloWorkload(CustomSEWorkload):
+    def __init__(self):
+        super().__init__(
+            parameters={"binary": obtain_resource("riscv-hello"), "arguments": []}
+        )

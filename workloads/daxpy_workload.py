@@ -1,4 +1,4 @@
-# Copyright (c) 2022 The Regents of the University of California
+# Copyright (c) 2022-24 The Regents of the University of California
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -24,13 +24,15 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-from gem5.simulate.exit_event import ExitEvent
+import pathlib
+
+from gem5.resources.resource import FileResource
+from .custom_se_workload import CustomSEWorkload
+
+this_dir = pathlib.Path(__file__).parent.absolute()
 
 
-def handle_workend():
-    while True:
-        m5.stats.dump()
-        yield True
-
-
-exit_event_handler = {ExitEvent.WORKEND: handle_workend()}
+class DAXPYWorkload(CustomSEWorkload):
+    def __init__(self):
+        daxpy_bin = FileResource(str(this_dir / "daxpy/daxpy-gem5"))
+        super().__init__(parameters={"binary": daxpy_bin, "arguments": []})
