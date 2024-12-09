@@ -1,0 +1,14 @@
+{
+    "python.analysis.extraPaths": [
+        "gem5/src/python"
+    ],
+    "editor.rulers": [
+        79
+    ],
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "markdownlint.config": {
+        "default": true,
+        "MD026": false
+    }
+}
