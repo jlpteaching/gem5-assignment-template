@@ -7,7 +7,7 @@
 
 int main()
 {
-  const int N = 131072;
+  const int N = 196608;
   double X[N], Y[N], alpha = 0.5;
   std::random_device rd; std::mt19937 gen(rd());
   std::uniform_real_distribution<> dis(1, 2);
@@ -18,7 +18,7 @@ int main()
   }
 
 #ifdef GEM5
-m5_work_begin(0,0);
+  m5_work_begin(0,0);
 #endif
 
   // Start of daxpy loop
@@ -29,7 +29,7 @@ m5_work_begin(0,0);
   // End of daxpy loop
 
 #ifdef GEM5
-    m5_work_end(0,0);
+  m5_work_end(0,0);
 #endif
 
   double sum = 0;

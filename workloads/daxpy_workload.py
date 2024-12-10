@@ -1,4 +1,4 @@
-# Copyright (c) 2022 The Regents of the University of California
+# Copyright (c) 2022-24 The Regents of the University of California
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -26,14 +26,13 @@
 
 import pathlib
 
+from gem5.resources.resource import FileResource
 from .custom_se_workload import CustomSEWorkload
-from gem5.resources.resource import CustomResource
-
 
 this_dir = pathlib.Path(__file__).parent.absolute()
 
 
 class DAXPYWorkload(CustomSEWorkload):
     def __init__(self):
-        daxpy_bin = CustomResource(str(this_dir / "daxpy/daxpy-gem5"))
+        daxpy_bin = FileResource(str(this_dir / "daxpy/daxpy-gem5"))
         super().__init__(parameters={"binary": daxpy_bin, "arguments": []})

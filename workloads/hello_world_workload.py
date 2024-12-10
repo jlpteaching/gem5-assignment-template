@@ -26,6 +26,8 @@
 
 from .custom_se_workload import CustomSEWorkload
 from gem5.resources.resource import Resource
+from .custom_se_workload import CustomSEWorkload
+from gem5.resources.resource import obtain_resource
 
 
 class HelloWorkload(CustomSEWorkload):
@@ -33,3 +35,14 @@ class HelloWorkload(CustomSEWorkload):
         super().__init__(
             parameters={"binary": Resource("riscv-hello"), "arguments": []}
         )
+from gem5.simulate.exit_event import ExitEvent
+
+
+def handle_workend():
+    while True:
+        m5.stats.dump()
+        yield True
+
+
+exit_event_handler = {ExitEvent.WORKEND: handle_workend()}
+            parameters={"binary": obtain_resource("riscv-hello"), "arguments": []}

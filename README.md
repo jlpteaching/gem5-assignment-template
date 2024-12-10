@@ -1,14 +1,14 @@
 ---
 Author: Jason Lowe-Power
-Editor:  Maryam Babaie, Mahyar Samani
+Editor:  Maryam Babaie, Mahyar Samani, Kaustav Goswami
 Title: ECS 201A Assignment 2
 ---
 
 Originally from University of Wisconsin-Madison CS/ECE 752.
 
-Modified for ECS 201A, Winter 2023.
+Modified for ECS 201A, Winter 2024.
 
-**Due on *{{ site.data.course.dates.gem5_2 }}* 11:59 pm (PST)**: See [Submission](#submission) for details
+**Due on *01/29* 1:59 pm (PST)**: See [Submission](#submission) for details
 
 ## Table of Contents
 
@@ -33,7 +33,9 @@ This homework is based on exercise 3.6 of [CA:AQA 3rd edition](https://www.googl
 
 ## Workload
 
-For this assignment we are going to use DAXPY as our workload. The DAXPY loop (double precision `aX + Y`) is an often used operation in programs that work with matrices and vectors. The following code implements DAXPY in C++.
+For this assignment we are going to use DAXPY as our workload.
+The DAXPY loop (double precision `aX + Y`) is an often used operation in programs that work with matrices and vectors.
+The following code implements DAXPY in C++.
 
 ```cpp
 #include <cstdio>
@@ -41,7 +43,7 @@ For this assignment we are going to use DAXPY as our workload. The DAXPY loop (d
 
 int main()
 {
-  const int N = 131072;
+const int N = 196608;
   double X[N], Y[N], alpha = 0.5;
   std::random_device rd; std::mt19937 gen(rd());
   std::uniform_real_distribution<> dis(1, 2);
@@ -68,7 +70,9 @@ int main()
 }
 ```
 
-You can find the definitions for the workload objects in gem5 under `workloads/daxpy_workloads.py`. In this assignment, we will only be using `DAXPYWorkload`. In order to create an object of `DAXPYWorkload` you just need to call its constructor (`__init__`) function.
+You can find the definitions for the workload objects in gem5 under`workloads/daxpy_workloads.py`.
+In this assignment, we will only be using `DAXPYWorkload`.
+In order to create an object of `DAXPYWorkload` you just need to call its constructor (`__init__`) function.
 
 ## Experimental setup
 
@@ -79,16 +83,60 @@ You might find this information useful in later steps of your analysis.
 As part of this assignment, you will only modify/change the CPU model.
 Models for the board, cache hierarchy, and memory will remain a constant in your experiment.
 
-- Board models: You can find all the models you need to use for your CPU (processor) under `components/boards.py`.
+- Board models: You can find all the models you need to use for your CPU
+(processor) under `components/boards.py`.
 You will only be using `HW2RISCVBoard` in this assignment.
-- CPU models: You can find all the models you need to use for your CPU (processor) under `components/processors.py`.
+- CPU models: You can find all the models you need to use for your CPU
+(processor) under `components/processors.py`.
 There are a few classes defined in `components/processors.py`.
-However, the main classes (models) you will need to use are `HW2TimingSimpleCPU` and `HW2MinorCPU`.
-- Cache models: You can find all the models you need to use for your cache hierarchy under `components/cache_hierarchies.py`.
+However, the main classes (models) you will need to use are
+`HW2TimingSimpleCPU` and `HW2MinorCPU`.
+- Cache models: You can find all the models you need to use for your cache
+hierarchy under `components/cache_hierarchies.py`.
 You will only use `HW2MESITwoLevelCache` in this assignment.
-- Memory models: You can find all the models you need to use for your memory under `components/memories.py`.
-You will only use `HW2DDR3_1600_8x8` in this assignment.
-- Clock frequency: You can use a clock frequency of `4 GHz` for all of your simulations.
+- Memory models: You can find all the models you need to use for your memory
+under `components/memories.py`.
+You will only use `HW2DDR4_2400_8x8` in this assignment.
+- Clock frequency: You can use a clock frequency of `4 GHz` for all of your
+simulations.
+
+
+### Region of Interest (ROI)
+
+In your role as a computer architect, it’s crucial to focus on the code segments that put the most strain on the specific hardware component you’re targeting.
+There are usually three segments to a program: (a) initialization, (b) computation, and (c) verification.
+As you might have guessed, segment (b) is the important section that you need to study.
+In the DAXPY code above, our ROI is the DAXPY loop.
+```cpp
+  // Start of daxpy loop
+  for (int i = 0; i < N; ++i)
+  {
+    Y[i] = alpha * X[i] + Y[i];
+  }
+  // End of daxpy loop
+```
+In gem5, you can annotate this region with gem5-specific instruction.
+In the `workloads/daxpy/daxpy.cpp`, the code is annotated as:
+```cpp
+#ifdef GEM5
+  m5_work_begin(0,0);
+#endif
+
+  // Start of daxpy loop
+  for (int i = 0; i < N; ++i)
+  {
+    Y[i] = alpha * X[i] + Y[i];
+  }
+  // End of daxpy loop
+
+#ifdef GEM5
+  m5_work_end(0,0);
+#endif
+```
+To compile this program, you need to include the `gem5/m5ops.h` header file.
+In the stats file generated after the simulation, you will only have statistics within the defined ROI.
+
+The compiled program `daxpy-gem5` and it's assembly are already generated in the `workloads/daxpy/`.
 
 ### **IMPORTANT NOTE**
 
@@ -98,10 +146,13 @@ In your configuration scripts, make sure to import `exit_event_handler` using th
 from workloads.roi_manager import exit_event_handler
 ```
 
-You will have to pass `exit_event_handler` as a keyword argument named `on_exit_event` when creating a `simulator` object. Use the *template* below to create a simulator object.
+You will have to pass `exit_event_handler` as a keyword argument named `on_exit_event` when creating a `simulator` object.
+Use the *template* below to create a simulator object.
 
 ```python
-simulator = Simulator(board={name of your board}, full_system=False, on_exit_event=exit_event_handler)
+simulator = Simulator(board={name of your board},
+                      full_system=False,
+                      on_exit_event=exit_event_handler)
 ```
 
 ## Analysis and simulation
@@ -110,6 +161,13 @@ Complete the following steps and answer the questions for your report.
 Collect data from your simulation runs and use simulator statistics to answer the questions.
 Use clear reasoning and visualization to drive your conclusions.
 You are allowed to submit your reports in **pairs** and in **PDF** format.
+
+### Step 0
+
+Before starting simulation and analysis, you should be able to identify the
+ROI of a  program.
+
+1. For the DAXPY's assembly code, identify the ROI. In your report, copy the assembly code segment corresponding to `m5_work_begin` and `m5_work_end`.
 
 ### Step I
 
@@ -131,7 +189,8 @@ This statistic represents a distribution of different operation classes executed
 
 In your report, answer the same questions after simulation supported with data.
 Use `HelloWorldWorkload` from `workloads/hello_world_workload.py` as a second program to compare instruction mixes.
-A complete set of simulation data for this step should include **2 configuration** (1 for `DAXPYWorkload` and 1 for `HelloWorldWorkload`).
+
+A complete set of simulation data for this step should include **two configuration** (one for `DAXPYWorkload` and one for `HelloWorldWorkload`).
 
 ### Step II
 
@@ -141,49 +200,49 @@ Make sure to understand how to instantiate an instance of `HW2MinorCPU`.
 Please make sure to read the documentation for `HW2MinorCPU` and understand what each of the input arguments to `__init__` mean.
 
 `MinorCPU` is one of gem5's internal CPU models that models an in-order pipelined CPU.
-`HW2MinorCPU` is based on `MinorCPU`. The default pool of functional units for `MinorCPU` includes **two integer units** and **one floating point and SIMD unit**.
+`HW2MinorCPU` is based on `MinorCPU`.
+The default pool of functional units for `MinorCPU` includes **two integer units** and **one floating point and SIMD unit**.
 
 Modify your configuration script to allow for changing **issue latency**, and **floating point operation latency**.
 For your reference, **issue latency** measures the number of cycles between injection two consecutive instructions into the pipeline.
-An **issue latency** of `3 cycles` means that an instruction is injected to the pipeline, every *3 cycles*.
+An **issue latency** of `4 cycles` means that an instruction is injected to the pipeline, every *4 cycles*.
 On the other hand, **floating point operation latency** refers to the number of cycles it takes to complete the execution of a **floating point instruction**.
 In this step, measure your simulated performance for different combination of these two latencies.
-For simplicity's sake, start with an **initial value** of `3 cycles` for **issue latency** and an intial value of `2 cycles` for **floating point operation latency**.
+For simplicity's sake, start with an **initial value** of `4 cycles` for **issue latency** and an intial value of `4 cycles` for **floating point operation latency**.
 Moreover, **assume** you can trade **issue latency** with **floating point operation latency**.
-In addition, **assume** that the product of **issue latency** and **floating point operation latency** will always remain at a constant of `6`.
+In addition, **assume** that the product of **issue latency** and **floating point operation latency** will always remain at a constant of `8`.
 For your simulations, evaulate the performance of the configurations shown below.
 
 | # | issue latency | floating point operation latency |
 |---|---------------|----------------------------------|
-| 1 | 3             | 2                                |
-| 2 | 2             | 3                                |
-| 3 | 6             | 1                                |
+| 1 | 4             | 2                                |
+| 2 | 2             | 4                                |
+| 3 | 8             | 1                                |
 
 **NOTE**: Make sure to keep track of your simulation outputs for all of your simulation runs for your later analyses.
 
 In your report, answer the following questions after simulation supported with data.
-A complete set of simulation data for this step should include **3 configurations** (3 possible combinations of **issue latency** and **floating point operation latency**).
+A complete set of simulation data for this step should include **three configurations** (three possible combinations of **issue latency** and **floating point operation latency**).
 
 1. Between the 3 designs, which one did you find to be the be the best design?
-2. Why do you think your chosen design in question 1 results in the best performance?
-Can you reason about why you would prefer optimizing one of the latencies over the other?
+2. Why do you think your chosen design in question 1 results in the best performance? Can you reason about why you would prefer optimizing one of the latencies over the other?
 
 ### Step III
 
 For this step, modify your configuration script to allow for changing **integer operation latency** and **floating point operation latency**.
 Let's assume our processor has a very fast **decode** stage that can issue both **integer** and **floating point** instructions in `1 cycle`.
 Next, let's focus on **integer operation latency** and **floating point operation latency**.
-Let's assume an intial value of `4 cycles` for **integer operation latency** and an initial value of `8 cycles` for **floating point operation latency**.
+Let's assume an intial value of `6 cycles` for **integer operation latency** and an initial value of `12 cycles` for **floating point operation latency**.
 For your experimentation, suppose you can only reduce one of these latencies by a factor of 2.
-This means that you can build a processor with an **integer operation latency** of `2 cycles` and a **floating point operation latency** of `8 cycles` or a processor with an **integer operation latency** of `4 cycles` and a **floating point operation latency** of `4 cycles`.
+This means that you can build a processor with an **integer operation latency** of `3 cycles` and a **floating point operation latency** of `12 cycles` or a processor with an **integer operation latency** of `6 cycles` and a **floating point operation latency** of `6 cycles`.
 For your experimentation, simulate the baseline case and the two possible **improved** cases.
 Here is a table showing all possible combinations of the latencies that you need to experiment with.
 
 | # | integer issue latency | integer operation latency | floating point issue latency | floating point operation latency |
 |---|-----------------------|---------------------------|------------------------------|----------------------------------|
-| 1 | 1                     | 4                         | 1                            | 8                                |
-| 2 | 1                     | 2                         | 1                            | 8                                |
-| 3 | 1                     | 4                         | 1                            | 4                                |
+| 1 | 1                     | 6                         | 1                            | 12                               |
+| 2 | 1                     | 3                         | 1                            | 12                               |
+| 3 | 1                     | 6                         | 1                            | 6                                |
 
 In your report answer the following questions.
 
@@ -193,7 +252,9 @@ In your report answer the following questions.
 
 **Hints**:
 
-- Take a look at the assembly code for the `DAXPY` loop below (you can also find the complete assembly for it under `worklaods/daxpy/daxpy-gem5-asm`). Can you point out some dependencies between the instructions? Do you think only looking at the instruction mix gathered from [Step I](#step-i) provided enough information to apply Amdahl's law?
+- Take a look at the assembly code for the `DAXPY` loop below (you can also find the complete assembly for it under `worklaods/daxpy/daxpy-gem5-asm`).
+Can you point out some dependencies between the instructions?
+Do you think only looking at the instruction mix gathered from [Step I](#step-i) provided enough information to apply Amdahl's law?
 - Think about the other stages of the pipeline, in this question we have only focused on **decode** and **execute**.
 
 ```asm
@@ -217,10 +278,15 @@ In your report answer the following questions.
 ## Submission
 
 As mentioned before, you are allowed to submit your assignments in **pairs** and in **PDF** format.
-You should submit your report on [gradescope](https://www.gradescope.com/courses/487868).
-In your report answer the questions presented in [Analysis and simulation](#analysis-and-simulation), [Analysis and simulation: Step I](#step-i), [Analysis and simulation: Step II](#step-ii), and [Analysis and simulation: Step III](#step-iii).
+You should submit your report on
+[gradescope](https://www.gradescope.com/courses/487868).
+In your report answer the questions presented in [Analysis and simulation](#analysis-and-simulation), [Analysis and simulation: Step 0](#step-0),
+[Analysis and simulation: Step I](#step-i),
+[Analysis and simulation: Step II](#step-ii), and
+[Analysis and simulation: Step III](#step-iii).
 Use clear reasoning and visualization to drive your conclusions.
-Submit all your code through your assignment repository. Please make sure to include code/scripts for the following.
+Submit all your code through your assignment repository.
+Please make sure to include code/scripts for the following.
 
 - `Instruction.md`: should include instruction on how to run your simulations.
 - Automation: code/scripts to run your simulations.
@@ -231,17 +297,28 @@ Submit all your code through your assignment repository. Please make sure to inc
 Like your submission, your grade is split into two parts.
 
 1. Reproducibility Package (50 points):
-    a. Instruction and automation to run simulations for different section and dump statistics (20 points)
+    1. Instruction and automation to run simulations for different section and
+    dump statistics (20 points)
         - Instructions (10 points)
         - Automation (10 points)
-    b. Configuration scripts and correct simulation setup (30 points): 3 points for each configuration as described in [Analysis and simulation: Step I](#step-i), [Analysis and simulation: Step II](#step-ii), and [Analysis and simulation: Step III](#step-iii)
-2. Report (50 points): 7 points for each question presented in [Analysis and simulation: Step I](#step-i), [Analysis and simulation: Step II](#step-ii), [Analysis and simulation: Step III](#step-iii)
+    2. Configuration scripts and correct simulation setup (30 points): 3 points
+    for each configuration as described in
+    [Analysis and simulation: Step I](#step-i),
+    [Analysis and simulation: Step II](#step-ii),
+    and [Analysis and simulation: Step III](#step-iii)
+2. Report (50 points): 1 point for [Analysis and simulation: Step 0](#step-0),
+7 points for each question presented in
+[Analysis and simulation: Step I](#step-i),
+[Analysis and simulation: Step II](#step-ii),
+[Analysis and simulation: Step III](#step-iii)
 
 ## Academic misconduct reminder
 
-You are required to work on this assignment in teams. You are only allowed to share you scripts and code with your teammate(s). You may discuss high level concepts with others in the class but all the work must be completed by your team and your team only.
+You are required to work on this assignment in teams. You are only allowed to share you scripts and code with your teammate(s).
+You may discuss high level concepts with others in the class but all the work must be completed by your team and your team only.
 
-Remember, DO NOT POST YOUR CODE PUBLICLY ON GITHUB! Any code found on GitHub that is not the base template you are given will be reported to SJA. If you want to sidestep this problem entirely, don’t create a public fork and instead create a private repository to store your work.
+Remember, DO NOT POST YOUR CODE PUBLICLY ON GITHUB! Any code found on GitHub that is not the base template you are given will be reported to SJA.
+If you want to sidestep this problem entirely, don’t create a public fork and instead create a private repository to store your work.
 
 ## Hints
 
