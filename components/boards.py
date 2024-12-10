@@ -30,7 +30,7 @@ from gem5.components.boards.simple_board import SimpleBoard
 
 
 # A board class designed to be flexible and general. For this assignment, it
-# has been renamed to HW3RISCVBoard. Please refer to
+# has been renamed to HW4RISCVBoard. Please refer to
 #     gem5/src/python/components/boards/simple_board.py
 # for more detailed documentation. Below is the function signature for
 # the constructor to the SimpleBoard class.
@@ -45,4 +45,4 @@ from gem5.components.boards.simple_board import SimpleBoard
 #     )
 
 
-HW3RISCVBoard = SimpleBoard
+HW4RISCVBoard = SimpleBoard

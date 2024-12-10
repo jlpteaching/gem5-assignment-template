@@ -1,4 +1,4 @@
-# Copyright (c) 2022-24 The Regents of the University of California
+# Copyright (c) 2022 The Regents of the University of California
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -26,13 +26,56 @@
 
 import pathlib
 
-from gem5.resources.resource import FileResource
+from gem5.resources.resource import CustomResource
 from .custom_se_workload import CustomSEWorkload
 
 this_dir = pathlib.Path(__file__).parent.absolute()
 
 
-class MatMulWorkload(CustomSEWorkload):
-    def __init__(self):
-        mm_bin = FileResource(str(this_dir / "matmul/mm-gem5"))
-        super().__init__(parameters={"binary": mm_bin, "arguments": []})
+class IJKMatMulWorkload(CustomSEWorkload):
+    def __init__(self, matrix_size: int):
+        mm_bin = CustomResource(str(this_dir / "matmul/mm-ijk-gem5"))
+        super().__init__(
+            parameters={"binary": mm_bin, "arguments": [matrix_size]}
+        )
+
+
+class IKJMatMulWorkload(CustomSEWorkload):
+    def __init__(self, matrix_size: int):
+        mm_bin = CustomResource(str(this_dir / "matmul/mm-ikj-gem5"))
+        super().__init__(
+            parameters={"binary": mm_bin, "arguments": [matrix_size]}
+        )
+
+
+class BlockIJMatMulWorkload(CustomSEWorkload):
+    def __init__(self, matrix_size: int, block_size: int):
+        mm_bin = CustomResource(str(this_dir / "matmul/mm-block-ij-gem5"))
+        super().__init__(
+            parameters={
+                "binary": mm_bin,
+                "arguments": [matrix_size, block_size],
+            }
+        )
+
+
+class BlockIKMatMulWorkload(CustomSEWorkload):
+    def __init__(self, matrix_size: int, block_size: int):
+        mm_bin = CustomResource(str(this_dir / "matmul/mm-block-ik-gem5"))
+        super().__init__(
+            parameters={
+                "binary": mm_bin,
+                "arguments": [matrix_size, block_size],
+            }
+        )
+
+
+class BlockKJMatMulWorkload(CustomSEWorkload):
+    def __init__(self, matrix_size: int, block_size: int):
+        mm_bin = CustomResource(str(this_dir / "matmul/mm-block-kj-gem5"))
+        super().__init__(
+            parameters={
+                "binary": mm_bin,
+                "arguments": [matrix_size, block_size],
+            }
+        )
