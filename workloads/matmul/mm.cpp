@@ -17,7 +17,7 @@ void multiply(double **A, double **B, double **C, int size)
         for (int k = 0; k < size; k++) {
             for (int j = 0; j < size; j++) {
                 C[i][j] += A[i][k] * B[k][j];
-            }
+           }
         }
     }
 }

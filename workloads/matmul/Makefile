@@ -1,15 +1,18 @@
 GEM5_ROOT ?= ../../gem5
 
-all: mm mm-O0 mm-O3
+all: mm mm-asm mm-gem5 mm-gem5-asm
 
 clean:
-	rm mm mm-O0 mm-O3
+	rm mm mm-asm mm-gem5 mm-gem5-asm
 
 mm: mm.cpp
-	riscv64-linux-gnu-g++ -o mm mm.cpp -static -O2
+	riscv64-unknown-linux-gnu-g++ mm.cpp -o mm -static -O3
 
-mm-O0: mm.cpp
-	riscv64-linux-gnu-g++ -o mm-O0 mm.cpp -static -O0
+mm-asm: mm.cpp
+	riscv64-unknown-linux-gnu-g++ mm.cpp -o mm-asm -static -O3 -S -fverbose-asm
 
-mm-O3: mm.cpp
-	riscv64-linux-gnu-g++ -o mm-O3 mm.cpp -static -O3
+mm-gem5: mm.cpp
+	riscv64-unknown-linux-gnu-g++ mm.cpp -o mm-gem5 -static -O3 -I$(GEM5_ROOT)/include -DGEM5 -L$(GEM5_ROOT)/util/m5/build/riscv/out -lm5
+
+mm-gem5-asm: mm.cpp
+	riscv64-unknown-linux-gnu-g++ mm.cpp -o mm-gem5-asm -static -O3 -I$(GEM5_ROOT)/include -DGEM5 -L$(GEM5_ROOT)/util/m5/build/riscv/out -lm5 -S -fverbose-asm
