@@ -1,4 +1,4 @@
-# Copyright (c) 2022-24 The Regents of the University of California
+# Copyright (c) 2022 The Regents of the University of California
 # Copyright (c) 2022 EXAscale Performance SYStems (EXAPSYS)
 # All rights reserved.
 #
@@ -28,8 +28,9 @@
 
 from gem5.components.boards.simple_board import SimpleBoard
 
-# SimpleBoard is a board class designed to be flexible and general. For this
-# assignment, it has been renamed to HW1Board. Please refer to
+
+# A board class designed to be flexible and general. For this assignment, it
+# has been renamed to HW2RISCVBoard. Please refer to
 #     gem5/src/python/components/boards/simple_board.py
 # for more detailed documentation. Below is the function signature for
 # the constructor to the SimpleBoard class.
@@ -43,4 +44,5 @@ from gem5.components.boards.simple_board import SimpleBoard
 #         cache_hierarchy: AbstractCacheHierarchy,
 #     )
 
-HW1RiscvBoard = SimpleBoard
+
+HW2RISCVBoard = SimpleBoard
