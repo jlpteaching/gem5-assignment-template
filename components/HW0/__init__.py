@@ -48,10 +48,11 @@ class HW0DDR3_1600_8x8(ChanneledMemory):
 class HW0SingleCycleCPU(SimpleProcessor):
     """
     HW0SingleCycleCPU models a single core CPU with support for the RISC-V
-    instruction set architecture (ISA). This model extends SimpleProcessor
-    class from gem5's standard library.
+    instruction set architecture (ISA).
     CPUTypes.TIMING refers to TimingSimpleCPU which is an internal CPU model in
-    gem5.
+    gem5. This is a "single cycle" CPU model. Each instruction takes 0 cycles
+    to execute (after fetch) except for memory instructions which are a
+    variable number of cycles.
     """
     def __init__(self):
         super().__init__(cpu_type=CPUTypes.TIMING, num_cores=1, isa=ISA.RISCV)
