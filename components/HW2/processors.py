@@ -193,7 +193,7 @@ class HW2MinorCPUStdCore(BaseCPUCore):
 # for your simulations.
 
 
-class HW2MinorCPU(BaseCPUProcessor):
+class HW2PipelinedCPU(BaseCPUProcessor):
     def __init__(
         self,
         issue_latency: int = 2,

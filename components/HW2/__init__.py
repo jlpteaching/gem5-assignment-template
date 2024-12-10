@@ -29,10 +29,18 @@ class HW2MESITwoLevelCache(MESITwoLevelCacheHierarchy):
             num_l2_banks=4,
         )
 
-class HW1DDR4(ChanneledMemory):
+class HW2DDR4(ChanneledMemory):
     """
     HW1DDR3_2400_8x8 models a 1 GiB single channel DDR4 DRAM memory with a data
     bus clocked at 2400MHz.
     """
     def __init__(self):
         super().__init__(DDR4_2400_8x8, 1, 128, size="1GiB")
+
+__all__ = [
+    "HW2RISCVBoard",
+    "HW2MESITwoLevelCache",
+    "HW2DDR4",
+    "HW2TimingSimpleCPU",
+    "HW2PipelinedCPU",
+]
