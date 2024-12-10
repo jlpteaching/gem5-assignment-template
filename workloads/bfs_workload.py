@@ -1,4 +1,4 @@
-# Copyright (c) 2022 The Regents of the University of California
+# Copyright (c) 2022-24 The Regents of the University of California
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -27,7 +27,7 @@
 import pathlib
 
 from .custom_se_workload import CustomSEWorkload
-from gem5.resources.resource import CustomResource
+from gem5.resources.resource import FileResource
 
 
 this_dir = pathlib.Path(__file__).parent.absolute()
@@ -35,5 +35,5 @@ this_dir = pathlib.Path(__file__).parent.absolute()
 
 class BFSWorkload(CustomSEWorkload):
     def __init__(self):
-        bfs_bin = CustomResource(str(this_dir / "bfs/bfs-gem5"))
+        bfs_bin = FileResource(str(this_dir / "bfs/bfs-gem5"))
         super().__init__(parameters={"binary": bfs_bin, "arguments": []})

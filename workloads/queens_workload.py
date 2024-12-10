@@ -33,7 +33,7 @@ from gem5.resources.resource import FileResource
 this_dir = pathlib.Path(__file__).parent.absolute()
 
 
-class BubbleSortWorkload(CustomSEWorkload):
+class QueensWorkload(CustomSEWorkload):
     def __init__(self):
-        bubble_bin = FileResource(str(this_dir / "bubble/bubble-gem5"))
-        super().__init__(parameters={"binary": bubble_bin, "arguments": []})
+        queens_bin = FileResource(str(this_dir / "queens/queens-gem5"))
+        super().__init__(parameters={"binary": queens_bin, "arguments": ["25"]})
