@@ -28,13 +28,21 @@ from gem5.isas import ISA
 from gem5.components.processors.cpu_types import CPUTypes
 from gem5.components.processors.simple_processor import SimpleProcessor
 
-# HW4O3CPU implements a single core out of order processor for the RISC-V ISA.
+# HW5O3CPU implements a multi-core out of order processor for the X86 ISA.
 # It wraps SimpleProcessor from gem5's standard library using hard coded
 # parameters. Please look at
 #   gem5/src/python/gem5/components/processors/simple_processor.py
 # to learn more about SimpleProcessor.
 
 
-class HW4O3CPU(SimpleProcessor):
-    def __init__(self):
-        super().__init__(cpu_type=CPUTypes.O3, num_cores=1, isa=ISA.RISCV)
+class HW5O3CPU(SimpleProcessor):
+    def __init__(self, num_cores: int):
+        """
+        :param num_cores: Number of cores in the processor.
+        """
+        super().__init__(
+            cpu_type=CPUTypes.O3, num_cores=num_cores + 1, isa=ISA.X86
+        )
+
+    def get_actual_num_cores(self):
+        return len(self.cores) - 1

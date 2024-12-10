@@ -1,5 +1,4 @@
 # Copyright (c) 2022 The Regents of the University of California
-# Copyright (c) 2022 EXAscale Performance SYStems (EXAPSYS)
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -25,12 +24,10 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-
 from gem5.components.boards.simple_board import SimpleBoard
 
-
 # A board class designed to be flexible and general. For this assignment, it
-# has been renamed to HW4RISCVBoard. Please refer to
+# has been renamed to HW4X86Board. Please refer to
 #     gem5/src/python/components/boards/simple_board.py
 # for more detailed documentation. Below is the function signature for
 # the constructor to the SimpleBoard class.
@@ -45,4 +42,4 @@ from gem5.components.boards.simple_board import SimpleBoard
 #     )
 
 
-HW4RISCVBoard = SimpleBoard
+HW5X86Board = SimpleBoard

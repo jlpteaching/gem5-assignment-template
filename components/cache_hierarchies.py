@@ -1,4 +1,4 @@
-# Copyright (c) 2022 The Regents of the University of California
+# Copyright (c) 2021 The Regents of the University of California
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -24,67 +24,175 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-from gem5.utils.override import overrides
+
+from gem5.components.cachehierarchies.ruby.\
+    abstract_ruby_cache_hierarchy import AbstractRubyCacheHierarchy
+from gem5.components.cachehierarchies.\
+    abstract_two_level_cache_hierarchy import AbstractTwoLevelCacheHierarchy
+from gem5.coherence_protocol import CoherenceProtocol
+from gem5.isas import ISA
 from gem5.components.boards.abstract_board import AbstractBoard
-from gem5.components.cachehierarchies.ruby.mesi_two_level_cache_hierarchy import (
-    MESITwoLevelCacheHierarchy,
+from gem5.utils.requires import requires
+
+from .network import L1L2ClusterTree
+from gem5.components.cachehierarchies.ruby.\
+    caches.mesi_two_level.l1_cache import L1Cache
+from gem5.components.cachehierarchies.ruby.\
+    caches.mesi_two_level.l2_cache import L2Cache
+from gem5.components.cachehierarchies.ruby.\
+    caches.mesi_two_level.directory import Directory
+from gem5.components.cachehierarchies.ruby.\
+    caches.mesi_two_level.dma_controller import DMAController
+
+from m5.objects import (
+    RubySystem,
+    RubySequencer,
+    DMASequencer,
+    RubyPortProxy,
 )
 
-# HW4MESICache models a two-level cache hierarchy with MESI coherency protocol.
-# It allows for changing size of the L1D cache, its tag access latency and
-# its data access latency. It is used as a base class for other caches
-# that are going to be used for this assignment. All the cache models in this
-# assignment, model a very fast L1I cache (tag and data access latencies of 1)
-# with a capacity of 32 KiB. In addition, all the cache hierarchies have a
-# 128 KiB L2 cache with a tag latency of 5 and a data latency of 6 cycles.
+class HW5MESITwoLevelCacheHierarchy(
+    AbstractRubyCacheHierarchy, AbstractTwoLevelCacheHierarchy
+):
+    """A two level private L1 shared L2 MESI hierarchy.
 
+    In addition to the normal two level parameters, you can also change the
+    number of L2 banks in this protocol.
 
-class HW4MESICache(MESITwoLevelCacheHierarchy):
-    def __init__(self, l1d_size: str, l1_tag_lat: int, l1_data_lat: int):
-        super().__init__(
-            l1i_size="32 KiB",
+    The on-chip network is a point-to-point all-to-all simple network.
+    """
+
+    def __init__(self, xbar_latency: int):
+        AbstractRubyCacheHierarchy.__init__(self=self)
+        AbstractTwoLevelCacheHierarchy.__init__(
+            self,
+            l1i_size="32KiB",
             l1i_assoc=8,
-            l1d_size=l1d_size,
+            l1d_size="32KiB",
             l1d_assoc=8,
-            l2_size="32 KiB",
-            l2_assoc=16,
-            num_l2_banks=4,
+            l2_size="512KiB",
+            l2_assoc=8,
         )
-        self._l1_tag_lat = l1_tag_lat
-        self._l1_data_lat = l1_data_lat
 
-    def incorporate_cache(self, board: AbstractBoard):
-        super().incorporate_cache(board)
-        for controller in self._l1_controllers:
-            controller.L1Dcache.tagAccessLatency = self._l1_tag_lat
-            controller.L1Dcache.dataAccessLatency = self._l1_data_lat
-        for controller in self._l2_controllers:
-            controller.L2cache.tagAccessLatency = 5
-            controller.L2cache.dataAccessLatency = 6
+        self._xbar_latency = xbar_latency
 
+    def incorporate_cache(self, board: AbstractBoard) -> None:
 
-# HW4SmallCache extends HW4MESICache to set the following parameters for its
-# L1D cache. size: 64 KiB, tag access latency: 1, data access latency: 1
+        requires(coherence_protocol_required=CoherenceProtocol.MESI_TWO_LEVEL)
 
+        cache_line_size = board.get_cache_line_size()
 
-class HW4SmallCache(HW4MESICache):
-    def __init__(self):
-        super().__init__(l1d_size="16KiB", l1_tag_lat=1, l1_data_lat=1)
+        self.ruby_system = RubySystem()
 
+        # MESI_Two_Level needs 5 virtual networks
+        self.ruby_system.number_of_virtual_networks = 5
 
-# HW4SmallCache extends HW4MESICache to set the following parameters for its
-# L1D cache. size: 64 KiB, tag access latency: 1, data access latency: 3
+        self.ruby_system.network = L1L2ClusterTree(
+            self.ruby_system, self._xbar_latency
+        )
+        self.ruby_system.network.number_of_virtual_networks = 5
 
+        self._num_l2_banks = board.get_processor().get_actual_num_cores()
+        runtime_isa = board.get_processor().get_isa()
 
-class HW4MediumCache(HW4MESICache):
-    def __init__(self):
-        super().__init__(l1d_size="32KiB", l1_tag_lat=1, l1_data_lat=3)
+        self._l1_controllers = []
+        for i, core in enumerate(board.get_processor().get_cores()):
+            cache = L1Cache(
+                self._l1i_size,
+                self._l1i_assoc,
+                self._l1d_size,
+                self._l1d_assoc,
+                self.ruby_system.network,
+                core,
+                self._num_l2_banks,
+                cache_line_size,
+                runtime_isa,
+                board.get_clock_domain(),
+            )
 
+            cache.sequencer = RubySequencer(
+                version=i,
+                dcache=cache.L1Dcache,
+                clk_domain=cache.clk_domain,
+            )
 
-# HW4SmallCache extends HW4MESICache to set the following parameters for its
-# L1D cache. size: 64 KiB, tag access latency: 3, data access latency: 3
+            if board.has_io_bus():
+                cache.sequencer.connectIOPorts(board.get_io_bus())
 
+            cache.ruby_system = self.ruby_system
 
-class HW4LargeCache(HW4MESICache):
-    def __init__(self):
-        super().__init__(l1d_size="48KiB", l1_tag_lat=3, l1_data_lat=3)
+            core.connect_icache(cache.sequencer.in_ports)
+            core.connect_dcache(cache.sequencer.in_ports)
+
+            core.connect_walker_ports(
+                cache.sequencer.in_ports, cache.sequencer.in_ports
+            )
+
+            # Connect the interrupt ports
+            if runtime_isa == ISA.X86:
+                int_req_port = cache.sequencer.interrupt_out_port
+                int_resp_port = cache.sequencer.in_ports
+                core.connect_interrupt(int_req_port, int_resp_port)
+            else:
+                core.connect_interrupt()
+
+            self._l1_controllers.append(cache)
+
+        self._l2_controllers = [
+            L2Cache(
+                self._l2_size,
+                self._l2_assoc,
+                self.ruby_system.network,
+                self._num_l2_banks,
+                cache_line_size,
+            )
+            for _ in range(self._num_l2_banks)
+        ]
+        # TODO: Make this prettier: The problem is not being able to proxy
+        # the ruby system correctly
+        for cache in self._l2_controllers:
+            cache.ruby_system = self.ruby_system
+
+        self._directory_controllers = [
+            Directory(self.ruby_system.network, cache_line_size, range, port)
+            for range, port in board.get_memory().get_mem_ports()
+        ]
+        # TODO: Make this prettier: The problem is not being able to proxy
+        # the ruby system correctly
+        for dir in self._directory_controllers:
+            dir.ruby_system = self.ruby_system
+
+        self._dma_controllers = []
+        if board.has_dma_ports():
+            dma_ports = board.get_dma_ports()
+            for i, port in enumerate(dma_ports):
+                ctrl = DMAController(self.ruby_system.network, cache_line_size)
+                ctrl.dma_sequencer = DMASequencer(version=i, in_ports=port)
+                self._dma_controllers.append(ctrl)
+                ctrl.ruby_system = self.ruby_system
+
+        self.ruby_system.num_of_sequencers = len(self._l1_controllers) + len(
+            self._dma_controllers
+        )
+        self.ruby_system.l1_controllers = self._l1_controllers
+        self.ruby_system.l2_controllers = self._l2_controllers
+        self.ruby_system.directory_controllers = self._directory_controllers
+
+        if len(self._dma_controllers) != 0:
+            self.ruby_system.dma_controllers = self._dma_controllers
+
+        # Create the network and connect the controllers.
+        self.ruby_system.network.connectControllers(
+            self._l1_controllers,
+            self._l2_controllers,
+            self._directory_controllers[0],
+        )
+        # self.ruby_system.network.connectControllers(
+        #     self._l1_controllers + self._l2_controllers +self._directory_controllers
+        # )
+        self.ruby_system.network.setup_buffers()
+
+        # Set up a proxy port for the system_port. Used for load binaries and
+        # other functional-only things.
+        self.ruby_system.sys_port_proxy = RubyPortProxy()
+        board.connect_system_port(self.ruby_system.sys_port_proxy.in_ports)
