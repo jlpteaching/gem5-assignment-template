@@ -11,11 +11,11 @@ from gem5.components.processors.cpu_types import CPUTypes
 from gem5.components.processors.simple_processor import SimpleProcessor
 from gem5.isas import ISA
 
-HW0RISCVBoard = SimpleBoard
+RISCVBoard = SimpleBoard
 
-class HW0MESITwoLevelCache(MESITwoLevelCacheHierarchy):
+class MESITwoLevelCache(MESITwoLevelCacheHierarchy):
     """
-    HW0MESITwoLevelCache models a two-level cache hierarchy with MESI coherency
+    MESITwoLevelCache models a two-level cache hierarchy with MESI coherency
     protocol. The L1 cache is split into 64KiB of 8-way set associative
     instruction cache and 64KiB of 8-way set associative data cache. The L2
     cache is a unified 1MiB 4-way set associative cache.
@@ -31,9 +31,9 @@ class HW0MESITwoLevelCache(MESITwoLevelCacheHierarchy):
             num_l2_banks=4,
         )
 
-class HW0DDR3_1600_8x8(ChanneledMemory):
+class DDR3(ChanneledMemory):
     """
-    HW0DDR3_1600_8x8 models a 1 GiB single channel DDR3 DRAM memory with a data
+    DDR3_1600_8x8 models a 1 GiB single channel DDR3 DRAM memory with a data
     bus clocked at 1600MHz. This model extends ChanneledMemory from gem5's
     standard library.
     """
@@ -45,9 +45,9 @@ class HW0DDR3_1600_8x8(ChanneledMemory):
             size="1GiB",
         )
 
-class HW0SingleCycleCPU(SimpleProcessor):
+class SingleCycleCPU(SimpleProcessor):
     """
-    HW0SingleCycleCPU models a single core CPU with support for the RISC-V
+    SingleCycleCPU models a single core CPU with support for the RISC-V
     instruction set architecture (ISA).
     CPUTypes.TIMING refers to TimingSimpleCPU which is an internal CPU model in
     gem5. This is a "single cycle" CPU model. Each instruction takes 0 cycles
@@ -58,8 +58,8 @@ class HW0SingleCycleCPU(SimpleProcessor):
         super().__init__(cpu_type=CPUTypes.TIMING, num_cores=1, isa=ISA.RISCV)
 
 __all__ = [
-    "HW0RISCVBoard",
-    "HW0MESITwoLevelCache",
-    "HW0DDR3_1600_8x8",
-    "HW0SingleCycleCPU",
+    "RISCVBoard",
+    "MESITwoLevelCache",
+    "DDR3",
+    "SingleCycleCPU",
 ]
