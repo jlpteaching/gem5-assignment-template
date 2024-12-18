@@ -1,0 +1,18 @@
+[
+    {
+        "category": "workload",
+        "id": "hello_world_workload",
+        "description": "A simple workload that prints 'Hello, World!'",
+        "function": "set_se_binary_workload",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "resources": {
+            "binary": {
+                "id": "riscv-hello",
+                "resource_version": "1.0.0"
+            }
+        }
+    }
+]
