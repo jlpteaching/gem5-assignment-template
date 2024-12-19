@@ -28,7 +28,7 @@ In this assignment you are going to develop and run a set of experiments to test
 We will use the Iron Law of Performance to guide our experiments.
 We will investigate the effects of changing the ISA and the CPU frequency on the performance of a computer system.
 
-Our research question is: For a simple CPU model (i.e., fixed microarchitecture), does ISA or technology make a bigger impact on system performance?
+Our research question is: **For a simple CPU model (i.e., fixed microarchitecture), does ISA or technology make a bigger impact on system performance?**
 
 You are going to use a matrix multiplication program as the workload for your experiments.
 Matrix multiplication is a commonly used kernel in many domains such as linear algebra, machine learning, and fluid dynamics.
@@ -153,18 +153,25 @@ You will submit this assignment via GitHub Classroom.
 
 Make sure you include both your runscript, an explanation of how to use your script, and the questions to the questions in the `questions.md` file.
 
+### Explanation of how to use your script
+
+Include a detailed explanation of how to use your script and how you use your script to generate your answers (this will be more applicable in future assignments).
+Make sure that all paths are relative to this directory (`assignment-1/`).
+The code included in the "Example command to run the script" section should be able to be copied and pasted into a terminal and run without modification.
+
+- You should include a sentence or two which describes what the script (or scripts) do under "Explanation of the script" in `questions.md`.
+- You should include the path to the script under "Script to run" in `questions.md`.
+- You should include any parameters that need to be passed to the script under "Parameters to script (if any)" in `questions.md`.
+- You should include each command used to gather data under "Command used to gather data" in `questions.md`.
+  - Make sure this can by copy-pasted and run in your codespace without modification.
+  - If you need other files to run your script, make sure to include those files when you commit your changes.
+
 ## Grading
 
 - **25 points** gem5 runscript and explanation of how to use your script
 - **50 points** for the questions in the report
 - **25 points** for the research question
 - **10 points** for the next steps
-
-### Explanation of how to use your script
-
-Include a detailed explanation of how to use your script and how you use your script to generate your answers (this will be more applicable in future assignments).
-Make sure that all paths are relative to this directory (`assignment-0/`).
-The code included in the "Example command to run the script" section should be able to be copied and pasted into a terminal and run without modification.
 
 ## Academic misconduct reminder
 

@@ -12,10 +12,46 @@ Use markdown formatting.
 
 ### Parameters to script (if any)
 
-### Example command to run the script
+### Commands used to gather data
+
+#### Commands used for Step II
 
 ```shell
-gem5
+
+```
+
+```shell
+
+```
+
+```shell
+
+```
+
+#### Commands used for Step III
+
+```shell
+
+```
+
+```shell
+
+```
+
+```shell
+
+```
+
+```shell
+
+```
+
+```shell
+
+```
+
+```shell
+
 ```
 
 ## [75 points] Questions

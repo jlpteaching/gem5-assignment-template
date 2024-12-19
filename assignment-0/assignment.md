@@ -16,7 +16,6 @@ Title: ECS 201A Assignment 0
 - [Submission](#submission)
 - [Grading](#grading)
 - [Academic misconduct reminder](#academic-misconduct-reminder)
-- [Hints](#hints)
 
 ## Introduction
 
@@ -381,7 +380,7 @@ This way you will not need to create a configuration script for every system you
 You can pass your input arguments to your configuraion script following the path to your configuration script.
 gem5 will then capture that part of the command line and pass it to your configuration script.
 You will then have to parse that part of the command line to read your input arguments from the command line.
-Below is how you can invoke gem5 with the flags we discussed before and input arguments to your conifuration script.
+Below is how you can invoke gem5 with the flags we discussed before and input arguments to your configuration script.
 
 ```shell
 gem5 [-re] {path to your configuration script} [input arguments to your configuration script]
@@ -401,17 +400,24 @@ You will submit this assignment via GitHub Classroom.
 
 Make sure you include both your runscript, an explanation of how to use your script, and the questions to the questions in the `questions.md` file.
 
-## Grading
-
-- **50 points** `run.py` script located at `assignment-0/run.py`
-- **25 points** for the `questions.md` file located at `assignment-0/questions.md`
-- **25 points** for explanation of how to use your script located at `assignment-0/questions.md`
-
 ### Explanation of how to use your script
 
 Include a detailed explanation of how to use your script and how you use your script to generate your answers (this will be more applicable in future assignments).
 Make sure that all paths are relative to this directory (`assignment-0/`).
 The code included in the "Example command to run the script" section should be able to be copied and pasted into a terminal and run without modification.
+
+- You should include a sentence or two which describes what the script (or scripts) do under "Explanation of the script" in `questions.md`.
+- You should include the path to the script under "Script to run" in `questions.md`.
+- You should include any parameters that need to be passed to the script under "Parameters to script (if any)" in `questions.md`.
+- You should include the command used to gather data under "Command used to gather data" in `questions.md`.
+  - Make sure this can by copy-pasted and run in your codespace without modification.
+  - If you need other files to run your script, make sure to include those files when you commit your changes.
+
+## Grading
+
+- **50 points** `run.py` script located at `assignment-0/run.py`
+- **25 points** for the `questions.md` file located at `assignment-0/questions.md`
+- **25 points** for explanation of how to use your script located at `assignment-0/questions.md`
 
 ## Academic misconduct reminder
 
