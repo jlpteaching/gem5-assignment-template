@@ -31,6 +31,8 @@
     "onCreateCommand": "./.devcontainer/on_create.sh",
     "postStartCommand": "./.devcontainer/post_start.sh",
     "containerEnv": {
-        "GEM5_CONFIG": "${containerWorkspaceFolder}/gem5-config.json"
+        "GEM5_CONFIG": "${containerWorkspaceFolder}/gem5-config.json",
+        "GEM5_ROOT": "${containerWorkspaceFolder}/gem5",
+        "BASE_PATH": "${containerWorkspaceFolder}"
     }
 }
