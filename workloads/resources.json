@@ -14,5 +14,95 @@
                 "resource_version": "1.0.0"
             }
         }
+    },
+    {
+        "category": "binary",
+        "id": "mm-riscv",
+        "description": "A simple implementation of matrix multiplication in RISC-V",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "url": "file:///workspaces/gem5-assignment-template/workloads/matmul-basic/mm-riscv",
+        "md5sum": "286c8d5b8b67d04bdbeb72e65bf8c271"
+    },
+    {
+        "category": "binary",
+        "id": "mm-x86",
+        "description": "A simple implementation of matrix multiplication in x86",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "url": "file:///workspaces/gem5-assignment-template/workloads/matmul-basic/mm-x86",
+        "md5sum": "9b5379a9ef6c169ebb4f15d1dcb592d9"
+    },
+    {
+        "category": "binary",
+        "id": "mm-arm",
+        "description": "A simple implementation of matrix multiplication in ARM",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "url": "file:///workspaces/gem5-assignment-template/workloads/matmul-basic/mm-arm",
+        "md5sum": "2a2862bcc5ee9b6d7a984ef1eced99ab"
+    },
+    {
+        "category": "workload",
+        "id": "matrix_multiply_riscv_run",
+        "description": "A workload that runs matrix multiplication in RISC-V",
+        "function": "set_se_binary_workload",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "resources": {
+            "binary": {
+                "id": "mm-riscv",
+                "resource_version": "1.0.0"
+            }
+        },
+        "additional_params": {
+            "arguments": ["64"]
+        }
+    },
+    {
+        "category": "workload",
+        "id": "matrix_multiply_x86_run",
+        "description": "A workload that runs matrix multiplication in x86",
+        "function": "set_se_binary_workload",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "resources": {
+            "binary": {
+                "id": "mm-x86",
+                "resource_version": "1.0.0"
+            }
+        },
+        "additional_params": {
+            "arguments": ["64"]
+        }
+    },
+    {
+        "category": "workload",
+        "id": "matrix_multiply_arm_run",
+        "description": "A workload that runs matrix multiplication in ARM",
+        "function": "set_se_binary_workload",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "resources": {
+            "binary": {
+                "id": "mm-arm",
+                "resource_version": "1.0.0"
+            }
+        },
+        "additional_params": {
+            "arguments": ["64"]
+        }
     }
 ]
