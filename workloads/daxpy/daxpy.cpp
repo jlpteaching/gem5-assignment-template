@@ -22,9 +22,9 @@ int main()
 #endif
 
   // Start of daxpy loop
-  for (int i = 0; i < N; ++i)
+  for (int i = 0; i < N*10; ++i)
   {
-    Y[i] = alpha * X[i] + Y[i];
+    Y[i%N] = alpha * X[i%N] + Y[i%N];
   }
   // End of daxpy loop
 

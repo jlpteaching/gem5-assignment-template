@@ -114,7 +114,7 @@
             "24.1"
         ],
         "url": "file:///workspaces/gem5-assignment-template/workloads/daxpy/daxpy",
-        "md5sum": "dcffea8806175a3ea40c521eabd4661c"
+        "md5sum": "929f9f86b1d84ed009f96d54f8f3e8a0"
     },
     {
         "category": "binary",
@@ -125,7 +125,7 @@
             "24.1"
         ],
         "url": "file:///workspaces/gem5-assignment-template/workloads/daxpy/daxpy-gem5",
-        "md5sum": "4515e0c99e62c67f29c969ad71375fcf"
+        "md5sum": "223d6b38ef1ece75beaecb825ea2c319"
     },
     {
         "category": "workload",

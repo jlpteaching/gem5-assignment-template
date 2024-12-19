@@ -105,7 +105,7 @@ Models for the board, cache hierarchy, and memory will remain a constant in your
   See the code in `components/processors.py` for more information.
 - Cache models: You will only use `MESITwoLevelCache` in this assignment.
 - Memory models: You will only use `DDR4` in this assignment.
-- Clock frequency: You can use a clock frequency of `4 GHz` for all of your simulations.
+- Clock frequency: Use a clock frequency of `1 GHz` for all of your simulations.
 
 ### Region of Interest (ROI)
 
@@ -157,7 +157,7 @@ Complete the following steps and answer the questions for your report.
 Collect data from your simulation runs and use simulator statistics to answer the questions.
 Use clear reasoning and visualization to drive your conclusions.
 
-### Step I: Write down your hypotheses and experimental setup
+### Step I: Write down your hypotheses
 
 Before starting simulation and analysis, you should be able to identify the ROI of a  program.
 
@@ -187,7 +187,7 @@ This statistic represents a distribution of different operation classes executed
 
 Now, that we have the instruction mix, let's answer the following questions (the same as above).
 
-1. For the ROI of this workload, what percentage of instructions do you think will be integer, floating point, and memory operations? Explain your reasoning.
+1. For the ROI of this workload, what percentage of instructions are integer, floating point, and memory operations? Explain your reasoning.
 2. Estimate how the performance will change under the following conditions:
   a. If the latency of integer operations are increased from 1 to 6 cycles, but the system is pipelined.
   b. If the latency of floating point operations are increased from 6 to 12 cycles, but the system is pipelined.
@@ -222,7 +222,7 @@ Design three experiments to test your hypothesis about the performance impact of
 
 ### Research question:
 
-Use the data from the experiements that you ran in [Step II](#step-ii-developing-and-running-the-experiments) to answer the following questions.
+Use the data from the experiments that you ran in [Step II](#step-ii-developing-and-running-the-experiments) to answer the following questions.
 
 1. Does changing the latency of the integer operations, floating point operations, or the issue latency have a bigger impact on the performance of the system?
 2. Are these changes the main factor in the performance of the system for the DAXPY workload? If not, what other factors might be affecting the performance of the system?
@@ -231,23 +231,19 @@ Use the data from the experiements that you ran in [Step II](#step-ii-developing
 
 - Take a look at the assembly code for the `DAXPY` loop below (you can generate the complete assembly for it under `workloads/daxpy` with the makefile).
 Can you find some dependencies between the instructions?
-Do you think only looking at the instruction mix gathered from [Step I](#step-i-write-down-your-hypotheses-and-experimental-setup) provided enough information to apply instruction mix and the Iron Law?
+Do you think only looking at the instruction mix gathered from [Step I](#step-i-write-down-your-hypotheses) provided enough information to apply instruction mix and the Iron Law?
 - Think about the other stages of the pipeline, in this question we have only focused on **decode** and **execute**.
 
 ```asm
-.L35:
-# daxpy.cpp:27:     Y[i] = alpha * X[i] + Y[i];
-  fld  fa4,0(a5)  # MEM[(double *)_56], MEM[(double *)_56]
-  fld  fa5,0(s2)  # MEM[(double *)_49], MEM[(double *)_49]
-# daxpy.cpp:25:   for (int i = 0; i < N; ++i)
-  addi  a5,a5,8  #, ivtmp.133, ivtmp.133
-  addi  s2,s2,8  #, ivtmp.132, ivtmp.132
-# daxpy.cpp:27:     Y[i] = alpha * X[i] + Y[i];
-  fmadd.d  fa5,fa5,fa3,fa4  # _5, MEM[(double *)_49], tmp181, MEM[(double *)_56]
-# daxpy.cpp:27:     Y[i] = alpha * X[i] + Y[i];
-  fsd  fa5,-8(a5)  # _5, MEM[(double *)_56]
-# daxpy.cpp:25:   for (int i = 0; i < N; ++i)
-  bne  s1,a5,.L35  #, _14, ivtmp.133,
+  call  m5_work_begin@plt  #
+# daxpy.cpp:27:     Y[i%N] = alpha * X[i%N] + Y[i%N];
+  li  a3,3153920    # tmp338,
+  fld  fa3,.LC4,a5  # tmp291,, tmp304
+  li  a1,-3145728   # tmp257,
+  addi  a5,a3,1824  #, tmp337, tmp338
+  add  a5,a5,a1     # tmp257, tmp337, tmp337
+  ...
+# daxpy.cpp:32:   m5_work_end(0,0);
 ```
 
 **NOTE**: Make sure to keep the simulation output for all of your simulation runs for your later analyses.
@@ -257,7 +253,7 @@ Do you think only looking at the instruction mix gathered from [Step I](#step-i-
 Answer the following questions in your report.
 Include information on how you designed the experiment, what you measured, and the analyzed the data.
 
-1. Change the clock to be lower (e.g., 1 GHz). How does a lower clock affect the answers to the two research questions?
+1. Change the clock to be higher (e.g., 4 GHz). How does a higher clock affect the answers to the two research questions?
 
 ## Submission
 
@@ -286,9 +282,9 @@ The code included in the "Example command to run the script" section should be a
 ## Grading
 
 - **25 points** gem5 runscript and explanation of how to use your script
-- **50 points** for the questions in the report
-- **25 points** for the research question
-- **10 points** for the next steps
+- **45 points** for the questions in the report
+- **30 points** for the research question
+- **25 points** for the next steps
 
 ## Academic misconduct reminder
 
