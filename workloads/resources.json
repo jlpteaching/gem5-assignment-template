@@ -104,5 +104,59 @@
         "additional_params": {
             "arguments": ["64"]
         }
+    },
+    {
+        "category": "binary",
+        "id": "daxpy-riscv",
+        "description": "A simple implementation of daxpy in RISC-V",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "url": "file:///workspaces/gem5-assignment-template/workloads/daxpy/daxpy",
+        "md5sum": "dcffea8806175a3ea40c521eabd4661c"
+    },
+    {
+        "category": "binary",
+        "id": "daxpy-gem5-riscv",
+        "description": "A simple implementation of daxpy in RISC-V with gem5 ROI annotations",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "url": "file:///workspaces/gem5-assignment-template/workloads/daxpy/daxpy-gem5",
+        "md5sum": "4515e0c99e62c67f29c969ad71375fcf"
+    },
+    {
+        "category": "workload",
+        "id": "daxpy_riscv_run",
+        "description": "A workload that runs daxpy in RISC-V",
+        "function": "set_se_binary_workload",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "resources": {
+            "binary": {
+                "id": "daxpy-riscv",
+                "resource_version": "1.0.0"
+            }
+        }
+    },
+    {
+        "category": "workload",
+        "id": "daxpy_riscv_gem5_run",
+        "description": "A workload that runs daxpy in RISC-V with gem5 ROI annotations",
+        "function": "set_se_binary_workload",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "resources": {
+            "binary": {
+                "id": "daxpy-gem5-riscv",
+                "resource_version": "1.0.0"
+            }
+        }
     }
 ]

@@ -1,18 +1,20 @@
 GEM5_ROOT ?= ../../gem5
 
-all: daxpy daxpy-asm daxpy-gem5 daxpy-gem5-asm
+all: daxpy daxpy-gem5
 
 clean:
-	rm daxpy daxpy-asm daxpy-gem5 daxpy-gem5-asm
+	rm -f daxpy daxpy-asm daxpy-gem5 daxpy-gem5-asm
 
 daxpy: daxpy.cpp
-	riscv64-unknown-linux-gnu-g++ daxpy.cpp -o daxpy -static -O2
+	riscv64-linux-gnu-g++ daxpy.cpp -o daxpy -static -O2
+	md5sum daxpy
 
 daxpy-asm: daxpy.cpp
-	riscv64-unknown-linux-gnu-g++ daxpy.cpp -o daxpy-asm -static -O2 -S -fverbose-asm
+	riscv64-linux-gnu-g++ daxpy.cpp -o daxpy-asm -static -O2 -S -fverbose-asm
 
 daxpy-gem5: daxpy.cpp
-	riscv64-unknown-linux-gnu-g++ daxpy.cpp -o daxpy-gem5 -static -O2 -I$(GEM5_ROOT)/include -DGEM5 -L$(GEM5_ROOT)/util/m5/build/riscv/out -lm5
+	riscv64-linux-gnu-g++ daxpy.cpp -o daxpy-gem5 -static -O2 -I$(GEM5_ROOT)/include -DGEM5 -L$(GEM5_ROOT)/util/m5/build/riscv/out -lm5
+	md5sum daxpy-gem5
 
 daxpy-gem5-asm: daxpy.cpp
-	riscv64-unknown-linux-gnu-g++ daxpy.cpp -o daxpy-gem5-asm -static -O2 -I$(GEM5_ROOT)/include -DGEM5 -L$(GEM5_ROOT)/util/m5/build/riscv/out -lm5 -S -fverbose-asm
+	riscv64-linux-gnu-g++ daxpy.cpp -o daxpy-gem5-asm -static -O2 -I$(GEM5_ROOT)/include -DGEM5 -L$(GEM5_ROOT)/util/m5/build/riscv/out -lm5 -S -fverbose-asm
