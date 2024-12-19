@@ -13,11 +13,13 @@ from gem5.components.processors.cpu_types import CPUTypes
 from gem5.components.processors.simple_processor import SimpleProcessor
 from gem5.isas import ISA
 
-HW1RISCVBoard = SimpleBoard
+RISCVBoard = SimpleBoard
+X86Board = SimpleBoard
+ArmBoard = SimpleBoard
 
-class HW1MESITwoLevelCache(MESITwoLevelCacheHierarchy):
+class MESITwoLevelCache(MESITwoLevelCacheHierarchy):
     """
-    HW1MESITwoLevelCache models a two-level cache hierarchy with MESI coherency
+    MESITwoLevelCache models a two-level cache hierarchy with MESI coherency
     protocol. The L1 cache is split into 64KiB of 8-way set associative
     instruction cache and 64KiB of 8-way set associative data cache. The L2
     cache is a unified 1MiB 4-way set associative cache.
@@ -33,9 +35,9 @@ class HW1MESITwoLevelCache(MESITwoLevelCacheHierarchy):
             num_l2_banks=4,
         )
 
-class HW1DDR3(ChanneledMemory):
+class DDR3(ChanneledMemory):
     """
-    HW1DDR3_1600_8x8 models a 1 GiB single channel DDR3 DRAM memory with a data
+    DDR3_1600_8x8 models a 1 GiB single channel DDR3 DRAM memory with a data
     bus clocked at 1600MHz. This model extends ChanneledMemory from gem5's
     standard library.
     """
@@ -48,26 +50,28 @@ class HW1DDR3(ChanneledMemory):
         )
 
 
-class HW1DDR4(ChanneledMemory):
+class DDR4(ChanneledMemory):
     """
-    HW1DDR3_2400_8x8 models a 1 GiB single channel DDR4 DRAM memory with a data
+    DDR3_2400_8x8 models a 1 GiB single channel DDR4 DRAM memory with a data
     bus clocked at 2400MHz.
     """
     def __init__(self):
         super().__init__(DDR4_2400_8x8, 1, 128, size="1GiB")
 
 
-class HW1LPDDR5(ChanneledMemory):
+class LPDDR5(ChanneledMemory):
     """
     LPDDR5_6400_1x16_8B_BL32 models a 1 GiB 4 channel LPDDR5 DRAM memory with a
     data bus clocked at 6400MHz.
+
+    The theoretical peak bandwidth of LPDDR5 is
     """
     def __init__(self):
         super().__init__(LPDDR5_6400_1x16_8B_BL32, 4, 128, size="1GiB")
 
-class HW1SingleCycleCPU(SimpleProcessor):
+class RISCVSingleCycleCPU(SimpleProcessor):
     """
-    HW1SingleCycleCPU models a single core CPU with support for the RISC-V
+    SingleCycleCPU models a single core CPU with support for the Arm
     instruction set architecture (ISA).
     CPUTypes.TIMING refers to TimingSimpleCPU which is an internal CPU model in
     gem5. This is a "single cycle" CPU model. Each instruction takes 0 cycles
@@ -77,21 +81,39 @@ class HW1SingleCycleCPU(SimpleProcessor):
     def __init__(self):
         super().__init__(cpu_type=CPUTypes.TIMING, num_cores=1, isa=ISA.RISCV)
 
-class HW1PipelinedCPU(SimpleProcessor):
+class ArmSingleCycleCPU(SimpleProcessor):
     """
-    HW1PipelinedCPU models a single core CPU with support for the RISC-V
-    instruction set architecture (ISA). This model uses the MINOR CPU model
-    which is an in-order pipelined CPU with 4 stages.
+    SingleCycleCPU models a single core CPU with support for the Arm
+    instruction set architecture (ISA).
+    CPUTypes.TIMING refers to TimingSimpleCPU which is an internal CPU model in
+    gem5. This is a "single cycle" CPU model. Each instruction takes 0 cycles
+    to execute (after fetch) except for memory instructions which are a
+    variable number of cycles.
     """
     def __init__(self):
-        super().__init__(CPUTypes.MINOR, num_cores=1, isa=ISA.RISCV)
+        super().__init__(cpu_type=CPUTypes.TIMING, num_cores=1, isa=ISA.ARM)
+
+class X86SingleCycleCPU(SimpleProcessor):
+    """
+    SingleCycleCPU models a single core CPU with support for the x86
+    instruction set architecture (ISA).
+    CPUTypes.TIMING refers to TimingSimpleCPU which is an internal CPU model in
+    gem5. This is a "single cycle" CPU model. Each instruction takes 0 cycles
+    to execute (after fetch) except for memory instructions which are a
+    variable number of cycles.
+    """
+    def __init__(self):
+        super().__init__(cpu_type=CPUTypes.TIMING, num_cores=1, isa=ISA.X86)
 
 __all__ = [
-    "HW1RISCVBoard",
-    "HW1MESITwoLevelCache",
-    "HW1DDR3",
-    "HW1DDR4",
-    "HW1LPDDR5",
-    "HW1SingleCycleCPU",
-    "HW1PipelinedCPU",
+    "RISCVBoard",
+    "X86Board",
+    "ArmBoard",
+    "MESITwoLevelCache",
+    "DDR3",
+    "DDR4",
+    "LPDDR5",
+    "RISCVSingleCycleCPU",
+    "ArmSingleCycleCPU",
+    "X86SingleCycleCPU",
 ]

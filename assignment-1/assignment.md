@@ -10,11 +10,10 @@ Originally from University of Wisconsin-Madison CS/ECE 752 .
 
 Modified for ECS 201A, Winter 2023.
 
-**Due on 01/20/2023 11:59 pm (PST)**: See [Submission](#submission) for details
+**Due on XXX 11:59 pm (PST)**: See [Submission](#submission) for details
 
 ## Table of Contents
 
-- [Administrivia](#adminstrivia)
 - [Introduction](#introduction)
 - [Workload](#workload)
 - [Experimental setup](#experimental-setup)
@@ -22,25 +21,22 @@ Modified for ECS 201A, Winter 2023.
 - [Submission](#submission)
 - [Grading](#grading)
 - [Academic misconduct reminder](#academic-misconduct-reminder)
-- [Hints](#hints)
-
-## Adminstrivia
-
-You should submit your report in **pairs** and in **PDF** format. Make sure to start early and post any questions you might have on Piazza. The standard late assignemt policy applies.
 
 ## Introduction
 
-In this assignment you are going to:
+In this assignment you are going to develop and run a set of experiments to test the effects of changing different components of a computer system on its performance.
+We will use the Iron Law of Performance to guide our experiments.
+We will investigate the effects of changing the ISA, the CPU frequency, and the memory system on the performance of a computer system.
 
-- measure the performance differences of a single-cycle like processor vs an in-order pipelined processor,
-- see how the measured performance scales as CPU clock frequency changes,
-- and see the effect of memory bandwidth and latency on measured performance.
+Our research question is: For a simple CPU model (i.e., fixed microarchitecture), does ISA, memory, or technology make a bigger impact on system performance?
 
-You are going to use a matrix multiplication program as the workload for your experiments. Matrix multiplication is a commonly used kernel in many domains such as linear algebra, machine learning, and fluid dynamics.
+You are going to use a matrix multiplication program as the workload for your experiments.
+Matrix multiplication is a commonly used kernel in many domains such as linear algebra, machine learning, and fluid dynamics.
 
 ## Workload
 
-For this assignment we are going to use a matrix multiplication program as our workload. The program takes and integer as input that determines the `size` of the square matrices `A`, `B`, and `C`.
+For this assignment we are going to use a matrix multiplication program as our workload.
+The program takes and integer as input that determines the `size` of the square matrices `A`, `B`, and `C`.
 
 ```cpp
 void multiply(double **A, double **B, double **C, int size)
@@ -55,14 +51,22 @@ void multiply(double **A, double **B, double **C, int size)
 }
 ```
 
-You can find the definitions for the workload objects in gem5 under `workloads/workloads.py`.
-In this assignment, we will only be using `MatMulWorkload`.
-In order to create an object of `MatMulWorkload` you just need to pass matrix size (an integer) `mat_size` to its constructor (`__init__`) function.
-**In your configuration choose an appropriate value for `mat_size`**. It should be large enough that it makes your workload interesting.
-Since changing `mat_size` will influence simulation time, as a guideline, choose a value that results in simulation times less than 10 minutes (hostSeconds < 600).
-We found that setting mat_size to 224 will result in a simulation time of around 5 minutes which is a reasonable compromise.
+We have provided three gem5 workloads for you that you can get with `obtain_resources`, one for RISC-V, one for Arm, and one for x86.
+The names are:
 
-**CAVEAT [PLEASE READ CAREFULLY]**: When using this workload with gem5, your simulation will output two sets of statistics in the same `stats.txt` file. Each set of statistics start with a line like below.
+- `matrix_multiply_riscv_run`
+- `matrix_multiply_arm_run`
+- `matrix_multiply_x86_run`
+
+### Details of workloads
+
+These workloads have gem5 region of interest (ROI) markers that allow you to measure the performance of the matrix multiplication program.
+By default, at the beginning of the ROI the statistics will be reset.
+At the end of the ROI, the statistics will be dumped to the `stats.txt` file.
+Additionally, when gem5 exits, the statistics will be dumped to the `stats.txt` file.
+
+> **CAVEAT [PLEASE READ CAREFULLY]**: When using these workloads with gem5, your simulation will output two sets of statistics in the same `stats.txt` file.
+> Each set of statistics start with a line like below.
 
 ```text
 ---------- Begin Simulation Statistics ----------
@@ -72,96 +76,108 @@ Please make sure to **ignore** the **second** set of generated statistics in you
 
 ## Experimental setup
 
-For this assignment, we will set up an experiment to see effect of changing a system's component on it performance. You will need to write configuration scripts using gem5 stdlib that allow you to change the CPU model, CPU and cache frequency, and memory model.
-Under the `components` directory, you will find modules that define the different models that you should use in your configuration scritps.
+For this assignment, we will set up an experiment to see effect of changing a system's component on it performance.
+You will need to write configuration scripts using gem5's stdlib that allow you to change the ISA, CPU and cache frequency, and memory model.
+Under the `components` directory, you will find modules that define the different models that you should use in your configuration scripts.
 
-- Board models: You can find all the models you need to use for your CPU (processor) under `components/boards.py`. You will only be using `HW1RISCVBoard` in this assignment.
-- CPU models: You can find all the models you need to use for your CPU (processor) under `components/processors.py`.
-- Cache models: You can find all the models you need to use for your cache hierarchy under `components/cache_hierarchies.py`. You will only use `HW1MESITwoLevelCache` in this assignment.
-- Memory models: You can find all the models you need to use for your memory under `components/memories.py`.
+- Board models: You will using `RISCVBoard`, `X86Board`, and `ArmBoard` in this assignment.
+- CPU models: You will be using `RISCVSingleCycleCPU`, `ArmSingleCycleCPU`, and `X86SingleCycleCPU` for this assignment.
+- Cache models: You will be using `MESITwoLevelCache` in this assignment.
+- Memory models: There are three memory models that you will be using in this assignment: `DDR3`, `DDR4`, and `LPDDR5`.
+
+Remember, you should use the `--outdir` option to specify the output directory for your simulation results so that they do not overwrite each other.
+
+Each simulation should take between 1-5 minutes.
 
 ## Analysis and simulation
 
-Complete the following steps and answer the questions for your report. Collect data from your simulation runs and use simulator statistics to answer the questions. Use clear reasoning and visualization to drive your conclusions. You are allowed to submit your reports in **pairs** and in **PDF** format.
+Complete the following steps and answer the questions for your report.
+Collect data from your simulation runs and use simulator statistics to answer the questions.
+Use clear reasoning and visualization to drive your conclusions.
 
 Before starting with simulations, answer the following questions in your report.
 
-1. What metrics should you use to measure the performance of a computer system? Why?
-2. Why is it not always possible to use the same metrics for performance to evaluate computer systems?
+### Step I: Write down your hypotheses and experimental setup
 
-### Step I: Changing the CPU model and CPU and cache clock frequency
+1. When you change the ISA from RISC-V to x86, what do you expect to happen to the performance of the system? Use the Iron Law of Performance to justify your answer.
+2. When you change the CPU frequency from 1GHz to 4GHz, what do you expect to happen to the performance of the system? Use the Iron Law of Performance to justify your answer.
+3. When you change the CPU frequency from 1GHz to 4GHz, will the speedup from 1GHz to 4GHz be the same for all ISAs? Why or why not?
+4. When you change the memory model from DDR3 to DDR4, what do you expect to happen to the performance of the system? Use the Iron Law of Performance to justify your answer.
 
-Before running any simulations try to answer these questions.
+### Step II: Investigating the impact of the ISA
 
-1. At the same clock frequency, between a single-cycle CPU (`HW1TimingSimpleCPU`) and an in-order pipelined CPU (`HW1MinorCPU`) which CPU will exhibit better performance? Why?
-2. Between a single-cycle CPU (`HW1TimingSimpleCPU`) and an in-order pipelined CPU (`HW1MinorCPU`) CPU which one is going to be more sensitive to changing the clock frequency? Why?
+Write a gem5 runscript that allows you to run either the RISC-V, Arm, or x86 matrix multiplication program.
+Use a frequency of 1 GHz and DDR3 as the memory model.
 
-In your configuration script allow for:
+In your report, answer the following questions after simulation supported with data.
 
-- changing the CPU model between `HW1TimingSimpleCPU` and `HW1MinorCPU`
-- and changing the clock frequency between `1GHz`, `2GHz`, and `4GHz`
+1. What is the *performance* for matrix multiplication for each ISA?
+2. Can you match the difference in performance to the Iron Law of Performance? Why or why not?
 
-Use `HW1DDR3_1600_8x8` as the memory model.
+> **Hint**: In `workloads/matmul-basic` the makefile will generate the assembly code for the matrix multiplication program for each ISA based on the binary provided.
+> You may find that useful to understand the differences between the ISAs.
 
-In your report, answer the same questions after simulation supported with data. A complete set of simualtion data for this step should include **6 configurations** (2 options for CPU model * 3 options for clock frequency).
+### Step III: Investigating the impact of the CPU and cache clock frequency
 
-### Step II: Changing the CPU and memory model
+Add the ability to change the frequency of the CPU and cache in your configuration script.
+Use DDR3 as the memory model.
 
-Before running any simulations try to answer these questions:
+In your report, answer the following questions after simulation supported with data.
 
-1. If you double the double the performance of memory (double the bandwidth and halfen the latency) in a computer system, will the overall perforamance double as well? Why?
-2. Which CPU model (between `HW1TimingSimpleCPU` and `HW1MinorCPU`) will benefit more from improving memory performance? Why?
+1. What is the speedup of the system when you change the CPU and cache frequency from 1GHz to 2GHz to 4GHz? Show the speedup for each ISA.
+2. Does the Iron Law of Performance correctly predict the speedup for each ISA? Why or why not?
 
-In your configuration allow for:
+### Step IV: Investigating the impact of the memory model
 
-- changing the CPU model between `HW1TimingSimpleCPU` and `HW1MinorCPU`
-- and changine the memory model between `HW1DDR3_1600_8x8`, `HW1DDR3_2133_8x8`, and `HW1LPDDR3_1600_1x32`.
+Add the ability to change the memory model in your configuration script.
+Use 1GHz as the clock frequency.
 
-Use `4GHz` as the clock frequency.
+In your report, answer the following questions after simulation supported with data.
 
-**NOTE**: To become familiar with the different memory models you will use in this assignment, please read through the documentation for the different memory models in `components/memories.py`.
+1. What is the speedup of DDR4 and LPDDR5 memory models compared to DDR3? Show the speedup for each ISA.
+2. What part of the Iron Law of Performance is most affected by changing the memory architecture?
 
-In your report, answer the same questions after simulation supported with data. A complete set of simualtion data for this step should include **6 configurations** (2 options for CPU model * 3 options for memory model).
+### Research question:
 
-### Step III: General questions
+Answer the following question in your report based on the four steps above.
 
-Now that you have completed your simulation runs and analyses. Answer this last question in your report.
+*For a simple CPU model (i.e., fixed microarchitecture), does ISA, memory, or technology make a bigger impact on system performance?*
 
-1. If you were to use a different application, do you think your conclusions would change? Why?
+We gathered data on the effects of the ISA with a fixed memory and frequency, the effects of the frequency with a fixed ISA and memory, and the effects of the memory with a fixed ISA and frequency.
+Use the data you gathered to support your answer to the research question.
+
+### Next steps (required 201A, extra credit 154B):
+
+Answer the following questions in your report.
+
+1. If the workload had a significantly better (lower) CPI, how would that change the results of the experiments? E.g., what would happen if the workload and microarchitecture supported a CPI of 0.25 (or 4 instructions per cycle)?
 
 ## Submission
 
-Your submission is split into two parts. Read the following sections for details on each part.
+You will submit this assignment via GitHub Classroom.
 
-### Part I: Reproducibility package
+1. Accept the assignment by clicking on the link provided in the announcement.
+2. Create a Codespace for the assignment on your repository.
+3. Fill out the `questions.md` file.
+4. Commit your changes.
 
-As part of your submission, you should include any script/code/file that might be needed to rerun your gem5 experiments. This may include configuration scripts that define set up the simulation, python/shell/etc. scripts that drive your simulations using your configuration scripts, any document including instruction on how to run your simulations. You should do this through your assignment's repository. Make sure to commit and push your changes to your local repository to your remote. Add clear and relevant commit messages to your commits. **NOTE**: Any commits/pushes past the assignment deadline will be ignored.
-
-### Part II: Report
-
-As mentioned before, you are allowed to submit your assignments in **pairs** and in **PDF** format.
-You should submit your report on [gradescope](https://www.gradescope.com/courses/487868).
-In your report answer the questions presented in [Analysis and simulation](#analysis-and-simulation), [Analysis and simulation: Step I](#step-i-changing-the-cpu-model-and-cpu-and-cache-clock-frequency), [Analysis and simulation: Step II](#step-ii-changing-the-cpu-and-memory-model),and [Analysis and simulation: Step III](#step-iii-general-questions). Use clear reasoning and visualization to drive your conclusions.
-
+Make sure you include both your runscript, an explanation of how to use your script, and the questions to the questions in the `questions.md` file.
 
 ## Grading
 
-Like your submission, your grade is split into two parts.
+- **25 points** gem5 runscript and explanation of how to use your script
+- **5 points per question** for the questions in the report
+- **25 points** for the research question
+- **10 points** for the next steps
 
-1. Reproducibility Package (50 points):
-1.1 Instruction and automation to run simulations for different section and dump statistics (20 points)
-1.1.a Instructions (10 points)
-1.1.b Automation (10 points)
-1.2 Configuration scripts and correct simulation setup (30 points): 2.5 points for each configuration as described in [Analysis and simulation: Step I](#step-i-changing-the-cpu-model-and-cpu-and-cache-clock-frequency) and [Analysis and simulation: Step II](#step-ii-changing-the-cpu-and-memory-model)
-2. Report (50 points): 7 points for each question presented in [Analysis and simulation](#analysis-and-simulation), [Analysis and simulation: Step I](#step-i-changing-the-cpu-model-and-cpu-and-cache-clock-frequency), [Analysis and simulation: Step II](#step-ii-changing-the-cpu-and-memory-model),and [Analysis and simulation: Step III](#step-iii-general-questions).
+### Explanation of how to use your script
+
+Include a detailed explanation of how to use your script and how you use your script to generate your answers (this will be more applicable in future assignments).
+Make sure that all paths are relative to this directory (`assignment-0/`).
+The code included in the "Example command to run the script" section should be able to be copied and pasted into a terminal and run without modification.
 
 ## Academic misconduct reminder
 
-You are required to work on this assignment in teams. You are only allowed to share you scripts and code with your teammate(s). You may discuss high level concepts with others in the class but all the work must be completed by your team and your team only.
+You are required to work on this assignment **individually**. You may discuss high level concepts with others in the class but all the work must be completed by you.
 
-Remember, DO NOT POST YOUR CODE PUBLICLY ON GITHUB! Any code found on GitHub that is not the base template you are given will be reported to SJA. If you want to sidestep this problem entirely, don’t create a public fork and instead create a private repository to store your work.
-
-## Hints
-
-- Start early and ask questions on Piazza and in discussion.
-- If you need help, come to office hours for the TA, or post your questions on Piazza.
+Remember, DO NOT POST YOUR CODE PUBLICLY ON GITHUB! Any code found on GitHub that is not the base template you are given will be reported to SJA. If you want to sidestep this problem entirely, don't create a public fork and instead create a private repository to store your work.
