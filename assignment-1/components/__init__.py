@@ -40,6 +40,7 @@ class DDR3(ChanneledMemory):
     DDR3_1600_8x8 models a 1 GiB single channel DDR3 DRAM memory with a data
     bus clocked at 1600MHz. This model extends ChanneledMemory from gem5's
     standard library.
+    The theoretical peak bandwidth of DDR3 is 12.8 GB/s.
     """
     def __init__(self):
         super().__init__(
@@ -48,26 +49,6 @@ class DDR3(ChanneledMemory):
             interleaving_size=128,
             size="1GiB",
         )
-
-
-class DDR4(ChanneledMemory):
-    """
-    DDR3_2400_8x8 models a 1 GiB single channel DDR4 DRAM memory with a data
-    bus clocked at 2400MHz.
-    """
-    def __init__(self):
-        super().__init__(DDR4_2400_8x8, 1, 128, size="1GiB")
-
-
-class LPDDR5(ChanneledMemory):
-    """
-    LPDDR5_6400_1x16_8B_BL32 models a 1 GiB 4 channel LPDDR5 DRAM memory with a
-    data bus clocked at 6400MHz.
-
-    The theoretical peak bandwidth of LPDDR5 is
-    """
-    def __init__(self):
-        super().__init__(LPDDR5_6400_1x16_8B_BL32, 4, 128, size="1GiB")
 
 class RISCVSingleCycleCPU(SimpleProcessor):
     """

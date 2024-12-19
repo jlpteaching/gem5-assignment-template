@@ -26,9 +26,9 @@ Modified for ECS 201A, Winter 2023.
 
 In this assignment you are going to develop and run a set of experiments to test the effects of changing different components of a computer system on its performance.
 We will use the Iron Law of Performance to guide our experiments.
-We will investigate the effects of changing the ISA, the CPU frequency, and the memory system on the performance of a computer system.
+We will investigate the effects of changing the ISA and the CPU frequency on the performance of a computer system.
 
-Our research question is: For a simple CPU model (i.e., fixed microarchitecture), does ISA, memory, or technology make a bigger impact on system performance?
+Our research question is: For a simple CPU model (i.e., fixed microarchitecture), does ISA or technology make a bigger impact on system performance?
 
 You are going to use a matrix multiplication program as the workload for your experiments.
 Matrix multiplication is a commonly used kernel in many domains such as linear algebra, machine learning, and fluid dynamics.
@@ -77,13 +77,13 @@ Please make sure to **ignore** the **second** set of generated statistics in you
 ## Experimental setup
 
 For this assignment, we will set up an experiment to see effect of changing a system's component on it performance.
-You will need to write configuration scripts using gem5's stdlib that allow you to change the ISA, CPU and cache frequency, and memory model.
+You will need to write configuration scripts using gem5's stdlib that allow you to change the ISA, CPU and cache frequency.
 Under the `components` directory, you will find modules that define the different models that you should use in your configuration scripts.
 
 - Board models: You will using `RISCVBoard`, `X86Board`, and `ArmBoard` in this assignment.
 - CPU models: You will be using `RISCVSingleCycleCPU`, `ArmSingleCycleCPU`, and `X86SingleCycleCPU` for this assignment.
 - Cache models: You will be using `MESITwoLevelCache` in this assignment.
-- Memory models: There are three memory models that you will be using in this assignment: `DDR3`, `DDR4`, and `LPDDR5`.
+- Memory models: You will be using `DDR3` memory in this assignment.
 
 Remember, you should use the `--outdir` option to specify the output directory for your simulation results so that they do not overwrite each other.
 
@@ -102,7 +102,7 @@ Before starting with simulations, answer the following questions in your report.
 1. When you change the ISA from RISC-V to x86, what do you expect to happen to the performance of the system? Use the Iron Law of Performance to justify your answer.
 2. When you change the CPU frequency from 1GHz to 4GHz, what do you expect to happen to the performance of the system? Use the Iron Law of Performance to justify your answer.
 3. When you change the CPU frequency from 1GHz to 4GHz, will the speedup from 1GHz to 4GHz be the same for all ISAs? Why or why not?
-4. When you change the memory model from DDR3 to DDR4, what do you expect to happen to the performance of the system? Use the Iron Law of Performance to justify your answer.
+4. Describe the experimental setup to answer the research question. What are the independent and dependent variables? What is the baseline?
 
 ### Step II: Investigating the impact of the ISA
 
@@ -127,23 +127,13 @@ In your report, answer the following questions after simulation supported with d
 1. What is the speedup of the system when you change the CPU and cache frequency from 1GHz to 2GHz to 4GHz? Show the speedup for each ISA.
 2. Does the Iron Law of Performance correctly predict the speedup for each ISA? Why or why not?
 
-### Step IV: Investigating the impact of the memory model
-
-Add the ability to change the memory model in your configuration script.
-Use 1GHz as the clock frequency.
-
-In your report, answer the following questions after simulation supported with data.
-
-1. What is the speedup of DDR4 and LPDDR5 memory models compared to DDR3? Show the speedup for each ISA.
-2. What part of the Iron Law of Performance is most affected by changing the memory architecture?
-
 ### Research question:
 
 Answer the following question in your report based on the four steps above.
 
-*For a simple CPU model (i.e., fixed microarchitecture), does ISA, memory, or technology make a bigger impact on system performance?*
+*For a simple CPU model (i.e., fixed microarchitecture), does ISA or technology make a bigger impact on system performance?*
 
-We gathered data on the effects of the ISA with a fixed memory and frequency, the effects of the frequency with a fixed ISA and memory, and the effects of the memory with a fixed ISA and frequency.
+We gathered data on the effects of the ISA with a fixed memory and frequency and the effects of the frequency with a fixed ISA and memory
 Use the data you gathered to support your answer to the research question.
 
 ### Next steps (required 201A, extra credit 154B):
@@ -166,7 +156,7 @@ Make sure you include both your runscript, an explanation of how to use your scr
 ## Grading
 
 - **25 points** gem5 runscript and explanation of how to use your script
-- **5 points per question** for the questions in the report
+- **50 points** for the questions in the report
 - **25 points** for the research question
 - **10 points** for the next steps
 
