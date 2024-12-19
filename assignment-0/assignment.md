@@ -403,9 +403,15 @@ Make sure you include both your runscript, an explanation of how to use your scr
 
 ## Grading
 
-50 points `run.py` script located at `assignment-0/run.py`
-50 points for the `questions.md` file located at `assignment-0/questions.md`
+- **50 points** `run.py` script located at `assignment-0/run.py`
+- **25 points** for the `questions.md` file located at `assignment-0/questions.md`
+- **25 points** for explanation of how to use your script located at `assignment-0/questions.md`
 
+### Explanation of how to use your script
+
+Include a detailed explanation of how to use your script and how you use your script to generate your answers (this will be more applicable in future assignments).
+Make sure that all paths are relative to this directory (`assignment-0/`).
+The code included in the "Example command to run the script" section should be able to be copied and pasted into a terminal and run without modification.
 
 ## Academic misconduct reminder
 

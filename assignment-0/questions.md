@@ -4,8 +4,24 @@
 Put your answers below each question.
 Use markdown formatting.
 
-1. [20 points] How do you control gem5? What is the interface?
+## [25 points] How to reproduce the results
 
-2. [20 points] What file contains the statistics after running a gem5 simulation?
+### Explanation of the script
 
-3. [10 points] Explain the difference between the host and the simulated (guest) system.
+### Script to run
+
+### Parameters to script (if any)
+
+### Example command to run the script
+
+```shell
+gem5
+```
+
+## [25 points] Questions
+
+1. [10 points] How do you control gem5? What is the interface?
+
+2. [10 points] What file contains the statistics after running a gem5 simulation?
+
+3. [5 points] Explain the difference between the host and the simulated (guest) system.
