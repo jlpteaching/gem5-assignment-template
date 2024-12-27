@@ -18,7 +18,7 @@
     {
         "category": "binary",
         "id": "mm-riscv",
-        "description": "A simple implementation of matrix multiplication in RISC-V",
+        "description": "A simple implementation of matrix multiplication in RISC-V with gem5 ROI annotations",
         "resource_version": "1.0.0",
         "gem5_versions": [
             "24.1"
@@ -29,7 +29,7 @@
     {
         "category": "binary",
         "id": "mm-x86",
-        "description": "A simple implementation of matrix multiplication in x86",
+        "description": "A simple implementation of matrix multiplication in x86 with gem5 ROI annotations",
         "resource_version": "1.0.0",
         "gem5_versions": [
             "24.1"
@@ -40,7 +40,7 @@
     {
         "category": "binary",
         "id": "mm-arm",
-        "description": "A simple implementation of matrix multiplication in ARM",
+        "description": "A simple implementation of matrix multiplication in ARM with gem5 ROI annotations",
         "resource_version": "1.0.0",
         "gem5_versions": [
             "24.1"
@@ -51,7 +51,7 @@
     {
         "category": "workload",
         "id": "matrix_multiply_riscv_run",
-        "description": "A workload that runs matrix multiplication in RISC-V",
+        "description": "A workload that runs matrix multiplication in RISC-V with gem5 ROI annotations",
         "function": "set_se_binary_workload",
         "resource_version": "1.0.0",
         "gem5_versions": [
@@ -70,7 +70,7 @@
     {
         "category": "workload",
         "id": "matrix_multiply_x86_run",
-        "description": "A workload that runs matrix multiplication in x86",
+        "description": "A workload that runs matrix multiplication in x86 with ROI annotations",
         "function": "set_se_binary_workload",
         "resource_version": "1.0.0",
         "gem5_versions": [
@@ -89,7 +89,7 @@
     {
         "category": "workload",
         "id": "matrix_multiply_arm_run",
-        "description": "A workload that runs matrix multiplication in ARM",
+        "description": "A workload that runs matrix multiplication in ARM with ROI annotations",
         "function": "set_se_binary_workload",
         "resource_version": "1.0.0",
         "gem5_versions": [
@@ -158,5 +158,117 @@
                 "resource_version": "1.0.0"
             }
         }
+    },
+    {
+        "category": "binary",
+        "id": "queens-riscv",
+        "description": "A simple implementation of the N-Queens problem in RISC-V with gem5 ROI annotations",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "url": "file:///workspaces/gem5-assignment-template/workloads/queens/queens",
+        "md5sum": "c6404dd0273aba503702d24392b3374a"
+    },
+    {
+        "category": "workload",
+        "id": "queens_riscv_run",
+        "description": "A workload that runs the N-Queens problem in RISC-V with gem5 ROI annotations",
+        "function": "set_se_binary_workload",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "resources": {
+            "binary": {
+                "id": "queens-riscv",
+                "resource_version": "1.0.0"
+            }
+        }
+    },
+    {
+        "category": "binary",
+        "id": "bfs-riscv",
+        "description": "A simple implementation of Breadth-First Search in RISC-V with gem5 ROI annotations",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "url": "file:///workspaces/gem5-assignment-template/workloads/bfs/bfs",
+        "md5sum": "d6aca9e873ef826f8e89ec19fc2d272f"
+    },
+    {
+        "category": "workload",
+        "id": "bfs_riscv_run",
+        "description": "A workload that runs Breadth-First Search in RISC-V with gem5 ROI annotations",
+        "function": "set_se_binary_workload",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "resources": {
+            "binary": {
+                "id": "bfs-riscv",
+                "resource_version": "1.0.0"
+            }
+        }
+    },
+    {
+        "category": "binary",
+        "id": "bfs-bubble-riscv",
+        "description": "A simple implementation of bubble sort in RISC-V with gem5 ROI annotations",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "url": "file:///workspaces/gem5-assignment-template/workloads/bubble/bubble",
+        "md5sum": "54594a19d993c0e21e8206d94ee24fd3"
+    },
+    {
+        "category": "workload",
+        "id": "bubble_riscv_run",
+        "description": "A workload that runs bubble sort in RISC-V with gem5 ROI annotations",
+        "function": "set_se_binary_workload",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "resources": {
+            "binary": {
+                "id": "bfs-bubble-riscv",
+                "resource_version": "1.0.0"
+            }
+        }
+    },
+    {
+        "category": "suite",
+        "id": "comparch-benchmarks",
+        "description": "A suite of benchmarks for computer architecture 154B/201A at UC Davis",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "workloads": [
+            {
+                "id": "matrix_multiply_riscv_run",
+                "resource_version": "1.0.0"
+            },
+            {
+                "id": "daxpy_riscv_gem5_run",
+                "resource_version": "1.0.0"
+            },
+            {
+                "id": "queens_riscv_run",
+                "resource_version": "1.0.0"
+            },
+            {
+                "id": "bfs_riscv_run",
+                "resource_version": "1.0.0"
+            },
+            {
+                "id": "bubble_riscv_run",
+                "resource_version": "1.0.0"
+            }
+        ]
     }
 ]
