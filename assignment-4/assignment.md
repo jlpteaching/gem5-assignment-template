@@ -4,18 +4,18 @@ Editor:  Maryam Babaie, Mahyar Samani
 Title: ECS 201A Assignment 4
 ---
 
-## Assignment 4 -- Due 11:59 pm (PST) *{{ site.data.course.dates.dino_4 }}*
+## Assignment 4 -- Due XXX pm (PST) on XXX, 2025
 
 ## Table of Contents
 
 - [Introduction](#introduction)
+- [Research question](#research-question)
 - [Workload](#workload)
 - [Experimental setup](#experimental-setup)
 - [Analysis and simulation](#analysis-and-simulation)
 - [Submission](#submission)
 - [Grading](#grading)
 - [Academic misconduct reminder](#academic-misconduct-reminder)
-- [Hints](#hints)
 
 ## Introduction
 
@@ -25,6 +25,12 @@ The goals of this assignment are:
 - Show how algorithms have different behaviors as the microarchitecture changes.
 - Show how changing the algorithm can change performance on the *same* microarchitecture.
 - Improve your understanding of cache architectures.
+
+## Research question
+
+**How does the cache hierarchy and the algorithm design affect the performance of matrix multiplication?**
+
+To answer this question, you will have to implement different matrix multiplication algorithms and run them on different cache hierarchies.
 
 ## Workload
 
@@ -73,11 +79,10 @@ void multiply(double **A, double **B, double **C, int size)
 
 The animation below shows how the order of operations during the multiplication operation.
 
-![matrix multiplication](util/mm_ijk.gif)
+![matrix multiplication](images/mm_ijk.gif)
 
-You can import this workload into your configuration script from `workloads/matmul_workload.py` as `IJKMatMulWorkload`.
+You can import this workload into your configuration script using `obtain_resource("mm_ijk_run")`.
 
-I have provided a ready-made binary for this implementation.
 However, if you need to compile your own binary, you can run the command below in `workloads/matmul`.
 
 ```sh
@@ -94,7 +99,7 @@ Rather, it exposes locality when accessing matrix `C`.
 We can reorder our nested loops and still get the correct answer.
 In fact, all permutations of our three nested loops will result in the same `C` matrix.
 Moreover, when it comes to the complexity of the algorithm itself, reordering the for loops does not change the complexity.
-However, reordering the for loops; changes the access pattern to the memory.
+However, reordering the for loops changes the access pattern to the memory.
 In turn, it could increase/decrease our cache hit rate.
 For this step, you can see a slightly different implementation of the matrix multiplication program below.
 You can also find it in `workloads/matmul/ikj_multiply.h`
@@ -115,12 +120,11 @@ void multiply(double **A, double **B, double **C, int size)
 As you can see, two for loops have been interchanged (*j* and *k*) from our previous implementation.
 The animation below shows how the order of operations during the multiplication operation.
 
-![matrix multiplication](util/mm_ikj.gif)
+![matrix multiplication](images/mm_ikj.gif)
 
-You can import this workload into your configuration script from `workloads/matmul_workload.py` as `IKJMatMulWorkload`.
+You can import this workload into your configuration script using `obtain_resource("mm_ikj_run")`.
 
-I have provided a ready-made binary for this implementation.
-However, if you need to compile your own binary, you can run the command below in `workloads/matmul`.
+If you need to compile your own binary, you can run the command below in `workloads/matmul`.
 
 ```shell
 make mm-ikj-gem5
@@ -138,7 +142,7 @@ Look at [this short article](https://csapp.cs.cmu.edu/public/waside/waside-block
 Similar to loop interchange, there are multiple different ways you can choose to block accesses to your matrices in the matrix multiplication algorithm.
 One example is shown below where `k` and `j` are blocked and `i` is streamed.
 
-![blocked matrix multiplication](util/mm_blocked.gif)
+![blocked matrix multiplication](images/mm_blocked.gif)
 
 For this assignment, you need to implement three different variants of the blocking scheme.
 
@@ -275,8 +279,7 @@ Remember, don't exhaustively search, but try to use the information and the stat
 ### Step IV: Running on native hardware
 
 Now, run the matrix multiply workloads on some real hardware (not gem5).
-You can run it on the CSIF machines, your laptop, or the codespaces computer.
-To build all your binaries for your native hardware (e.g., your host), use the command below in `workloads/matmul`.
+Use the codespace to run the experiments.
 
 ```shell
 make all-native
@@ -338,8 +341,3 @@ Like your submission, your grade is split into two parts.
 You are required to work on this assignment in teams. You are only allowed to share your scripts and code with your teammate(s). You may discuss high-level concepts with others in the class but all the work must be completed by your team and your team only.
 
 Remember, DO NOT POST YOUR CODE PUBLICLY ON GITHUB! Any code found on GitHub that is not the base template you are given will be reported to SJA. If you want to sidestep this problem entirely, don’t create a public fork instead create a private repository to store your work.
-
-## Hints
-
-- Start early and ask questions on Piazza and in discussion.
-- If you need help, come to office hours for the TA, or post your questions on Piazza.

@@ -273,5 +273,155 @@
                 "input_group": ["all"]
             }
         ]
+    },
+    {
+        "category": "binary",
+        "id": "mm_ijk",
+        "description": "A simple implementation of matrix multiplication in C with IJK loop ordering",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "url": "file:///workspaces/gem5-assignment-template/workloads/matmul/mm-ijk-gem5",
+        "md5sum": "00a154568502a58bf44a1eaebe218635"
+    },
+    {
+        "category": "binary",
+        "id": "mm_ikj",
+        "description": "A simple implementation of matrix multiplication in C with IKJ loop ordering",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "url": "file:///workspaces/gem5-assignment-template/workloads/matmul/mm-ikj-gem5",
+        "md5sum": "adb92a0c5bc5ed5a97f4613b64527223"
+    },
+    {
+        "category": "binary",
+        "id": "mm_block_ij",
+        "description": "A simple implementation of matrix multiplication in C with block IJ loop ordering",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "url": "file:///workspaces/gem5-assignment-template/workloads/matmul/mm-block-ij-gem5",
+        "md5sum": ""
+    },
+    {
+        "category": "binary",
+        "id": "mm_block_ik",
+        "description": "A simple implementation of matrix multiplication in C with block IK loop ordering",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "url": "file:///workspaces/gem5-assignment-template/workloads/matmul/mm-block-ik-gem5",
+        "md5sum": ""
+    },
+    {
+        "category": "binary",
+        "id": "mm_block_kj",
+        "description": "A simple implementation of matrix multiplication in C with block KJ loop ordering",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "url": "file:///workspaces/gem5-assignment-template/workloads/matmul/mm-block-kj-gem5",
+        "md5sum": ""
+    },
+    {
+        "category": "workload",
+        "id": "mm_ijk_run",
+        "description": "A workload that runs matrix multiplication in C with IJK loop ordering",
+        "function": "set_se_binary_workload",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "resources": {
+            "binary": {
+                "id": "mm_ijk",
+                "resource_version": "1.0.0"
+            }
+        },
+        "additional_params": {
+            "arguments": ["128"]
+        }
+    },
+    {
+        "category": "workload",
+        "id": "mm_ikj_run",
+        "description": "A workload that runs matrix multiplication in C with IKJ loop ordering",
+        "function": "set_se_binary_workload",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "resources": {
+            "binary": {
+                "id": "mm_ikj",
+                "resource_version": "1.0.0"
+            }
+        },
+        "additional_params": {
+            "arguments": ["128"]
+        }
+    },
+    {
+        "category": "workload",
+        "id": "mm_block_ij_run",
+        "description": "A workload that runs matrix multiplication in C with block IJ loop ordering",
+        "function": "set_se_binary_workload",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "resources": {
+            "binary": {
+                "id": "mm_block_ij",
+                "resource_version": "1.0.0"
+            }
+        },
+        "additional_params": {
+            "arguments": ["128", "8"]
+        }
+    },
+    {
+        "category": "workload",
+        "id": "mm_block_ik_run",
+        "description": "A workload that runs matrix multiplication in C with block IK loop ordering",
+        "function": "set_se_binary_workload",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "resources": {
+            "binary": {
+                "id": "mm_block_ik",
+                "resource_version": "1.0.0"
+            }
+        },
+        "additional_params": {
+            "arguments": ["128", "8"]
+        }
+    },
+    {
+        "category": "workload",
+        "id": "mm_block_kj_run",
+        "description": "A workload that runs matrix multiplication in C with block KJ loop ordering",
+        "function": "set_se_binary_workload",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "resources": {
+            "binary": {
+                "id": "mm_block_kj",
+                "resource_version": "1.0.0"
+            }
+        },
+        "additional_params": {
+            "arguments": ["128", "8"]
+        }
     }
 ]
