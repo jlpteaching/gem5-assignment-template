@@ -31,10 +31,10 @@ class MESITwoLevelCache(MESITwoLevelCacheHierarchy):
 
 class DDR4(ChanneledMemory):
     """
-    HW1DDR4_2400_8x8 models a 1 GiB single channel DDR4 DRAM memory with a data
+    DDR4 models a 1 GiB single channel DDR4 DRAM memory with a data
     bus clocked at 2400MHz.
 
-    The theoretical peak bandwidth of DDR3 is 19.2 GB/s.
+    The theoretical peak bandwidth of DDR4 is 19.2 GB/s.
     """
     def __init__(self):
         super().__init__(DDR4_2400_8x8, 1, 128, size="1GiB")
