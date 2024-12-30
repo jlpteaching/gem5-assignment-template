@@ -8,25 +8,27 @@ from gem5.components.processors.cpu_types import CPUTypes
 from gem5.components.processors.simple_processor import SimpleProcessor
 from gem5.isas import ISA
 
-from cache_hierarchies import HW4SmallCache, HW4MediumCache, HW4LargeCache
+from .cache_hierarchies import SmallCache, MediumCache, LargeCache
 
-HW4RISCVBoard = SimpleBoard
+RISCVBoard = SimpleBoard
 
 
-class HW4DDR4(ChanneledMemory):
+class DDR4(ChanneledMemory):
     """
-    HW4DDR4 models a 1 GiB single channel DDR4 DRAM memory with a data
+    DDR4 models a 1 GiB single channel DDR4 DRAM memory with a data
     bus clocked at 2400MHz.
+
+    The theoretical peak bandwidth of DDR4 is 19.2 GB/s.
     """
 
     def __init__(self):
         super().__init__(DDR4_2400_8x8, 1, 128, size="1GiB")
 
 
-class HW4O3CPU(SimpleProcessor):
+class OutOfOrderCPU(SimpleProcessor):
     """
-    HW4O3CPU implements a single core out of order processor for the RISC-V ISA
-    Parameters are the O3CPU defaults.
+    OutOfOrderCPU implements a single core out of order processor for the
+    RISC-V ISA Parameters are the O3CPU defaults.
     """
 
     def __init__(self):
@@ -34,10 +36,10 @@ class HW4O3CPU(SimpleProcessor):
 
 
 __all__ = [
-    "HW4RISCVBoard",
-    "HW4DDR4",
-    "HW4O3CPU",
-    "HW4SmallCache",
-    "HW4MediumCache",
-    "HW4LargeCache",
+    "RISCVBoard",
+    "DDR4",
+    "OutOfOrderCPU",
+    "SmallCache",
+    "MediumCache",
+    "LargeCache",
 ]
