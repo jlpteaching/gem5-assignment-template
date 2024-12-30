@@ -35,13 +35,12 @@ from m5.objects.BranchPredictor import (
     MultiperspectivePerceptronTAGE64KB,
 )
 
-class HW3O3CPUCore(RiscvO3CPU):
+
+class OutOfOrderCPUCore(RiscvO3CPU):
     def __init__(self, width, rob_size, num_int_regs, num_fp_regs):
         """
-        HW3O3CPUCore extends RiscvO3CPU. RiscvO3CPU is one of gem5's internal models
-        the implements an out of order pipeline. Please refer to
-          https://www.gem5.org/documentation/general_docs/cpu_models/O3CPU
-        to learn more about O3CPU.
+        OutOfOrderCPUCore extends RiscvO3CPU. RiscvO3CPU is one of gem5's
+        internal models the implements an out of order pipeline.
 
         This class sets the width of the fetch, decode, rename, issue,
         writeback, and commit stages of the pipeline. It also sets the number
@@ -77,11 +76,11 @@ class HW3O3CPUCore(RiscvO3CPU):
         self.SQEntries = 128
 
 
-
-class HW3O3CPUStdCore(BaseCPUCore):
+class OutOfOrderCPUStdCore(BaseCPUCore):
     def __init__(self, width, rob_size, num_int_regs, num_fp_regs):
         """
-        HW3O3CPUStdCore wraps HW3O3CPUCore into a gem5 standard library core.
+        OutOfOrderCPUStdCore wraps OutOfOrderCPUCore into a gem5 standard
+        library core.
 
         :param width: sets the width of fetch, decode, raname, issue, wb, and
         commit stages.
@@ -90,19 +89,19 @@ class HW3O3CPUStdCore(BaseCPUCore):
         :param num_int_regs: determines the size of the vector/floating point
         register file.
         """
-        core = HW3O3CPUCore(width, rob_size, num_int_regs, num_fp_regs)
+        core = OutOfOrderCPUCore(width, rob_size, num_int_regs, num_fp_regs)
         super().__init__(core, ISA.RISCV)
 
 
-class HW3O3CPU(BaseCPUProcessor):
+class OutOfOrderCPU(BaseCPUProcessor):
     def __init__(self, width, rob_size, num_int_regs, num_fp_regs):
         """
-        HW3O3CPU models a single core CPU with support for the RISC-V
+        OutOfOrderCPU models a single core CPU with support for the RISC-V
         instruction set architecture (ISA). This model uses the O3 CPU model
         which is an out of order pipelined CPU.
 
         Some parameters of the O3 CPU model are set in this class. Please refer
-        to the HW3O3CPUCore class for more information.
+        to the OutOfOrderCPUCore class for more information.
 
         :param width: sets the width of fetch, decode, raname, issue, wb, and
         commit stages.
@@ -111,7 +110,9 @@ class HW3O3CPU(BaseCPUProcessor):
         :param num_int_regs: determines the size of the vector/floating point
         register file.
         """
-        cores = [HW3O3CPUStdCore(width, rob_size, num_int_regs, num_fp_regs)]
+        cores = [
+            OutOfOrderCPUStdCore(width, rob_size, num_int_regs, num_fp_regs)
+        ]
         super().__init__(cores)
         self._width = width
         self._rob_size = rob_size
@@ -129,8 +130,7 @@ class HW3O3CPU(BaseCPUProcessor):
         rob_size, num_int_regs, and num_fp_regs.
         """
         score = (
-            self._width
-            * (2 * self._rob_size + self._num_int_regs + self._num_fp_regs)
+            self._width * (2 * self._rob_size + self._num_int_regs + self._num_fp_regs)
             + 4 * self._width
             + 2 * self._rob_size
             + self._num_int_regs

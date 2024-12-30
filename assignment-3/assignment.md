@@ -4,18 +4,17 @@ Editor:  Maryam Babaie, Mahyar Samani, Kaustav Goswami
 Title: ECS 201A Assignment 3
 ---
 
-**Due on 02/17 1:59 pm (PST)**: See [Submission](#submission) for details
+**Due on XXX 11:59 pm (PST)**: See [Submission](#submission) for details
 
 ## Table of Contents
 
 - [Introduction](#introduction)
-- [Workload](#workload)
+- [Workloads](#workloads)
 - [Experimental setup](#experimental-setup)
 - [Analysis and simulation](#analysis-and-simulation)
 - [Submission](#submission)
 - [Grading](#grading)
 - [Academic misconduct reminder](#academic-misconduct-reminder)
-- [Hints](#hints)
 
 ## Introduction
 
@@ -26,14 +25,46 @@ The goals of this assignment are:
 - Give you experience investigating the *bottleneck* in a particular architecture.
 - Improve your understanding of out-of-order processor architecture.
 
-## Workload
+## Research Question
+
+**What is the bottleneck in the performance of an out-of-order processor?**
+
+You will be given a design of an out-of-order processor.
+Your task is to investigate the performance of this processor on a set of benchmarks and determine what the main bottleneck is.
+Then, you will design a new processor that improves the performance of the original processor with the minimal impact on area.
+
+The questions you will be answering in this assignment are:
+
+1. What is the biggest bottleneck in the performance of the original processor? The width, the number of physical registers, or the reorder buffer size?
+2. What is the design of the processor that gives the most performance improvement with the least impact on area?
+
+## Workloads
 
 In this assignment, you are going to use four workloads for the evaluation of the performance of your systems.
 Read more about each workload and how to use those workloads for your experiments below.
 
+You will be using the following workloads for your experiments detailed below.
+
+- Matrix Multiplication (`matrix_multiply_riscv_run`)
+- Breadth First Search (`bfs_riscv_run`)
+- Bubble Sort (`bubble_sort_riscv_run`)
+- N-Queens (`n_queens_riscv_run`)
+
+Note that all of these workloads have been compiled with the gem5 annotations enabled.
+
+Together, these workloads are called the "comparch-benchmarks".
+This is a *suite* of workloads to use for your evaluation.
+When using `obtain_resource` you can also get a *suite* which is a list of workloads.
+You can iterate over the suite to run all the workloads in the suite using the *multisim* feature of gem5.
+
+These workloads run in approximately 1-10 minutes each.
+
+> Note: Multisim in gem5 24.1 [has a couple of bugs](https://github.com/gem5/gem5/issues/1738).
+> However, it should work if you use 1 or 2 simultaneous simulations.
+
 ### Matrix Multiplication
 
-You are going to use the same matrix multiplication program from [assignment 1]({{'modules/gem5/assignment1' | relative_url}}) as the first workload.
+You are going to use the same matrix multiplication program from [assignment 1](../assignment-1/assignment.md) as the first workload.
 Please note that matrix size is hardcoded for this assignment.
 You do not have to pass matrix size as an input argument to the `__init__` function for your workload.
 Below you can find the C++ implementation of the matrix multiplication workload.
@@ -78,8 +109,6 @@ int main()
     return 0;
 }
 ```
-
-Take a look at `workloads/matmul_workload.py` to learn more about instantiating a matrix multiplication workload.
 
 ### Breadth first search (**BFS**)
 
@@ -153,7 +182,6 @@ This program sorts an array by replacing each element with the smallest element 
 Below you can find the C++ implementation for bubble sort.
 
 ```cpp
-
 #include <iostream>
 
 #include "array.h"
@@ -256,7 +284,6 @@ bool solveNQ(int **board, int N) {
         return false;
     }
 
-    printSolution(board, N);
     return true;
 }
 
@@ -282,6 +309,7 @@ int main(int argc, char *argv[]) {
 #ifdef GEM5
     m5_work_end(0,0);
 #endif
+        printSolution(board, size);
     }
     else {
         printf("N-Queens program. Usage \n $ ./queens <chess-board-size>\n");
@@ -290,34 +318,39 @@ int main(int argc, char *argv[]) {
 }
 ```
 
+We use an input of 18 for the chessboard size in the workload.
+
 ## Experimental setup
 
-In this assignment, you are asked to design  your own out of order `processor` models for your experiments.
-In regards to the rest of the components in your system:
+In this assignment, you will use the following base configurations for your computer system.
 
-- You will be using `HW3RISCVBoard` as your main `board` for your computer system.
+- You will be using `RISCVBoard` as your main `board` for your computer system.
 You can find the model for the board in `components/boards.py`.
-- You will be using `HW3MESICache` as your cache hierarchy for your computer system.
+- You will be using `MESITwoLevelCache` as your cache hierarchy for your computer system.
 You can find its model in `components/cache_hierarchies.py`.
-- You will be using `HW3DDR4` as your `memory` in your computer system.
+- You will be using `DDR4` as your `memory` in your computer system.
 You can find its model in `components/memories.py`.
-- You will be using `2 GHz` as you clock frequency `clk_freq` in your system.
+- You will be using `1 GHz` as you clock frequency `clk_freq` in your system.
 
-For your processor, you are going to use `HW3O3CPU` to model a high-performance and an efficient processor core.
-`HW3O3CPU` is based on `O3CPU` which is an internal model of gem5.
+For your processor, you are going to use `OutOfOrderCPU` to model a high-performance and an efficient processor core.
+`OutOfOrderCPU` is based on `O3CPU` which is an internal model of gem5.
 Read up on the `O3CPU` in [gem5's documentation](https://www.gem5.org/documentation/general_docs/cpu_models/O3CPU).
-Below, you can find details about `HWO3CPU` and its parameters.
+Below, you can find details about `OutOfOrderCPU` and its parameters.
 
 ### Pipeline width
 
 For the purposes of this assignment, you need to configure a processor with the same width in all stages.
-In the constructor of `HW3O3CPU` this attribute is named as `width`.
+In the constructor of `OutOfOrderCPU` this attribute is named as `width`.
+The width is one of the main constraints for how many instructions can be processed in parallel.
 
 ### Reorder Buffer size
 
 This is the number of entries in the **r**e**o**rder **b**uffer (ROB).
 This will constrain the number of instructions which can be "in flight" in the processor.
-In the constructor of `HW3O3CPU` this attribute is named as `rob_size`.
+In the constructor of `OutOfOrderCPU` this attribute is named as `rob_size`.
+The number of in flight instructions is also a main contraint for how many instructions can be processed in parallel.
+In this case, if instructions take more than 1 cycle to execute, you need to have enough space in the ROB to keep track of the instructions.
+If you don't have enough space in the ROB, the processor will stall.
 
 ### Number of physical registers
 
@@ -326,149 +359,199 @@ A processor renames architecture registers to physical registers to resolve fals
 It also tracks true dependences (read-after-write) in the register file.
 To learn more about register renaming, read up on [Tomasulo's algorithm](https://en.wikipedia.org/wiki/Tomasulo%27s_algorithm).
 
-`HW3O3CPU` has two physical register files.
+`OutOfOrderCPU` has two physical register files.
 One register file for integer registers and one for floating point registers.
-In the constructor of `HW3O3CPU`, `num_int_regs` refers to the number of *integer physical registers* and `num_fp_regs` refers to the number of *floating point physical registers*.
+In the constructor of `OutOfOrderCPU`, `num_int_regs` refers to the number of *integer physical registers* and `num_fp_regs` refers to the number of *floating point physical registers*.
 
 **NOTE**: Both register files must be larger than the 32 entries or gem5 will hang.
-This is becuase the number of physical registers must be bigger than or equal to the number of logical registers.
+This is because the number of physical registers must be bigger than or equal to the number of logical registers.
 RISC-V ISA defines 32 logical registers.
 
-### big and LITTLE cores
+The number of physical registers can also constrain the amount of parallelism in the processor.
+If there are not enough physical registers, the processor will stall.
 
-In this assignment, you are required to design your own high-performance and efficient cores.
-You need to add two core designs to `components/processors.py`.
-In `componets/processors.py`, create a model based on `HW3O3CPU` and name it `HW3BigCore`.
-This core will be your high-performance core for the assignment.
-Create another model in `components/processors.py` and name it `HW3LittleCore`.
-This core will be your efficient core for the assignment.
-You can use information available on the internet on the different core microarchitectures to configure your `HW3BigCore` and `HW3LittleCore`.
-As a starting point, take a look at [WikiChip](https://en.wikichip.org/wiki/WikiChip) and [AnandTech](https://www.anandtech.com/).
-Your instructor has loosely modeled their `HW3BigCore` on [Intel Sunny Cove](https://en.wikichip.org/wiki/intel/microarchitectures/sunny_cove) and their `HW3LittleCore` on [Intel Gracemont](https://en.wikichip.org/wiki/intel/microarchitectures/gracemont).
+So, you need to balance the width, the number of physical registers, and the ROB size to get the best performance per unit area or per unit power.
+The processor is *out of balance*, then you will be wasting resources and not getting the best performance.
 
-**NOTE**: You are not required to match the specifications of any core.
-Use information online as a guideline for your design.
-You might find it impossible to match the specifications found online.
-E.g. the base model `HW3O3CPU` assumes the same width for all the stages of the pipeline which is not usually the case with modern processor designs.
+## The base model
 
-**Tips and To dos**: When designing your cores and caches, I recommend taking note of the following:
+You are already given a run script which runs the "comparch-benchmarks".
+We have also included the output for two different configurations of the `OutOfOrderCPU` in the `results` directory.
 
-- When designing your cores, I strongly recommend **not** beefing up your cores, especially `HW3LittleCore`.
-Remember that in computer design, there are almost always diminishing returns.
-A beefy `HW3LittleCore` will result in a `HW3BigCore` that is not much more performant than `HW3LittleCore`.
-I recommend dividing the values you see on specifications by in half for `HW3LittleCore`.
-- Setting the `width` below 4 would result some unstability.
-However, you might want to set `width` to 3 or less for `HW3LittleCore`.
-I recommend starting with very little numbers for the rest of the parameters, especially `rob_size`, and gradually increasing them to get around this issue.
-- Make sure you register files have more than 32 entries each.
+The first configuration we call the "little" core, and your job is to find the main bottlenecks in this design.
+The second configuration we call the "big" core.
+The "big" core has a large width, a large ROB size, and a large number of physical registers, leading to a very large area.
+You can see below that the speedup of the "big" core over the "little" core is not as large as you might expect.
+The details of the configurations and the performance results are shown below.
 
-## Analysis and simulation
+| Core Type | Width | ROB Size | Number of Integer Registers | Number of Floating Point Registers |
+|-----------|-------|----------|-----------------------------|------------------------------------|
+| little    | 4     | 32       | 64                          | 64                                 |
+| big       | 8     | 192      | 256                         | 256                                |
 
-Before running any simulations answer the following questions in your report.
+> Note: There's a bug in gem5's out-of-order model such that when running with small widths sometimes there's an assertion failure.
+> Therefore, we have set the width to 4 for the "little" core.
 
-1- What will be the average speed up of `HW3BigCore` over `HW3LittleCore`? Can you predict an upper bound using your pipeline parameters?
-**Hint**: You can predict and upper bound for the speed up using Amdahl's law with optimistic values.
-2- Do you think all the workloads will experience the same speed up between `HW3BigCore` and `HW3LittleCore`?
+| Workload           | Little Core IPC | Big Core IPC | Speedup |
+|--------------------|------------------|--------------|---------|
+| BFS                | 0.525410         | 0.809980     |   1.54      |
+| Bubble Sort        | 0.879611         | 0.895811     |   1.02      |
+| Matrix Multiplication | 1.608251      | 1.685272     |   1.05      |
+| N-Queens           | 1.000015         | 1.122047     |   1.12      |
 
-### Step I: Performance comparison
+### Running the base model
 
-Now that you have completed the design process of `HW3BigCore` and `HW3LittleCore`, let's compare their performances using our four workloads as benchmarks.
-Simulate each workload with each core.
-For each workload compare the performance of `HW3BigCore` with the performance of `HW3LittleCore`.
+Now that you have to run multiple workloads for multiple configurations, you need to automate the process.
+You can use the `multisim` feature of gem5 to run multiple simulations in parallel.
 
-Answer the following questions in your report.
-Use relevant and correct reasoning in your answer.
-Use simulation data with proper simulation data to strengthen your reasoning.
+> Note: `multisim` has some bugs, so if you experience hangs, you can run workloads one-by-one.
+> However, we still suggest using `multisim` even if you manually run experiments because it helps keep things organized.
 
-1. What is the speed up of `HW3BigCore` over `HW3LittleCore` for each workload?
-2. What is the average improvement in IPC of `HW3BigCore` compared to `HW3LittleCore` over all the workloads?
-**CAUTION**: Make sure to use the correct mean to report average IPC improvement.
-3. Some workloads show more speedup that others. Which workloads show high speedup, which show low speedup? Look at the benchmark code (both the `.c` and `.s` files may be useful) and speculate the *algorithm characteristics* which influence the IPC difference between `HW3BigCore` and `HW3LittleCore`. What characteristics do applications have that lead to low performance improvement and what characteristics lead to high performance improvement?
-4. Which workload has the highest IPC for `HW3BigCore`? What is unique about this workload?
+We have provided a script `experiments.py` that runs the big and little designs.
+You can extend this script to run your experiments.
 
-**Hints**: Take a look at the assembly code of the **ROI** for inspiration.
+In `experiments.py`, we first define a function to get the board.
+Then, we have a set of configurations that we want to run.
+You can uncomment the next lines to print the area of each configuration (used to answer some of the questions).
+Finally, there is a nested for loop that will run each benchmark for each configuration.
+In this for loop, instead of calling `simulator.run()` we add the simulator to the multisim object which will run all the simulations in parallel when we run the script with the multisim module (as shown below).
 
-### Step II: Medium core
+```python
+from components import (
+    RISCVBoard,
+    MESITwoLevelCache,
+    DDR4,
+    OutOfOrderCPU,
+)
 
-In this step, you are tasked with finding a middle ground between `HW3BigCore` and `HW3LittleCore`.
-This core needs to perform as closely as possible to `HW3BigCore` while using as little resources as `HW3LittleCore`.
-We will refer to this core as `HW3MediumCore`.
-To pick our sweet spot for the design of `HW3MediumCore`, we need to develop a methodology.
-First, we need to define a cost function for increasing hardware resources.
-We will use area as the cost of making a hardware.
-Not all parameters of the pipeline have the same effect on the area.
-E.g. Increasing the width of the pipeline has a quadratic effect on the area of the hardware while increasing register file entries has a linear effect.
-Morever the cost of increasing two of these resources at the same time should be bigger than the sum of increasing each resource.
-We will use an equation like below to score the area of a pipeline using the 4 parameters of `width`, `rob_size`, `num_int_regs`, and `num_fp_regs`.
+from gem5.simulate.simulator import Simulator
+from gem5.utils.multisim import multisim
+from gem5.resources.resource import obtain_resource
 
-$area_{score} = 2 * width^2 * rob\_ size + width^2 * (num\_ int\_ regs + num\_ fp\_ regs) + 4 * width + 2 * rob\_ size + (num\_ int\_ regs + num\_ fp\_ regs)$
+multisim.set_num_processes(10)
 
-You can also get the area score for a pipeline design by calling the method `get_area_score` on the processor.
+def get_board(width, rob_size, num_int_regs, num_fp_regs):
+    cache = MESITwoLevelCache()
+    memory = DDR4()
+    cpu = OutOfOrderCPU(width, rob_size, num_int_regs, num_fp_regs)
 
-Now that we have our cost function, let's devise a method for measuring our gains.
-In you report answer the following question.
+    board = RISCVBoard(
+        clk_freq="1GHz", processor=cpu, cache_hierarchy=cache, memory=memory
+    )
 
-1. If you were to use the speed up under only one workload from the four workloads you used before, which workload would you choose? Why?
+    return board
 
-Now that we have devised functions to measure costs and gains, configure 4 middle ground designs for the pipeline.
-Not all of these designs will have the "best" cost-gain tradeoff.
-In your report include the following figure.
+configurations = {
+    "little": {"width": 4, "rob_size": 32, "num_int_regs": 64, "num_fp_regs": 64},
+    "big": {"width": 12, "rob_size": 384, "num_int_regs": 512, "num_fp_regs": 512},
+}
 
-2. Create a [pareto frontier](https://en.wikipedia.org/wiki/Pareto_efficiency) plot with cost on the y-axis and performance on the x-axis.
-This will be a scatter plot with 6 points: the two "big" and "LITTLE" cores as well as your 4 middle ground designs.
-Then, "connet the dots" on the "best" designs.
+# for name, config in configurations.items():
+#     board = get_board(**config)
+#     print(f"Area of {name} configuration: {board.get_processor().get_area_score()}")
+# exit(0)
 
-Answer this question in your report.
+for workload in obtain_resource("comparch-benchmarks"):
+    for name in ["little", "big"]:
+        config = configurations[name]
+        board = get_board(**config)
+        board.set_workload(workload)
+        simulator = Simulator(board=board, id=f"{name}-{workload.get_id()}")
+        multisim.add_simulator(simulator)
+```
 
-3. Assume you are an engineer working to design this middle ground core. Given this early analysis, which designs, if any, would you recommend your team to pursue developing? Explain why. (Note: you may want to annotate the above plot.)
+To run the script with the multisim module, you can use the following command.
 
-### Step III: General Questions
+```bash
+gem5 -re -m gem5.utils.multisim experiments.py
+```
 
-Based on your experiments and insights, can you answer the following qeustion?
+When you run this, you will find the output in the `m5out` directory with one directory for each simulation.
+The names come from the `id` parameter of the `Simulator` object.
+We also use the `-re` flag to redirect the stdout and stderr of each simulation to a file in the `m5out` directory.
 
-1. Many phone chips (e.g. Arm Cortex-A series processors) and Intel's Alder Lake chips employ architectures that contain both big cores and little cores in a single system.
-The operating system (or Intel's "thread directory") can choose which core to use to run each thread.
-Assume that there is not context switching overhead, do you think that this system will be more or less efficient than have an equal number of medium cores?
-You may want to read the paper [Amdahl's Law in the Multicore Era by Hill and Marty](https://research.cs.wisc.edu/multifacet/papers/ieeecomputer08_amdahl_multicore.pdf) for inspiration.
-Note that you do not need to run any further experiments to answer this question.
-Back up your answer with logic.
+You can list all of the names of the simulations with the following command.
+
+```bash
+gem5 experiments.py --list
+```
+
+Then, you can run a specific simulation with the following command.
+
+```bash
+gem5 experiments.py <id>
+```
+
+It is particularly useful to run a single simulation if you make changes to the parameters and need to re run just a small subset of the simulations.
+
+## Your experiments
+
+Remember, the research question you are trying to answer is:
+What is the bottleneck in the performance of an out-of-order processor?
+
+### Step 1: Choose your configurations
+
+You run *three* experiments to answer this question to determine if the bottleneck is the width, the number of physical registers, or the reorder buffer size.
+You will need to run the following experiments:
+
+- A wide processor with a small reorder buffer and a small number of physical registers.
+- A processor with a small width, a large reorder buffer, and a small number of physical registers.
+- A wide processor with a large reorder buffer and a small number of physical registers.
+
+1. What are the configurations you are going to run?
+
+### Step 2: Run your experiments
+
+Run your experiments using the `experiments.py` script.
+After running the experiments, compile the results in a table.
+Include the speedup of each configuration over the "little" core.
+
+1. What is the speedup of each configuration over the "little" core? Present your table as described above.
+
+### Step 3: Analyze your results and answer the research question
+
+1. What is the biggest bottleneck in the performance of the original processor? The width, the number of physical registers, or the reorder buffer size? Use your data to support your answer.
+2. Using the `board.get_processor().get_area_score()` method, calculate the area of each configuration. What is the area-efficient design?
+
+### Step 4: Workload analysis
+
+The workloads show different behaviors with some more sensitive to the width of the processor and others more sensitive to the number of physical registers or the ROB size.
+
+1. Describe which workload is affected more by each parameter of your configuration.
+2. [Required 201A, extra credit 154B] Use the application's source code, the resulting assembly code, or other information to explain why each workload is more sensitive to a particular parameter.
 
 ## Submission
 
-As mentioned before, you are allowed to submit your assignments in **pairs** and in **PDF** format.
-You should submit your report on [gradescope](https://www.gradescope.com/courses/487868).
-In your report answer the questions presented in [Analysis and simulation](#analysis-and-simulation), [Analysis and simulation: Step I](#step-i-performance-comparison), [Analysis and simulation: Step II](#step-ii-medium-core), and, [Analysis and simulation: Step III](#step-iii-general-questions).
-Use clear reasoning and visualization to drive your conclusions.
-Submit all your code through your assignment repository. Please make sure to include code/scripts for the following.
+You will submit this assignment via GitHub Classroom.
 
-- `Instruction.md`: should include instruction on how to run your simulations.
-- Automation: code/scripts to run your simulations.
-- Configuration: python file configuring the systems you need to simulate.
-You should add your final core designs to `components/processors.py`.
-There should be six core definitions in `components/processor.py`.
-They should include **one design** for `HW3BigCore`, **one design** for `HW3LittleCore`, and **four designs** for `HW3MediumCore`.
-You can add numbers to designs for `HW3MediumCore` to distinguish their design.
-E.g. `HW3MediumCore0`, `HW3MediumCore1`, `HW3MediumCore2`, and `HW3MediumCore3`.
+1. Accept the assignment by clicking on the link provided in the announcement.
+2. Create a Codespace for the assignment on your repository.
+3. Fill out the `questions.md` file.
+4. Commit your changes.
+
+Make sure you include both your runscript, an explanation of how to use your script, and the questions to the questions in the `questions.md` file.
+
+### Explanation of how to use your script
+
+Include a detailed explanation of how to use your script and how you use your script to generate your answers (this will be more applicable in future assignments).
+Make sure that all paths are relative to this directory (`assignment-1/`).
+The code included in the "Example command to run the script" section should be able to be copied and pasted into a terminal and run without modification.
+
+- You should include a sentence or two which describes what the script (or scripts) do under "Explanation of the script" in `questions.md`.
+- You should include the path to the script under "Script to run" in `questions.md`.
+- You should include any parameters that need to be passed to the script under "Parameters to script (if any)" in `questions.md`.
+- You should include each command used to gather data under "Command used to gather data" in `questions.md`.
+  - Make sure this can by copy-pasted and run in your codespace without modification.
+  - If you need other files to run your script, make sure to include those files when you commit your changes.
 
 ## Grading
 
-Like your submission, your grade is split into two parts.
-
-1. Reproducibility Package (50 points):50
-    1. Instruction and automation to run simulations for different section and dump statistics (20 points)
-        - Instructions (5 points)
-        - Automation (5 points)
-    2. Configuration scripts and correct simulation setup (40 points): 10 points for configuration script(s) used to run your simulations and 5 points for implementing each of the 6 processor models as described in [Analysis and simulation: Step I](#step-i-performance-comparison), and [Analysis and simulation: Step II](#step-ii-medium-core).
-
-2. Report (50 points): 5 points for each question presented in [Analysis and simualtion](#analysis-and-simulation), [Analysis and simulation: Step I](#step-i-performance-comparison), [Analysis and simulation: Step II](#step-ii-medium-core), and, [Analysis and simulation: Step III](#step-iii-general-questions).
+- **25 points** gem5 experiment script and explanation of how to use your script
+- **75 points** for the questions in the report
+- **25 points** for the next steps
 
 ## Academic misconduct reminder
 
 You are required to work on this assignment in teams. You are only allowed to share you scripts and code with your teammate(s). You may discuss high level concepts with others in the class but all the work must be completed by your team and your team only.
 
 Remember, DO NOT POST YOUR CODE PUBLICLY ON GITHUB! Any code found on GitHub that is not the base template you are given will be reported to SJA. If you want to sidestep this problem entirely, don’t create a public fork and instead create a private repository to store your work.
-
-## Hints
-
-- Start early and ask questions on Piazza and in discussion.
-- If you need help, come to office hours for the TA, or post your questions on Piazza.

@@ -7,13 +7,13 @@ from gem5.components.cachehierarchies.ruby.mesi_two_level_cache_hierarchy import
 )
 from gem5.components.memory.dram_interfaces.ddr4 import DDR4_2400_8x8
 from gem5.components.memory.memory import ChanneledMemory
-from processors import HW3O3CPU
+from .processors import OutOfOrderCPU
 
-HW3RISCVBoard = SimpleBoard
+RISCVBoard = SimpleBoard
 
-class HW3MESITwoLevelCache(MESITwoLevelCacheHierarchy):
+class MESITwoLevelCache(MESITwoLevelCacheHierarchy):
     """
-    HW3MESITwoLevelCache models a two-level cache hierarchy with MESI coherency
+    MESITwoLevelCache models a two-level cache hierarchy with MESI coherency
     protocol. The L1 cache is split into 64KiB of 8-way set associative
     instruction cache and 64KiB of 8-way set associative data cache. The L2
     cache is a unified 1MiB 4-way set associative cache.
@@ -29,17 +29,19 @@ class HW3MESITwoLevelCache(MESITwoLevelCacheHierarchy):
             num_l2_banks=4,
         )
 
-class HW3DDR4(ChanneledMemory):
+class DDR4(ChanneledMemory):
     """
-    HW1DDR3_2400_8x8 models a 1 GiB single channel DDR4 DRAM memory with a data
+    DDR4 models a 1 GiB single channel DDR4 DRAM memory with a data
     bus clocked at 2400MHz.
+
+    The theoretical peak bandwidth of DDR4 is 19.2 GB/s.
     """
     def __init__(self):
         super().__init__(DDR4_2400_8x8, 1, 128, size="1GiB")
 
 __all__ = [
-    "HW3RISCVBoard",
-    "HW3MESITwoLevelCache",
-    "HW3DDR4",
-    "HW3O3CPU",
+    "RISCVBoard",
+    "MESITwoLevelCache",
+    "DDR4",
+    "OutOfOrderCPU",
 ]
