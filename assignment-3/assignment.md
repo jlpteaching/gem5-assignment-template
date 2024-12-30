@@ -9,9 +9,11 @@ Title: ECS 201A Assignment 3
 ## Table of Contents
 
 - [Introduction](#introduction)
+- [Research Question](#research-question)
 - [Workloads](#workloads)
 - [Experimental setup](#experimental-setup)
-- [Analysis and simulation](#analysis-and-simulation)
+- [The Base model](#the-base-model)
+- [Your experiments](#your-experiments)
 - [Submission](#submission)
 - [Grading](#grading)
 - [Academic misconduct reminder](#academic-misconduct-reminder)

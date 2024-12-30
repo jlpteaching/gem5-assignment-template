@@ -13,13 +13,13 @@ Modified for ECS 201A, Winter 2024.
 ## Table of Contents
 
 - [Introduction](#introduction)
+- [Research question](#research-question)
 - [Workload](#workload)
 - [Experimental setup](#experimental-setup)
 - [Analysis and simulation](#analysis-and-simulation)
 - [Submission](#submission)
 - [Grading](#grading)
 - [Academic misconduct reminder](#academic-misconduct-reminder)
-- [Hints](#hints)
 
 ## Introduction
 
