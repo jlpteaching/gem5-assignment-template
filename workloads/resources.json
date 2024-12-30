@@ -168,7 +168,7 @@
             "24.1"
         ],
         "url": "file:///workspaces/gem5-assignment-template/workloads/queens/queens",
-        "md5sum": "c6404dd0273aba503702d24392b3374a"
+        "md5sum": "f51e1ea5bd17e55511da80e25be24880"
     },
     {
         "category": "workload",
@@ -184,6 +184,9 @@
                 "id": "queens-riscv",
                 "resource_version": "1.0.0"
             }
+        },
+        "additional_params": {
+            "arguments": ["18"]
         }
     },
     {
@@ -251,23 +254,23 @@
         "workloads": [
             {
                 "id": "matrix_multiply_riscv_run",
-                "resource_version": "1.0.0"
-            },
-            {
-                "id": "daxpy_riscv_gem5_run",
-                "resource_version": "1.0.0"
+                "resource_version": "1.0.0",
+                "input_group": ["all"]
             },
             {
                 "id": "queens_riscv_run",
-                "resource_version": "1.0.0"
+                "resource_version": "1.0.0",
+                "input_group": ["all"]
             },
             {
                 "id": "bfs_riscv_run",
-                "resource_version": "1.0.0"
+                "resource_version": "1.0.0",
+                "input_group": ["all"]
             },
             {
                 "id": "bubble_riscv_run",
-                "resource_version": "1.0.0"
+                "resource_version": "1.0.0",
+                "input_group": ["all"]
             }
         ]
     }

@@ -54,7 +54,6 @@ bool solveNQ(int **board, int N) {
         return false;
     }
 
-    printSolution(board, N);
     return true;
 }
 
@@ -80,6 +79,7 @@ int main(int argc, char *argv[]) {
 #ifdef GEM5
     m5_work_end(0,0);
 #endif
+        printSolution(board, size);
     }
     else {
         printf("N-Queens program. Usage \n $ ./queens <chess-board-size>\n");
