@@ -423,5 +423,185 @@
         "additional_params": {
             "arguments": ["128", "8"]
         }
+    },
+    {
+        "category": "binary",
+        "id": "array_sum_naive",
+        "description": "A simple implementation of array sum in C with a naive parallelization strategy",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "url": "file:///workspaces/gem5-assignment-template/workloads/array_sum/naive-gem5",
+        "md5sum": "1e0431416f967fedc1271f53cd9bd981"
+    },
+    {
+        "category": "binary",
+        "id": "array_sum_chunking",
+        "description": "A simple implementation of array sum in C with a chunking the input array",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "url": "file:///workspaces/gem5-assignment-template/workloads/array_sum/chunking-gem5",
+        "md5sum": "687250fbcdad903745f0621fa17a6212"
+    },
+    {
+        "category": "binary",
+        "id": "array_sum_race_optimized",
+        "description": "A simple implementation of array sum in C without using the same result variable",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "url": "file:///workspaces/gem5-assignment-template/workloads/array_sum/res-race-opt-gem5",
+        "md5sum": "fc62d1f1d839e14b36850a9b65c284b6"
+    },
+    {
+        "category": "binary",
+        "id": "array_sum_chunking_race_optimized",
+        "description": "A simple implementation of array sum in C with chunking the input array and without using the same result variable",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "url": "file:///workspaces/gem5-assignment-template/workloads/array_sum/chunking-res-race-opt-gem5",
+        "md5sum": "z6739b1d29034a7d467ea237baedc394f"
+    },
+    {
+        "category": "binary",
+        "id": "array_sum_result_cache_optimized",
+        "description": "A simple implementation of array sum in C with a result variable for each thread in a different cache block",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "url": "file:///workspaces/gem5-assignment-template/workloads/array_sum/block-race-opt-gem5",
+        "md5sum": "880d59919521f24c555dddcb9bda673a"
+    },
+    {
+        "category": "binary",
+        "id": "array_sum_all_optimizations",
+        "description": "A simple implementation of array sum in C with all optimizations applied (chunking and cache block result variables)",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "url": "file:///workspaces/gem5-assignment-template/workloads/array_sum/all-opt-gem5",
+        "md5sum": "228ef3475113ec3570a34fbbd49d7af8"
+    },
+    {
+        "category": "workload",
+        "id": "array_sum_naive_run",
+        "description": "A workload that runs array sum in C with a naive parallelization strategy",
+        "function": "set_se_binary_workload",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "resources": {
+            "binary": {
+                "id": "array_sum_naive",
+                "resource_version": "1.0.0"
+            }
+        },
+        "additional_params": {
+            "arguments": ["16384", 4]
+        }
+    },
+    {
+        "category": "workload",
+        "id": "array_sum_chunking_run",
+        "description": "A workload that runs array sum in C with a chunking the input array",
+        "function": "set_se_binary_workload",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "resources": {
+            "binary": {
+                "id": "array_sum_chunking",
+                "resource_version": "1.0.0"
+            }
+        },
+        "additional_params": {
+            "arguments": ["16384", 4]
+        }
+    },
+    {
+        "category": "workload",
+        "id": "array_sum_race_optimized_run",
+        "description": "A workload that runs array sum in C without using the same result variable",
+        "function": "set_se_binary_workload",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "resources": {
+            "binary": {
+                "id": "array_sum_race_optimized",
+                "resource_version": "1.0.0"
+            }
+        },
+        "additional_params": {
+            "arguments": ["16384", 4]
+        }
+    },
+    {
+        "category": "workload",
+        "id": "array_sum_chunking_race_optimized_run",
+        "description": "A workload that runs array sum in C with chunking the input array and without using the same result variable",
+        "function": "set_se_binary_workload",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "resources": {
+            "binary": {
+                "id": "array_sum_chunking_race_optimized",
+                "resource_version": "1.0.0"
+            }
+        },
+        "additional_params": {
+            "arguments": ["16384", 4]
+        }
+    },
+    {
+        "category": "workload",
+        "id": "array_sum_result_cache_optimized_run",
+        "description": "A workload that runs array sum in C with a result variable for each thread in a different cache block",
+        "function": "set_se_binary_workload",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "resources": {
+            "binary": {
+                "id": "array_sum_result_cache_optimized",
+                "resource_version": "1.0.0"
+            }
+        },
+        "additional_params": {
+            "arguments": ["16384", 4]
+        }
+    },
+    {
+        "category": "workload",
+        "id": "array_sum_all_optimizations_run",
+        "description": "A workload that runs array sum in C with all optimizations applied (chunking and cache block result variables)",
+        "function": "set_se_binary_workload",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "resources": {
+            "binary": {
+                "id": "array_sum_all_optimizations",
+                "resource_version": "1.0.0"
+            }
+        },
+        "additional_params": {
+            "arguments": ["16384", 4]
+        }
     }
 ]
