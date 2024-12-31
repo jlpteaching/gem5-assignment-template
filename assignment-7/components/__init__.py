@@ -8,14 +8,13 @@ from gem5.components.processors.cpu_types import CPUTypes
 from gem5.components.processors.simple_processor import SimpleProcessor
 from gem5.isas import ISA
 
-from cache_hierarchies import HW5MESITwoLevelCacheHierarchy
+from cache_hierarchies import MESITwoLevelCacheHierarchy
 
-HW5RISCVBoard = SimpleBoard
+X86Board = SimpleBoard
 
-
-class HW5DDR4(ChanneledMemory):
+class DDR4(ChanneledMemory):
     """
-    HW5DDR4 models a 1 GiB single channel DDR4 DRAM memory with a data
+    DDR4 models a 1 GiB single channel DDR4 DRAM memory with a data
     bus clocked at 2400MHz.
     """
 
@@ -23,10 +22,10 @@ class HW5DDR4(ChanneledMemory):
         super().__init__(DDR4_2400_8x8, 1, 128, size="1GiB")
 
 
-class HW5O3CPU(SimpleProcessor):
+class O3CPU(SimpleProcessor):
     def __init__(self, num_cores: int):
         """
-        HW5O3CPU is an out of order processor with a configurable number of
+        O3CPU is an out of order processor with a configurable number of
         cores. Note that because of limitations of SE mode and OpenMP we need
         to have one more core than specified. E.g., for 4 threads you need 5
         cores. You should ignore the "first" core's stats.
@@ -42,8 +41,8 @@ class HW5O3CPU(SimpleProcessor):
 
 
 __all__ = [
-    "HW5RISCVBoard",
-    "HW5DDR4",
-    "HW5O3CPU",
-    "HW5MESITwoLevelCacheHierarchy",
+    "X86Board",
+    "DDR4",
+    "O3CPU",
+    "MESITwoLevelCacheHierarchy",
 ]
