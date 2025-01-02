@@ -2,12 +2,12 @@ GEM5_ROOT ?= ../../gem5
 CROSS_COMPILE=riscv64-linux-gnu-
 
 all: all-gem5
-all-gem5: mm-ijk-gem5 mm-ikj-gem5 mm-block-ij-gem5 mm-block-ik-gem5 mm-block-kj-gem5
-all-native: mm-ijk-native mm-ikj-native mm-block-ij-native mm-block-ik-native mm-block-kj-native
+all-gem5: mm-ijk-gem5 mm-ikj-gem5 mm-block-ij-gem5 mm-block-ik-gem5 mm-block-jk-gem5
+all-native: mm-ijk-native mm-ikj-native mm-block-ij-native mm-block-ik-native mm-block-jk-native
 
 clean:
-	rm mm-ijk-gem5 mm-ijk-gem5-asm mm-ikj-gem5 mm-ikj-gem5-asm mm-block-ij-gem5 mm-block-ij-gem5-asm mm-block-ik-gem5 mm-block-ik-gem5-asm mm-block-kj-gem5 mm-block-kj-gem5-asm
-	rm mm-ijk-native mm-ikj-native mm-block-ij-native mm-block-ik-native mm-block-kj-native
+	rm mm-ijk-gem5 mm-ijk-gem5-asm mm-ikj-gem5 mm-ikj-gem5-asm mm-block-ij-gem5 mm-block-ij-gem5-asm mm-block-ik-gem5 mm-block-ik-gem5-asm mm-block-jk-gem5 mm-block-jk-gem5-asm
+	rm mm-ijk-native mm-ikj-native mm-block-ij-native mm-block-ik-native mm-block-jk-native
 
 mm-ijk-native: mm.cpp
 	g++ mm.cpp -o mm-ijk-native -static -O3 -DIJK
@@ -49,12 +49,12 @@ mm-block-ik-gem5: mm.cpp
 mm-block-ik-gem5-asm: mm.cpp
 	$(CROSS_COMPILE)g++ mm.cpp -o mm-block-ik-gem5-asm -static -O3 -DIK -I$(GEM5_ROOT)/include -DGEM5 -L$(GEM5_ROOT)/util/m5/build/riscv/out -lm5 -S -fverbose-asm
 
-mm-block-kj-native: mm.cpp
-	g++ mm.cpp -o mm-block-kj-native -static -O3 -DKJ
+mm-block-jk-native: mm.cpp
+	g++ mm.cpp -o mm-block-jk-native -static -O3 -DJK
 
-mm-block-kj-gem5: mm.cpp
-	$(CROSS_COMPILE)g++ mm.cpp -o mm-block-kj-gem5 -static -O3 -DKJ -I$(GEM5_ROOT)/include -DGEM5 -L$(GEM5_ROOT)/util/m5/build/riscv/out -lm5
-	md5sum mm-block-kj-gem5
+mm-block-jk-gem5: mm.cpp
+	$(CROSS_COMPILE)g++ mm.cpp -o mm-block-jk-gem5 -static -O3 -DJK -I$(GEM5_ROOT)/include -DGEM5 -L$(GEM5_ROOT)/util/m5/build/riscv/out -lm5
+	md5sum mm-block-jk-gem5
 
-mm-block-kj-gem5-asm: mm.cpp
-	$(CROSS_COMPILE)g++ mm.cpp -o mm-block-kj-gem5-asm -static -O3 -DKJ -I$(GEM5_ROOT)/include -DGEM5 -L$(GEM5_ROOT)/util/m5/build/riscv/out -lm5 -S -fverbose-asm
+mm-block-jk-gem5-asm: mm.cpp
+	$(CROSS_COMPILE)g++ mm.cpp -o mm-block-jk-gem5-asm -static -O3 -DJK -I$(GEM5_ROOT)/include -DGEM5 -L$(GEM5_ROOT)/util/m5/build/riscv/out -lm5 -S -fverbose-asm

@@ -18,8 +18,8 @@
 #include "block_ik_multiply.h"
 #endif
 
-#ifdef KJ
-#include "block_kj_multiply.h"
+#ifdef JK
+#include "block_jk_multiply.h"
 #endif
 
 #ifdef GEM5
@@ -40,7 +40,7 @@ int main(int argc, char** argv)
     }
 #endif
 
-#if defined(IJ) || defined(IK) || defined(KJ)
+#if defined(IJ) || defined(IK) || defined(JK)
     int matrix_size;
     int block_size;
     if (argc != 3) {
@@ -53,7 +53,7 @@ int main(int argc, char** argv)
     }
 #endif
 
-#if defined(IJK) || defined(IKJ) || defined(IJ) || defined(IK) || defined(KJ)
+#if defined(IJK) || defined(IKJ) || defined(IJ) || defined(IK) || defined(JK)
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_real_distribution<> dis(0, 1);
@@ -89,7 +89,7 @@ int main(int argc, char** argv)
     multiply(A, B, C, matrix_size);
 #endif
 
-#if defined(IJ) || defined(IK) || defined(KJ)
+#if defined(IJ) || defined(IK) || defined(JK)
     multiply(A, B, C, matrix_size, block_size);
 #endif
 
@@ -101,7 +101,7 @@ int main(int argc, char** argv)
     std::cout << "Finished matrix multiply." << std::endl;
     std::cout << "Execution time: " << (double) (end - start).count() / 1e6 << " ms" << std::endl;
 
-#if defined(IJK) || defined(IKJ) || defined(IJ) || defined(IK) || defined(KJ)
+#if defined(IJK) || defined(IKJ) || defined(IJ) || defined(IK) || defined(JK)
     delete[] A;
     delete[] B;
     delete[] C;

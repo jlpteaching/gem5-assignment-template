@@ -320,13 +320,13 @@
     },
     {
         "category": "binary",
-        "id": "mm_block_kj",
+        "id": "mm_block_jk",
         "description": "A simple implementation of matrix multiplication in C with block KJ loop ordering",
         "resource_version": "1.0.0",
         "gem5_versions": [
             "24.1"
         ],
-        "url": "file:///workspaces/gem5-assignment-template/workloads/matmul/mm-block-kj-gem5",
+        "url": "file:///workspaces/gem5-assignment-template/workloads/matmul/mm-block-jk-gem5",
         "md5sum": ""
     },
     {
@@ -407,7 +407,7 @@
     },
     {
         "category": "workload",
-        "id": "mm_block_kj_run",
+        "id": "mm_block_jk_run",
         "description": "A workload that runs matrix multiplication in C with block KJ loop ordering",
         "function": "set_se_binary_workload",
         "resource_version": "1.0.0",
@@ -416,7 +416,7 @@
         ],
         "resources": {
             "binary": {
-                "id": "mm_block_kj",
+                "id": "mm_block_jk",
                 "resource_version": "1.0.0"
             }
         },
