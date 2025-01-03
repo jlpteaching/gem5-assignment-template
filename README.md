@@ -25,11 +25,11 @@ Below is the list of assignments in order of increasing difficulty:
 
 1. Fork this repository to an assignment-specific repository (e.g., "assignment-1-template") under your classroom organization. This fork can be public or private.
 2. Move the following files to the root of the repository.
-   1. The `assignment.md` file to `README.md` in the root of the repository.
+   1. The `assignment.md` file to `README.md` in the root of the repository. When moving this file, update the due date at the top of the file.
    2. The `questions.md` file.
    3. The `components` directory.
 3. Delete the assignments directory.
 
 ## Using codespaces
 
-I'll fill this in soon.
+- Note: There isn't a good way to enable prebuilt devcontainers, so the first time students open the codespace it will take a few minutes to clone gem5, etc.
