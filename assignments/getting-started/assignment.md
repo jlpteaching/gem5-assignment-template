@@ -1,6 +1,6 @@
 ---
 Author: Mahyar Samani
-Title: ECS 201A Assignment 0
+Title: Getting started with gem5
 ---
 
 **Due on *XXX* 11:59 pm (PST)**: See [Submission](#submission) for details.
