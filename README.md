@@ -33,3 +33,7 @@ Below is the list of assignments in order of increasing difficulty:
 ## Using codespaces
 
 - Note: There isn't a good way to enable prebuilt devcontainers, so the first time students open the codespace it will take a few minutes to clone gem5, etc.
+
+## Notes
+
+- The resources in `workloads` will not have the right paths (in the files `gem5-config.json` and `resources.json`) unless the script `.devcontainer/on_create.sh` is run. This script is automatically run when using codespaces or a devcontainer, but will not automatically run if you're using this repository directly on your local machine.
