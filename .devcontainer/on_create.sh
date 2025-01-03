@@ -22,3 +22,7 @@ sed -i "s|/workspaces/gem5-assignment-template|$BASE_PATH|g" $BASE_PATH/gem5-con
 
 # Update path in gem5-resources
 sed -i "s|/workspaces/gem5-assignment-template|$BASE_PATH|g" $BASE_PATH/workloads/resources.json
+
+git add $BASE_PATH/gem5-config.json
+git add $BASE_PATH/workloads/resources.json
+git commit -m "Update resource paths for this repository"
