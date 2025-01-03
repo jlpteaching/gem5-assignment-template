@@ -293,4 +293,3 @@ You may discuss high level concepts with others in the class but all the work mu
 
 Remember, DO NOT POST YOUR CODE PUBLICLY ON GITHUB! Any code found on GitHub that is not the base template you are given will be reported to SJA.
 If you want to sidestep this problem entirely, don’t create a public fork and instead create a private repository to store your work.
-
