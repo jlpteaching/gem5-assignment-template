@@ -1,5 +1,5 @@
 ---
-Author: Mahyar Samani
+Author: Mahyar Samani, Kaustav Goswami, Jason Lowe-Power
 Title: Getting started with gem5
 ---
 

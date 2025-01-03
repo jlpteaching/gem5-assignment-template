@@ -435,20 +435,6 @@ Now, we are going to use a software simulation framework to look at the details 
 
 To run your experiments, create a configuration script that allows you to run *any of the 6 implementations* of the workload with *any number of cores* for `HW5O3CPU` with *any latency* for `xbar_latency` in `HW5MESITwoLevelCacheHierarchy`.
 
-### **IMPORTANT NOTE**
-
-In your configuration scripts, make sure to import `exit_event_handler` using the command below.
-
-```python
-from workloads.roi_manager import exit_event_handler
-```
-
-You will have to pass `exit_event_handler` as a keyword argument named `on_exit_event` when creating a `simulator` object. Use the *template* below to create a simulator object.
-
-```python
-simulator = Simulator(board={name of your board}, full_system=False, on_exit_event=exit_event_handler)
-```
-
 ### Performance
 
 To get the performance/time of the region of interest, you can see the 3rd line in the stats file: `simSeconds`.
@@ -629,8 +615,3 @@ Total points = 50
 You are required to work on this assignment in teams. You are only allowed to share your scripts and code with your teammate(s). You may discuss high-level concepts with others in the class but all the work must be completed by your team and your team only.
 
 Remember, DO NOT POST YOUR CODE PUBLICLY ON GITHUB! Any code found on GitHub that is not the base template you are given will be reported to SJA. If you want to sidestep this problem entirely, don’t create a public fork instead create a private repository to store your work.
-
-## Hints
-
-- Start early and ask questions on Piazza and in discussion.
-- If you need help, come to office hours for the TA, or post your questions on Piazza.
