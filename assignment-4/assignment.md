@@ -12,7 +12,6 @@ Title: ECS 201A Assignment 4
 - [Research question](#research-question)
 - [Workload](#workload)
 - [Experimental setup](#experimental-setup)
-- [Analysis and simulation](#analysis-and-simulation)
 - [Submission](#submission)
 - [Grading](#grading)
 - [Academic misconduct reminder](#academic-misconduct-reminder)
@@ -140,7 +139,7 @@ In this algorithm, rather than streaming through all of the inputs, you operate 
 Look at [this short article](https://csapp.cs.cmu.edu/public/waside/waside-blocking.pdf) to learn more about the blocking technique used to increase locality in matrix multiplication.
 
 Similar to loop interchange, there are multiple different ways you can choose to block accesses to your matrices in the matrix multiplication algorithm.
-One example is shown below where `k` and `j` are blocked and `i` is streamed.
+One example is shown below where `j` and `k` are blocked and `i` is streamed.
 
 ![blocked matrix multiplication](images/mm_blocked.gif)
 
@@ -153,7 +152,7 @@ After implementation, you can build your binary by running the command below in 
 make mm-block-ij-gem5
 ```
 
-After building your binary, you can import it as a workload into your configuration script from `workloads/matmul_workload.py` as `BlockIJMatMulWorkload`.
+After building your binary, you can import it as a workload into your configuration script from `workloads/matmul_workload.py` as `obtain_resource("mm_block_ij_run")`.
 
 - Block *i* and *k* and implement it as the multiply function in `workloads/matmul/block_ik_multiply.h`.
 After implementation, you can build your binary by running the command below in `workload/matmul`.
@@ -162,16 +161,16 @@ After implementation, you can build your binary by running the command below in 
 make mm-block-ik-gem5
 ```
 
-After building your binary, you can import it as a workload into your configuration script from `workloads/matmul_workload.py` as `BlockIKMatMulWorkload`.
+After building your binary, you can import it as a workload into your configuration script from `workloads/matmul_workload.py` as `obtain_resource("mm_block_ik_run")`.
 
 - Block *k* and *j* and implement it as the multiply function in `workloads/matmul/block_kj_multiply.h`.
 After implementation, you can build your binary by running the command below in `workload/matmul`.
 
 ```shell
-make mm-block-kj-gem5
+make mm-block-jk-gem5
 ```
 
-After building your binary, you can import it as a workload into your configuration script from `workloads/matmul_workload.py` as `BlockKJMatMulWorkload`.
+After building your binary, you can import it as a workload into your configuration script from `workloads/matmul_workload.py` as `obtain_resource("mm_block_jk_run")`.
 
 You will have to pass `matrix_size` (describes the size of matrices `A`, `B`, and `C`) and `block_size` (describes the size of the block in your blocking scheme) to the constructor of all of the workloads you have implemented.
 If you have to run a workload on native hardware (e.g. your host machine), you should pass the same **two** arguments in the same order in the command line following the name of your binary.
@@ -179,7 +178,7 @@ If you have to run a workload on native hardware (e.g. your host machine), you s
 **NOTE**: You can use the command below in `workloads/matmul` to create the binaries for all the workloads discussed.
 
 ```shell
-make all-gem5
+make
 ```
 
 **CAUTION**: The above command generates binaries that can only be run with gem5.
@@ -197,41 +196,30 @@ We have already looked at how software implementation can help improve caching i
 In regards to hardware models, we will use different cache hierarchies to see the effect of cache size and latency on the performance.
 Under the `components` directory, you will find modules that define the different models that you should use in your configuration scripts.
 
-- Board models: You will find the definitions for `HW4RISCVBoard` in `components/boards.py`.
-- Board models: You will find the definitions for `HW4O3CPU` in `components/processors.py`.
+- Board models: You will use th `RISCVBoard`.
+- Board models: You will use the `OutOfOrderCPU`. This component uses the O3CPU with all of the default parameters.
 - Cache models: You can find all the models you need to use for your cache hierarchy under `components/cache_hierarchies.py`.
+
 You can find three models for your cache hierarchy.
 They all have an L2 cache with size of `128 KiB`.
 They also have the same L1I cache.
 However, there are different L1D cache designs.
 You can find a short description of each L1D design below.
-  - HW4LargeCache: a `48 KiB` L1D cache with higher latency.
-  - HW4MediumCache: a `32 KiB` L1D cache with medium latency.
-  - HW4SmallCache: a `16 KiB` L1 cache with lower latency.
+
+- LargeCache: a `48 KiB` L1D cache.
+- SmallCache: a `16 KiB` L1D cache.
 
 Make sure you understand their similarities and differences.
 
-- Memory models: You will find the definitions for `HW4DDR4` in `components/memories.py`.
+- Memory models: You will use the `DDR4` memory.
 - Clock frequency: You can use a clock frequency of `2 GHz` for all of your simulations.
 
-### **IMPORTANT NOTE**
-
-In your configuration scripts, make sure to import `exit_event_handler` using the command below.
-
-```python
-from workloads.roi_manager import exit_event_handler
-```
-
-You will have to pass `exit_event_handler` as a keyword argument named `on_exit_event` when creating a `simulator` object. Use the *template* below to create a simulator object.
-
-```python
-simulator = Simulator(board={name of your board}, full_system=False, on_exit_event=exit_event_handler)
-```
-
-## Analysis and simulation
+## The experiments
 
 As part of your analysis and simulation, you will have to run your workloads on both real hardware and gem5.
-Before running any workloads, let's take a look at our working set size.
+Before running any workloads, you should develop your hypotheses as to what the performance will be.
+Specifically, the main thing that is changing will be the *hit rate* in the L1 caches.
+You can estimate the hit rate by estimating the *active* working set size and comparing it to the cache size.
 Working set size is the number of bytes that have to be moved between the processor and the memory subsystem.
 
 ### Step I: Working set sizes
@@ -241,22 +229,24 @@ In your report answer the following questions.
 1. What is the working set size for the matrix multiply application?
 Describe the working set size as a function of `matrix_size` and the size of a double `double_size`.
 Plug in 128 as `matrix_size` and 8 as `double_size` and calculate the working set size.
+Give both the answer and the equation you used to calculate it.
 2. For each of the three blocking configurations, what's the *active working set* for multiplying *one block*?
 Describe the working set size as a function of `matrix_size`, `block_size`, and `double_size`.
 Plug in 128 as `matrix_size`, 8 as `block_size`, and 8 as `double_size`.
+3. Given your answers, for the "SmallCache" that is 16 KiB, which implementation do you think will perform the best?
+
+For these questions, you can assume the cache line size is 64 bytes.
 
 ### Step II: Simulation and performance comparison
 
 For your simulation, create a configuration script that allows you to run any of the workloads with any of the cache hierarchies.
 For this step:
 
-- run all the workloads on `HW4SmallCacheHierarchy`
-- run `BlockIJMatMulWorkload` with all the cache hierarchies.
+- run all the workloads on using the `SmallCache` hierarchy.
 
 In your report answer the following questions.
 
-1. For `HW4SmallCacheHierarchy`, which blocking scheme performs the best? Why?
-2. For `BlockIKMatMulWorkload`, which cache hierarchy performs the best? Why?
+1. For `SmallCache`, which blocking scheme performs the best? Why?
 
 Use a `matrix_size` of 128 and a `block_size` of 8 for all your simulations.
 
@@ -264,19 +254,27 @@ Use a `matrix_size` of 128 and a `block_size` of 8 for all your simulations.
 Moreover, think of how **a**verage **m**emory **a**ccess **t**ime (**AMAT**) could help you explain your results.
 I also recommend thinking about how the access pattern could influence memory access time.
 
-For this step, you will run **6 configurations** in total.
+The stats that are most useful will be:
 
-### Step III: Finding an optimal setup
+- `board.cache_hierarchy.ruby_system.l1_controllers.L1Dcache.m_demand_hits`
+- `board.cache_hierarchy.ruby_system.l1_controllers.L1Dcache.m_demand_misses`
+- `board.cache_hierarchy.ruby_system.l1_controllers.L1Dcache.m_demand_accesses`
+- `board.cache_hierarchy.ruby_system.l2_controllers0.L2cache.m_demand_hits`
+- `board.cache_hierarchy.ruby_system.l2_controllers0.L2cache.m_demand_misses`
+- `board.cache_hierarchy.ruby_system.l2_controllers0.L2cache.m_demand_accesses`
 
-In this step, you will use your conclusions in the last step to predict a combination of blocking scheme and cache hierarchy that performs best.
-In your report, answer the following questions.
+> Note: There are four L2 controllers, but they represent different banks of the same cache. The miss ratio should be the same for all of them.
 
-1. What combination of a blocking scheme and cache hierarchy will perform best?
-In your answer describe your approach for finding this combination.
-Remember, don't exhaustively search, but try to use the information and the statistics from the previous step to find the best combination.
-2. Between the size and the latency of the caches which one did you find has a more significant effect?
+### Step III: Comparing cache size effects
 
-### Step IV: Running on native hardware
+Now, run the same workloads on the `LargeCache` hierarchy.
+
+In your report answer the following questions.
+
+1. Which blocking schemes benefit the most from the larger cache?
+2. Why does the non-blocked implementation not benefit as much from the larger cache?
+
+### Next steps (required 201A, extra credit 154B): Running on native hardware
 
 Now, run the matrix multiply workloads on some real hardware (not gem5).
 Use the codespace to run the experiments.
@@ -296,7 +294,7 @@ make mm-block-ik-native
 ```
 
 ```shell
-make mm-block-kj-native
+make mm-block-jk-native
 ```
 
 Before running your workloads on real hardware, answer the following questions in your report.
@@ -312,32 +310,36 @@ After running the workloads on real hardware answer the following question in yo
 
 ## Submission
 
-As mentioned before, you are allowed to submit your assignments in **pairs** and in **PDF** format.
-You should submit your report on [gradescope](https://www.gradescope.com/courses/487868).
-In your report answer the questions presented in , [Analysis and simulation: Step I](#step-i-working-set-sizes), [Analysis and simulation: Step II](#step-ii-simulation-and-performance-comparison), [Analysis and simulation: Step III](#step-iii-finding-an-optimal-setup), and [Analysis and simulation: Step IV](#step-iv-running-on-native-hardware).
+You will submit this assignment via GitHub Classroom.
 
-Use clear reasoning and visualization to drive your conclusions.
-Submit all your code through your assignment repository. Please make sure to include code/scripts for the following.
+1. Accept the assignment by clicking on the link provided in the announcement.
+2. Create a Codespace for the assignment on your repository.
+3. Fill out the `questions.md` file.
+4. Commit your changes.
 
-- `Instruction.md`: should include instructions on how to run your simulations.
-- Automation: code/scripts to run your simulations.
-- Configuration: python file configuring the systems you need to simulate.
-- Workload implementation: You will need to add your implementations for the three different blocking schemes to their respective source code files in `workloads/matmul`.
+Make sure you include both your runscript, an explanation of how to use your script, and the questions to the questions in the `questions.md` file.
+
+### Explanation of how to use your script
+
+Include a detailed explanation of how to use your script and how you use your script to generate your answers (this will be more applicable in future assignments).
+Make sure that all paths are relative to this directory (`assignment-4/`).
+The code included in the "Example command to run the script" section should be able to be copied and pasted into a terminal and run without modification.
+
+- You should include a sentence or two which describes what the script (or scripts) do under "Explanation of the script" in `questions.md`.
+- You should include the path to the script under "Script to run" in `questions.md`.
+- You should include any parameters that need to be passed to the script under "Parameters to script (if any)" in `questions.md`.
+- You should include each command used to gather data under "Command used to gather data" in `questions.md`.
+  - Make sure this can by copy-pasted and run in your codespace without modification.
+  - If you need other files to run your script, make sure to include those files when you commit your changes.
 
 ## Grading
 
-Like your submission, your grade is split into two parts.
-
-1. Reproducibility Package (50 points):
-    a. Instruction and automation to run simulations for different sections and dump statistics (20 points)
-        - Instructions (5 points)
-        - Automation (5 points)
-    b. Configuration scripts and source codes (40 points): 5 points for configuration script(s) used to run your simulations as described in [Analysis and simulation: Step II](#step-ii-simulation-and-performance-comparison), 10 points for implementing each of the 3 blocking schemes as described in [Blocked matrix multiplication](#blocked-matrix-multiplication), and 5 points for the scripts used to run workloads on native hardware as described in [Analysis and simulation: Step IV](#step-iv-running-on-native-hardware).
-
-2. Report (50 points): 5 points for each question presented in [Analysis and simulation: Step I](#step-i-working-set-sizes), [Analysis and simulation: Step II](#step-ii-simulation-and-performance-comparison), [Analysis and simulation: Step III](#step-iii-finding-an-optimal-setup), and [Analysis and simulation: Step IV](#step-iv-running-on-native-hardware).
+- **25 points** gem5 experiment script and explanation of how to use your script
+- **75 points** for the questions in the report
+- **25 points** for the next steps
 
 ## Academic misconduct reminder
 
-You are required to work on this assignment in teams. You are only allowed to share your scripts and code with your teammate(s). You may discuss high-level concepts with others in the class but all the work must be completed by your team and your team only.
+You are required to work on this assignment in teams. You are only allowed to share you scripts and code with your teammate(s). You may discuss high level concepts with others in the class but all the work must be completed by your team and your team only.
 
-Remember, DO NOT POST YOUR CODE PUBLICLY ON GITHUB! Any code found on GitHub that is not the base template you are given will be reported to SJA. If you want to sidestep this problem entirely, don’t create a public fork instead create a private repository to store your work.
+Remember, DO NOT POST YOUR CODE PUBLICLY ON GITHUB! Any code found on GitHub that is not the base template you are given will be reported to SJA. If you want to sidestep this problem entirely, don’t create a public fork and instead create a private repository to store your work.
