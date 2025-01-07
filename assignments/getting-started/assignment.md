@@ -403,7 +403,7 @@ Make sure you include both your runscript, an explanation of how to use your scr
 ### Explanation of how to use your script
 
 Include a detailed explanation of how to use your script and how you use your script to generate your answers (this will be more applicable in future assignments).
-Make sure that all paths are relative to this directory (`assignment-0/`).
+Make sure that all paths are relative to this base directory.
 The code included in the "Example command to run the script" section should be able to be copied and pasted into a terminal and run without modification.
 
 - You should include a sentence or two which describes what the script (or scripts) do under "Explanation of the script" in `questions.md`.
@@ -415,9 +415,9 @@ The code included in the "Example command to run the script" section should be a
 
 ## Grading
 
-- **50 points** `run.py` script located at `assignment-0/run.py`
-- **25 points** for the `questions.md` file located at `assignment-0/questions.md`
-- **25 points** for explanation of how to use your script located at `assignment-0/questions.md`
+- **50 points** `run.py` script located at `getting-started-<yourGitHubUsername>/run.py`
+- **25 points** for the `questions.md` file located at `getting-started-<yourGitHubUsername>/questions.md`
+- **25 points** for explanation of how to use your script located at `getting-started-<yourGitHubUsername>/questions.md`
 
 ## Academic misconduct reminder
 
