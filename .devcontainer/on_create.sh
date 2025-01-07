@@ -25,13 +25,14 @@ sed -i "s|/workspaces/gem5-assignment-template|$BASE_PATH|g" $BASE_PATH/workload
 
 git add $BASE_PATH/gem5-config.json
 git add $BASE_PATH/workloads/resources.json
-git commit -m "Update resource paths for this repository" || true
 
-if ! git diff-index --quiet HEAD --; then
-  echo "Failed to commit changes. Please run the following command manually:"
+if ! git config user.email >/dev/null; then
+  echo "Author unset. Please run the following command manually:"
   echo
-  echo "    git config --global user.name <Your Name>"
-  echo "    git config --global user.email <Your Email>"
+  echo "    git config --global user.email \"you@example.com\""
+  echo "    git config --global user.name \"Your Name\""
   echo "    git commit -m \"Update resource paths for this repository\""
   echo
+else
+  git commit -m "Update resource paths for this repository"
 fi
