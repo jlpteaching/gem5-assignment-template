@@ -27,7 +27,7 @@ git add $BASE_PATH/gem5-config.json
 git add $BASE_PATH/workloads/resources.json
 
 if ! git config user.email >/dev/null; then
-  echo "Author unset. Please run the following command manually:"
+  echo "Author unset. Please run the following commands manually:"
   echo
   echo "    git config --global user.email \"you@example.com\""
   echo "    git config --global user.name \"Your Name\""
