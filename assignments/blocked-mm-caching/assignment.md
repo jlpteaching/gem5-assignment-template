@@ -1,7 +1,7 @@
 ---
 Author: Jason Lowe-Power
 Editor:  Maryam Babaie, Mahyar Samani
-Title: ECS 201A Assignment 4
+Title: Improving Blocked Matrix-Multiply Performance
 ---
 
 ## Assignment 4 -- Due XXX pm (PST) on XXX, 2025
@@ -12,6 +12,7 @@ Title: ECS 201A Assignment 4
 - [Research question](#research-question)
 - [Workload](#workload)
 - [Experimental setup](#experimental-setup)
+- [The Experiments](#the-experiments)
 - [Submission](#submission)
 - [Grading](#grading)
 - [Academic misconduct reminder](#academic-misconduct-reminder)

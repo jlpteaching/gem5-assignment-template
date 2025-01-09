@@ -1,7 +1,7 @@
 ---
 Author: Jason Lowe-Power
 Editor:  Maryam Babaie, Mahyar Samani, Kaustav Goswami
-Title: ECS 201A Assignment 3
+Title: Out-of-Order Core Designs
 ---
 
 **Due on XXX 11:59 pm (PST)**: See [Submission](#submission) for details

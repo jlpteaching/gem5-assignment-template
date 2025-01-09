@@ -1,14 +1,12 @@
 ---
 Author: Jason Lowe-Power
 Editor:  Maryam Babaie, Mahyar Samani
-Title: ECS 201A Assignment 1
+Title: ISA vs Technology
 ---
-
-# Assignment 1 -- (100 Points)
 
 Originally from University of Wisconsin-Madison CS/ECE 752 .
 
-Modified for ECS 201A, Winter 2023.
+Modified for ECS 201A, Winter 2025.
 
 **Due on XXX 11:59 pm (PST)**: See [Submission](#submission) for details
 
