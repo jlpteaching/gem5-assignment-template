@@ -1,7 +1,7 @@
 ---
 Author: Jason Lowe-Power
 Editor:  Maryam Babaie, Mahyar Samani, Kaustav Goswami
-Title: ECS 201A Assignment 2
+Title: Effects of Pipelining
 ---
 
 Originally from University of Wisconsin-Madison CS/ECE 752.
