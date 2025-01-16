@@ -36,3 +36,5 @@ if ! git config user.email >/dev/null; then
 else
   git commit -m "Update resource paths for this repository"
 fi
+
+exit 0
