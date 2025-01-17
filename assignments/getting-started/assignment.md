@@ -114,7 +114,7 @@ We will need **cpu, cache, and memory** to create a board. Here is the code that
 
 ```python
 if __name__ == "__m5_main__":
-    cpu = TimingSimpleCPU()
+    cpu = SingleCycleCPU()
     cache = MESITwoLevelCache()
     memory = DDR3()
     board = RISCVBoard(

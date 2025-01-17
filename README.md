@@ -24,11 +24,22 @@ Below is the list of assignments in order of increasing difficulty:
 ## Using this to create assignments
 
 1. Fork this repository to an assignment-specific repository (e.g., "assignment-1-template") under your classroom organization. This fork can be public or private.
+I use `gem5-assignment<num>-<xq><yy>` as the name of the repo.
 2. Move the following files to the root of the repository.
    1. The `assignment.md` file to `README.md` in the root of the repository. When moving this file, update the due date at the top of the file.
    2. The `questions.md` file.
    3. The `components` directory.
 3. Delete the assignments directory.
+4. Go to github classroom.
+   1. Create a new assignment.
+   2. Choose the repository you just created as the starter code. (This will create a copy of the repo in your organization.)
+   3. Set the repository visibility to private.
+   4. Select github codespaces as the editor.
+   5. Enable feedback pull requests.
+5. Update the page on the class website.
+   1. Copy the assignment text to the website repo.
+   2. Copy the invitation link to the website repo.
+   3. Update the assignment to have links to the invitations.
 
 ## Using codespaces
 
