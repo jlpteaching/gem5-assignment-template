@@ -1,4 +1,3 @@
-
 ---
 Author: Jason Lowe-Power
 Editor:  Maryam Babaie, Mahyar Samani, Kaustav Goswami
