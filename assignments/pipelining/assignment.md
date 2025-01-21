@@ -146,7 +146,9 @@ In the `workloads/daxpy/daxpy.cpp`, the code is annotated as:
 To compile this program, you need to include the `gem5/m5ops.h` header file.
 In the stats file generated after the simulation, you will only have statistics within the defined ROI.
 
-The compiled program `daxpy-gem5` and it's assembly are already generated in the `workloads/daxpy/`.
+The compiled program `daxpy-gem5` is in `workloads/daxpy/`.
+To build the assembly version of daxpy, run the commands found in `workloads/README.md`.
+Then, run the Makefile with the target `daxpy-asm` (or `daxpy-gem5-asm` for the gem5 annotated version). 
 You can use `make` to compile the program yourself (though this is not necessary).
 
 There are also makefile targets to generate the assembly code for the program, which may be useful in your analysis.
