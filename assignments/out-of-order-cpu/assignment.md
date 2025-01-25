@@ -4,7 +4,7 @@ Editor:  Maryam Babaie, Mahyar Samani, Kaustav Goswami
 Title: Out-of-Order Core Designs
 ---
 
-**Due on XXX 11:59 pm (PST)**: See [Submission](#submission) for details
+**Due on 2/3 (Monday) 11:59 pm (PST)**: See [Submission](#submission) for details
 
 ## Table of Contents
 
@@ -49,8 +49,8 @@ You will be using the following workloads for your experiments detailed below.
 
 - Matrix Multiplication (`matrix_multiply_riscv_run`)
 - Breadth First Search (`bfs_riscv_run`)
-- Bubble Sort (`bubble_sort_riscv_run`)
-- N-Queens (`n_queens_riscv_run`)
+- Bubble Sort (`bubble_riscv_run`)
+- N-Queens (`queens_riscv_run`)
 
 Note that all of these workloads have been compiled with the gem5 annotations enabled.
 
