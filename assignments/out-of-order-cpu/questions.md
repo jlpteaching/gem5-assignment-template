@@ -13,6 +13,10 @@ Use markdown formatting.
 ### Parameters to script (if any)
 
 ### Commands used to gather data
+List all the commands that you have used to do all the required experiments.
+```sh
+gem5 ...
+```
 
 ## [75 points] Questions
 
