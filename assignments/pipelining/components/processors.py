@@ -192,8 +192,8 @@ class MinorCPUStdCore(BaseCPUCore):
 class PipelinedCPU(BaseCPUProcessor):
     def __init__(
         self,
-        issue_latency: int = 2,
-        int_operation_latency: int = 3,
+        issue_latency: int = 1,
+        int_operation_latency: int = 1,
         fp_operation_latency: int = 6,
     ):
         """
