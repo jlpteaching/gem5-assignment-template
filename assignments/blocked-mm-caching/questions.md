@@ -4,6 +4,10 @@
 Put your answers below each question.
 Use markdown formatting.
 
+Name:
+Email:
+Student ID:
+
 ## [25 points] How to reproduce the results
 
 ### Explanation of the script

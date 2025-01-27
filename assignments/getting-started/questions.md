@@ -1,6 +1,5 @@
 # Assignment 0 Questions
 
-
 Name:
 Email:
 Student ID:
