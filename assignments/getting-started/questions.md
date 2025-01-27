@@ -1,5 +1,10 @@
 # Assignment 0 Questions
 
+
+Name:
+Email:
+Student ID:
+
 **IMPORTANT** Do not reformat this file!
 Put your answers below each question.
 Use markdown formatting.
