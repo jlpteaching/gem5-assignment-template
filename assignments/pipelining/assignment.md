@@ -200,7 +200,7 @@ Now, that we have the instruction mix, let's answer the following questions (the
   - If the latency of floating point operations are increased from 6 to 12 cycles, but the system is pipelined.
   - If the issue latency is increased from 1 to 2 cycles, but the operation latency is unchanged (1 cycle for integer and 6 cycles for floating point operations).
 
-### Step II: Developing and running the experiments
+### Step III: Developing and running the experiments
 
 For this step, write a configuration script that allows you to simulate DAXPY with the `PipelineCPU`.
 Make sure to understand how to instantiate an instance of `PipelineCPU`.
