@@ -4,6 +4,11 @@
 Put your answers below each question.
 Use markdown formatting.
 
+## Submission information
+
+Name:
+SID:
+
 ## [25 points] How to reproduce the results
 
 ### Explanation of the script
