@@ -7,6 +7,7 @@ Use markdown formatting.
 ## Submission information
 
 Name:
+
 SID:
 
 ## [25 points] How to reproduce the results
