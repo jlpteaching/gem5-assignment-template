@@ -2,7 +2,7 @@ GEM5_ROOT ?= ../../gem5
 CROSS_COMPILE=riscv64-linux-gnu-
 
 all: all-gem5 all-native
-all-gem5: mm-ijk-gem5 mm-ikj-gem5 mm-block-ij-gem5 mm-block-ik-gem5 mm-block-jk-gem5
+all-gem5: mm-ijk-gem5 mm-ikj-gem5 mm-block-ij-gem5 mm-block-ik-gem5 mm-block-jk-gem5 mm-ijk-gem5-asm mm-ikj-gem5-asm mm-block-ij-gem5-asm mm-block-ik-gem5-asm mm-block-jk-gem5-asm
 all-native: mm-ijk-native mm-ikj-native mm-block-ij-native mm-block-ik-native mm-block-jk-native
 
 clean:
