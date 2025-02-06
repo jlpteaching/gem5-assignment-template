@@ -88,6 +88,25 @@
     },
     {
         "category": "workload",
+        "id": "mm_x86_run",
+        "description": "A workload that runs matrix multiplication in x86 with ROI annotations",
+        "function": "set_se_binary_workload",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "resources": {
+            "binary": {
+                "id": "mm-x86",
+                "resource_version": "1.0.0"
+            }
+        },
+        "additional_params": {
+            "arguments": ["64"]
+        }
+    },
+    {
+        "category": "workload",
         "id": "matrix_multiply_arm_run",
         "description": "A workload that runs matrix multiplication in ARM with ROI annotations",
         "function": "set_se_binary_workload",
@@ -603,5 +622,349 @@
         "additional_params": {
             "arguments": ["16384", 4]
         }
+    },
+    {
+        "category": "binary",
+        "id": "bubble-x86",
+        "description": "A simple implementation of bubble sort in x86 with gem5 ROI annotations",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "url": "file:///workspaces/gem5-assignment-template/workloads/bubble/bubble-x86",
+        "md5sum": "e7193d1046f9f9297f4960b8f8a763f1"
+    },
+    {
+        "category": "workload",
+        "id": "bubble_x86_run",
+        "description": "A workload that runs bubble sort in x86 with gem5 ROI annotations",
+        "function": "set_se_binary_workload",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "resources": {
+            "binary": {
+                "id": "bubble-x86",
+                "resource_version": "1.0.0"
+            }
+        }
+    },
+    {
+        "category": "file",
+        "id": "bubble_hugepages-fs",
+        "description": "A full system runscript for running x86 bubblesort",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "url": "file:///workspaces/gem5-assignment-template/workloads/bubble/bubble_hugepages-fs",
+        "md5sum": "bb9001c891985f8f31874a201b0a0f27"
+    },
+    {
+        "category": "workload",
+        "id": "bubble_hugepages_fs_run",
+        "description": "A workload that runs bubble sort in x86 with gem5 ROI annotations in full system mode",
+        "function": "set_kernel_disk_workload",
+        "resources": {
+            "kernel": {
+                "id": "x86-linux-kernel-6.8.0-35-generic",
+                "resource_version": "1.0.0"
+            },
+            "disk_image": {
+                "id": "x86-ubuntu-24.04-img",
+                "resource_version": "3.0.0"
+            },
+            "readfile": {
+                "id": "bubble_hugepages-fs",
+                "resource_version": "1.0.0"
+            }
+        },
+        "additional_params": {
+            "kernel_args": [
+                "earlyprintk=ttyS0",
+                "console=ttyS0",
+                "lpj=7999923",
+                "root=/dev/sda2"
+            ]
+        },
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ]
+    },
+    {
+        "category": "file",
+        "id": "bubble-fs",
+        "description": "A full system runscript for running x86 bubblesort",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "url": "file:///workspaces/gem5-assignment-template/workloads/bubble/bubble-fs",
+        "md5sum": "d02f976864d88785dd79c4a5969eeb62"
+    },
+    {
+        "category": "workload",
+        "id": "bubble_fs_run",
+        "description": "A workload that runs bubble sort in x86 with gem5 ROI annotations in full system mode",
+        "function": "set_kernel_disk_workload",
+        "resources": {
+            "kernel": {
+                "id": "x86-linux-kernel-6.8.0-35-generic",
+                "resource_version": "1.0.0"
+            },
+            "disk_image": {
+                "id": "x86-ubuntu-24.04-img",
+                "resource_version": "3.0.0"
+            },
+            "readfile": {
+                "id": "bubble-fs",
+                "resource_version": "1.0.0"
+            }
+        },
+        "additional_params": {
+            "kernel_args": [
+                "earlyprintk=ttyS0",
+                "console=ttyS0",
+                "lpj=7999923",
+                "root=/dev/sda2"
+            ]
+        },
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ]
+    },
+    {
+        "category": "binary",
+        "id": "bfs-x86",
+        "description": "A simple implementation of Breadth-First Search in x86 with gem5 ROI annotations",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "url": "file:///workspaces/gem5-assignment-template/workloads/bfs/bfs-x86",
+        "md5sum": "72530a1a9a2a45be6ee3e590dcdfa0cb"
+    },
+    {
+        "category": "workload",
+        "id": "bfs_x86_run",
+        "description": "A workload that runs Breadth-First Search in x86 with gem5 ROI annotations",
+        "function": "set_se_binary_workload",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "resources": {
+            "binary": {
+                "id": "bfs-x86",
+                "resource_version": "1.0.0"
+            }
+        }
+    },
+    {
+        "category": "file",
+        "id": "bfs-fs",
+        "description": "A full system runscript for running x86 Breadth-First Search",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "url": "file:///workspaces/gem5-assignment-template/workloads/bfs/bfs-fs",
+        "md5sum": "2ccff54f47f87f50d7f86641c998d366"
+    },
+    {
+        "category": "workload",
+        "id": "bfs_fs_run",
+        "description": "A workload that runs Breadth-First Search in x86 with gem5 ROI annotations in full system mode",
+        "function": "set_kernel_disk_workload",
+        "resources": {
+            "kernel": {
+                "id": "x86-linux-kernel-6.8.0-35-generic",
+                "resource_version": "1.0.0"
+            },
+            "disk_image": {
+                "id": "x86-ubuntu-24.04-img",
+                "resource_version": "3.0.0"
+            },
+            "readfile": {
+                "id": "bfs-fs",
+                "resource_version": "1.0.0"
+            }
+        },
+        "additional_params": {
+            "kernel_args": [
+                "earlyprintk=ttyS0",
+                "console=ttyS0",
+                "lpj=7999923",
+                "root=/dev/sda2"
+            ]
+        },
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ]
+    },
+    {
+        "category": "file",
+        "id": "bfs_hugepages-fs",
+        "description": "A full system runscript for running x86 Breadth-First Search",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "url": "file:///workspaces/gem5-assignment-template/workloads/bfs/bfs_hugepages-fs",
+        "md5sum": "e5018d8ea94a75385581c5747b076d50"
+    },
+    {
+        "category": "workload",
+        "id": "bfs_hugepages_fs_run",
+        "description": "A workload that runs Breadth-First Search in x86 with gem5 ROI annotations in full system mode",
+        "function": "set_kernel_disk_workload",
+        "resources": {
+            "kernel": {
+                "id": "x86-linux-kernel-6.8.0-35-generic",
+                "resource_version": "1.0.0"
+            },
+            "disk_image": {
+                "id": "x86-ubuntu-24.04-img",
+                "resource_version": "3.0.0"
+            },
+            "readfile": {
+                "id": "bfs_hugepages-fs",
+                "resource_version": "1.0.0"
+            }
+        },
+        "additional_params": {
+            "kernel_args": [
+                "earlyprintk=ttyS0",
+                "console=ttyS0",
+                "lpj=7999923",
+                "root=/dev/sda2"
+            ]
+        },
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ]
+    },
+    {
+        "category": "file",
+        "id": "mm-fs",
+        "description": "A full system runscript for running x86 matrix multiplication",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "url": "file:///workspaces/gem5-assignment-template/workloads/matmul-basic/mm-fs",
+        "md5sum": "e6dae88fb7176bf2b9b3870454e6740e"
+    },
+    {
+        "category": "workload",
+        "id": "mm_fs_run",
+        "description": "A workload that runs matrix multiplication in x86 with gem5 ROI annotations in full system mode",
+        "function": "set_kernel_disk_workload",
+        "resources": {
+            "kernel": {
+                "id": "x86-linux-kernel-6.8.0-35-generic",
+                "resource_version": "1.0.0"
+            },
+            "disk_image": {
+                "id": "x86-ubuntu-24.04-img",
+                "resource_version": "3.0.0"
+            },
+            "readfile": {
+                "id": "mm-fs",
+                "resource_version": "1.0.0"
+            }
+        },
+        "additional_params": {
+            "kernel_args": [
+                "earlyprintk=ttyS0",
+                "console=ttyS0",
+                "lpj=7999923",
+                "root=/dev/sda2"
+            ]
+        },
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ]
+    },
+    {
+        "category": "binary",
+        "id": "mm-block-ik-x86-gem5",
+        "description": "A simple implementation of matrix multiplication in x86 with block IK loop ordering and gem5 ROI annotations",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "url": "file:///workspaces/gem5-assignment-template/workloads/matmul/mm-block-ik-x86-gem5",
+        "md5sum": "3b3ada0fbfd28e282f9db64987696b6a"
+    },
+    {
+        "category": "workload",
+        "id": "mm_block_ik_x86_run",
+        "description": "A workload that runs block IK matrix multiplication in x86 with gem5 ROI annotations",
+        "function": "set_se_binary_workload",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "resources": {
+            "binary": {
+                "id": "mm-block-ik-x86-gem5",
+                "resource_version": "1.0.0"
+            }
+        },
+        "additional_params": {
+            "arguments": ["128", "8"]
+        }
+    },
+    {
+        "category": "binary",
+        "id": "mm_block_ik-fs",
+        "description": "A binary for matrix multiplication with block IK optimization in full system mode",
+        "architecture": "X86",
+        "is_zipped": false,
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ],
+        "url": "file:///workspaces/gem5-assignment-template/workloads/matmul/mm_block_ik-fs",
+        "md5sum": "51627f0c2deb42f52594f97edf89ad59"
+    },
+    {
+        "category": "workload",
+        "id": "mm_block_ik_fs_run",
+        "description": "A workload that runs block IK matrix multiplication in x86 with gem5 ROI annotations in full system mode",
+        "function": "set_kernel_disk_workload",
+        "resources": {
+            "kernel": {
+                "id": "x86-linux-kernel-6.8.0-35-generic",
+                "resource_version": "1.0.0"
+            },
+            "disk_image": {
+                "id": "x86-ubuntu-24.04-img",
+                "resource_version": "3.0.0"
+            },
+            "readfile": {
+                "id": "mm_block_ik-fs",
+                "resource_version": "1.0.0"
+            }
+        },
+        "additional_params": {
+            "kernel_args": [
+                "earlyprintk=ttyS0",
+                "console=ttyS0",
+                "lpj=7999923",
+                "root=/dev/sda2"
+            ]
+        },
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "24.1"
+        ]
     }
 ]

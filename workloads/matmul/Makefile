@@ -58,3 +58,11 @@ mm-block-jk-gem5: mm.cpp
 
 mm-block-jk-gem5-asm: mm.cpp
 	$(CROSS_COMPILE)g++ mm.cpp -o mm-block-jk-gem5-asm -static -O3 -DJK -I$(GEM5_ROOT)/include -DGEM5 -L$(GEM5_ROOT)/util/m5/build/riscv/out -lm5 -S -fverbose-asm
+
+mm-block-ik-x86-gem5: mm.cpp
+	g++ mm.cpp -o mm-block-ik-x86-gem5 -static -O3 -DIK -I$(GEM5_ROOT)/include -DGEM5 -L$(GEM5_ROOT)/util/m5/build/x86/out -lm5
+	md5sum mm-block-ik-x86-gem5
+
+mm_block_ik-fs: mm-block-ik-x86-gem5
+	../make-binary-readfile.py mm-block-ik-x86-gem5 mm_block_ik-fs --args "128 8"
+	md5sum mm_block_ik-fs
