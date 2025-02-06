@@ -4,7 +4,7 @@ Editor:  Maryam Babaie, Mahyar Samani
 Title: Improving Blocked Matrix-Multiply Performance
 ---
 
-## Assignment 4 -- Due XXX pm (PST) on XXX, 2025
+## Assignment 4 -- Due 2/17 (Monday) at 11:59 pm (PST), 2025
 
 ## Table of Contents
 
@@ -164,7 +164,7 @@ make mm-block-ik-gem5
 
 After building your binary, you can import it as a workload into your configuration script from `workloads/matmul_workload.py` as `obtain_resource("mm_block_ik_run")`.
 
-- Block *k* and *j* and implement it as the multiply function in `workloads/matmul/block_kj_multiply.h`.
+- Block *j* and *k* and implement it as the multiply function in `workloads/matmul/block_jk_multiply.h`.
 After implementation, you can build your binary by running the command below in `workload/matmul`.
 
 ```shell
@@ -173,7 +173,7 @@ make mm-block-jk-gem5
 
 After building your binary, you can import it as a workload into your configuration script from `workloads/matmul_workload.py` as `obtain_resource("mm_block_jk_run")`.
 
-You will have to pass `matrix_size` (describes the size of matrices `A`, `B`, and `C`) and `block_size` (describes the size of the block in your blocking scheme) to the constructor of all of the workloads you have implemented.
+You will have to pass `matrix_size` (describes the size of matrices `A`, `B`, and `C`) and `block_size` (describes the size of the block in your blocking scheme) to the constructor of all the workloads you have implemented.
 If you have to run a workload on native hardware (e.g. your host machine), you should pass the same **two** arguments in the same order in the command line following the name of your binary.
 
 **NOTE**: You can use the command below in `workloads/matmul` to create the binaries for all the workloads discussed.
@@ -194,11 +194,11 @@ To do this, see [Running on native hardware](#step-iv-running-on-native-hardware
 
 In this assignment, we will investigate the effect of caching on overall performance.
 We have already looked at how software implementation can help improve caching in matrix multiplication.
-In regards to hardware models, we will use different cache hierarchies to see the effect of cache size and latency on the performance.
+Regarding hardware models, we will use different cache hierarchies to see the effect of cache size and latency on the performance.
 Under the `components` directory, you will find modules that define the different models that you should use in your configuration scripts.
 
-- Board models: You will use th `RISCVBoard`.
-- Board models: You will use the `OutOfOrderCPU`. This component uses the O3CPU with all of the default parameters.
+- Board models: You will use the `RISCVBoard`.
+- Board models: You will use the `OutOfOrderCPU`. This component uses the O3CPU with all the default parameters.
 - Cache models: You can find all the models you need to use for your cache hierarchy under `components/cache_hierarchies.py`.
 
 You can find three models for your cache hierarchy.
@@ -207,7 +207,8 @@ They also have the same L1I cache.
 However, there are different L1D cache designs.
 You can find a short description of each L1D design below.
 
-- LargeCache: a `48 KiB` L1D cache.
+- LargeCache: a `64 KiB` L1D cache.
+- MediumCache: a `32 KiB` L1D cache.
 - SmallCache: a `16 KiB` L1D cache.
 
 Make sure you understand their similarities and differences.
@@ -243,7 +244,7 @@ For these questions, you can assume the cache line size is 64 bytes.
 For your simulation, create a configuration script that allows you to run any of the workloads with any of the cache hierarchies.
 For this step:
 
-- run all the workloads on using the `SmallCache` hierarchy.
+- Run all the workloads on using the `SmallCache` hierarchy.
 
 In your report answer the following questions.
 
