@@ -11,9 +11,22 @@ Title: Virtual Memory Translation Cache Designs
 - [Introduction](#introduction)
 - [Research Question](#research-question)
 - [Workloads](#workloads)
+- [System under simulation](#system-under-simulation)
+- [Step I: A comparison between syscall emulation and full system](#step-i-a-comparison-between-syscall-emulation-and-full-system)
+  - [Run in SE mode](#run-in-se-mode)
+  - [Run in FS mode](#run-in-fs-mode)
+  - [Compare SE and FS modes](#compare-se-and-fs-modes)
 - [Experimental Setup](#experimental-setup)
 - [Analysis and Simulation](#analysis-and-simulation)
+  - [Step II: Hypothesis: Understanding the Virtual Memory System](#step-ii-hypothesis-understanding-the-virtual-memory-system)
+  - [Step III: Basic Performance Analysis](#step-iii-basic-performance-analysis)
+  - [Step III: Design Space Exploration](#step-iii-design-space-exploration)
+  - [Answering the Research Question](#answering-the-research-question)
+  - [Next Steps (Required 201A, Extra Credit 154B)](#next-steps-required-201a-extra-credit-154b)
+- [Hints](#hints)
+  - [Useful stats](#useful-stats)
 - [Submission](#submission)
+  - [Explanation of How to Use Your Script](#explanation-of-how-to-use-your-script)
 - [Grading](#grading)
 - [Academic Misconduct Reminder](#academic-misconduct-reminder)
 
@@ -50,6 +63,12 @@ You will use two different workloads for this assignment:
    - Available as `mm_block_ik_x86_run` or `mm_block_ik_fs_run`
 
 Both workloads are available in syscall emulation (SE) and full system (FS) modes.
+
+## System under simulation
+
+The system you are simulating looks something like the picture below:
+
+![System under simulation](images/system.png)
 
 ## Step I: A comparison between syscall emulation and full system
 
@@ -124,9 +143,10 @@ So, when you compare the statistics between SE and FS modes, you are comparing t
 
 ### Compare SE and FS modes
 
-1. What is the difference in IPC between SE and FS modes for each workload?
-2. What is the difference in the number of instructions between SE and FS modes for each workload?
-3. What is the difference in the number of TLB misses between SE and FS modes for each workload?
+1. What is the difference in the number of instructions between SE and FS modes for each workload? Why does it vary?
+2. What is the difference in the number of TLB misses between SE and FS modes for each workload? Why does it vary?
+3. What is the difference in IPC between SE and FS modes for each workload?
+4. What is the difference in the amount of data read from memory *for the page table walks* in SE and FS modes?
 
 ## Experimental Setup
 
@@ -184,6 +204,43 @@ Assume that the area difference of the larger TLB and the larger page walk cache
 
 1. How would your conclusions change if the workloads used huge pages (2MB) instead of regular 4KB pages?
 2. What are the characteristics of the workloads which cause the performance impact of address translation to be different between the two workloads?
+
+## Hints
+
+### Useful stats
+
+```text
+simSeconds
+```
+
+The hits, misses, and total latency for the data TLB's (DTB) page walk cache.
+You can divide the latency by the number of misses to get the average per miss latency (i.e., AMAT).
+The latency is given in *ticks* not cycles or seconds.
+
+```text
+board.cache_hierarchy.dptw_caches.overallHits::total
+board.cache_hierarchy.dptw_caches.overallMisses::total
+board.cache_hierarchy.dptw_caches.overallMissLatency::total
+```
+
+The TLB stats (hits, misses, accesses).
+Feel free to ignore the intruction TLB (itb).
+
+```text
+board.processor.switch.core.mmu.dtb.rdMisses
+board.processor.switch.core.mmu.dtb.wrMisses
+board.processor.switch.core.mmu.dtb.rdAccesses
+board.processor.switch.core.mmu.dtb.wrAccesses
+```
+
+The accesses by the page table waker to memory and to the L2 cache
+
+```text
+board.memory.mem_ctrl.dram.bwTotal::processor.switch.core.mmu.dtb.walker
+board.cache_hierarchy.l2-cache-0.overallAccesses::processor.switch.core.mmu.dtb.walker
+board.cache_hierarchy.l2-cache-0.overallMisses::processor.switch.core.mmu.dtb.walker
+board.cache_hierarchy.l2-cache-0.overallHits::processor.switch.core.mmu.dtb.walker
+```
 
 ## Submission
 
