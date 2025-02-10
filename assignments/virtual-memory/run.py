@@ -23,14 +23,11 @@ gem5 run.py <workload_name> [--fs] [--tlb_entries entries] [--pwc_size large|sma
 ```
 """
 
-from gem5.coherence_protocol import CoherenceProtocol
 from gem5.components.boards.x86_board import X86Board
 from gem5.components.memory.single_channel import SingleChannelDDR4_2400
-from gem5.isas import ISA
 from gem5.resources.resource import obtain_resource
 from gem5.simulate.exit_event import ExitEvent
 from gem5.simulate.simulator import Simulator
-from gem5.utils.requires import requires
 from components import SmallPWCHierarchy, LargePWCHierarchy
 from components.processors import create_processor
 
@@ -146,3 +143,16 @@ simulator = Simulator(
 simulator.override_outdir(Path("m5out") / simulator.get_id())
 
 simulator.run()
+
+"""
+gem5 -re run.py bfs --fs --pwc_size=small --tlb_entries 16 &
+gem5 -re run.py bfs --fs --pwc_size=small --tlb_entries 32 &
+gem5 -re run.py mm_block_ik --fs --pwc_size=small --tlb_entries 16 &
+gem5 -re run.py mm_block_ik --fs --pwc_size=small --tlb_entries 32 &
+gem5 -re run.py bfs --fs --pwc_size=large --tlb_entries 16 &
+gem5 -re run.py bfs --fs --pwc_size=large --tlb_entries 32 &
+gem5 -re run.py mm_block_ik --fs --pwc_size=large --tlb_entries 16 &
+gem5 -re run.py mm_block_ik --fs --pwc_size=large --tlb_entries 32 &
+gem5 -re run.py bfs &
+gem5 -re run.py mm_block_ik &
+"""
