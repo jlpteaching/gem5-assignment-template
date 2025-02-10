@@ -1,3 +1,6 @@
+# Copyright (c) 2025 Jason Lowe-Power
+# SPDX-License-Identifier: BSD-3-Clause
+
 from gem5.components.cachehierarchies.classic.private_l1_private_l2_cache_hierarchy import (
     PrivateL1PrivateL2CacheHierarchy,
 )

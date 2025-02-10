@@ -1,39 +1,42 @@
-"""
+# Copyright (c) 2025 Jason Lowe-Power
+# SPDX-License-Identifier: BSD-3-Clause
+
+"""Main simulation script for virtual memory translation cache design exploration.
+
+This script runs experiments to compare different virtual memory translation cache
+designs, specifically analyzing the tradeoff between TLB size and page walk cache
+configuration. It supports both full system (FS) and syscall emulation (SE) modes,
+and allows configuration of:
+- TLB entries: Number of TLB entries (e.g., 16, 32)
+- Page walk cache size: Small or large configuration
+- Workloads: Different memory-intensive benchmarks (bfs, mm_block_ik)
+
+The script uses gem5's X86 board with a switchable processor that starts with KVM
+(for fast boot in FS mode) and switches to detailed timing mode for the workload
+execution. It collects statistics on TLB and page walk cache performance.
 
 Usage
 -----
 
 ```
-gem5 run.py <workload_name> [--fs] [--tlb_entries entires] [--pwc_size large|small]
+gem5 run.py <workload_name> [--fs] [--tlb_entries entries] [--pwc_size large|small]
 ```
 """
 
 from gem5.coherence_protocol import CoherenceProtocol
 from gem5.components.boards.x86_board import X86Board
 from gem5.components.memory.single_channel import SingleChannelDDR4_2400
-from gem5.components.processors.cpu_types import CPUTypes
-from gem5.components.processors.simple_switchable_processor import (
-    SimpleSwitchableProcessor,
-)
-from gem5.components.processors.simple_processor import SimpleProcessor
 from gem5.isas import ISA
-from gem5.resources.resource import obtain_resource, BinaryResource
+from gem5.resources.resource import obtain_resource
 from gem5.simulate.exit_event import ExitEvent
 from gem5.simulate.simulator import Simulator
 from gem5.utils.requires import requires
 from components import SmallPWCHierarchy, LargePWCHierarchy
+from components.processors import create_processor
 
 import m5
 import argparse
 from pathlib import Path
-
-# This simulation requires using KVM with gem5 compiled for X86 simulation
-# and with MESI_Two_Level cache coherence protocol.
-requires(
-    isa_required=ISA.X86,
-    coherence_protocol_required=CoherenceProtocol.MESI_TWO_LEVEL,
-    kvm_required=True,
-)
 
 parser = argparse.ArgumentParser(description="Run gem5 simulation")
 parser.add_argument(
@@ -75,29 +78,8 @@ else:
 # Main memory
 memory = SingleChannelDDR4_2400(size="3GiB")
 
-# This is a switchable CPU. We first boot Ubuntu using KVM, then the guest
-# will exit the simulation by calling "m5 exit" (see the `command` variable
-# below, which contains the command to be run in the guest after booting).
-# Upon exiting from the simulation, the Exit Event handler will switch the
-# CPU type (see the ExitEvent.EXIT line below, which contains a map to
-# a function to be called when an exit event happens).
-if args.fs:
-    processor = SimpleSwitchableProcessor(
-        starting_core_type=CPUTypes.KVM,
-        switch_core_type=CPUTypes.TIMING,
-        isa=ISA.X86,
-        num_cores=1,
-    )
-    for proc in processor.start:
-        proc.core.usePerf = False
-    processor._switchable_cores['switch'][0].core.mmu.dtb.size = args.tlb_entries
-else:
-    processor = SimpleProcessor(
-        cpu_type=CPUTypes.TIMING,
-        isa=ISA.X86,
-        num_cores=1,
-    )
-    processor.cores[0].core.mmu.dtb.size = args.tlb_entries
+# Use create_processor since we need to do something weird for FS mode
+processor = create_processor(fs_mode=args.fs, tlb_entries=args.tlb_entries)
 
 board = X86Board(
     clk_freq="3GHz",
@@ -110,13 +92,13 @@ if args.fs:
     workload_fs = obtain_resource(f"{workload_name}_fs_run")
     board.set_workload(workload_fs)
     # Hack to get around readfile being a string and not a FileResource
-    board.readfile = obtain_resource(
-        f"{workload_name}-fs").get_local_path()
+    board.readfile = obtain_resource(f"{workload_name}-fs").get_local_path()
 else:
     workload_se = obtain_resource(f"{workload_name}_x86_run")
     board.set_workload(workload_se)
 
 
+# Note: this is only used in FS mode.
 def exit_event_handler():
     print("First exit: kernel booted")
     yield False  # gem5 is now executing systemd startup
@@ -128,20 +110,22 @@ def exit_event_handler():
     print("Switching to Timing CPU")
     processor.switch()
     yield False  # gem5 is now executing the program. The application_command
-                 # has an extra exit command to switch CPUs
-                 # This is required since we're using the instruction version
-                 # of the gem5 hypercalls.
+    # has an extra exit command to switch CPUs
+    # This is required since we're using the instruction version
+    # of the gem5 hypercalls.
 
     print("Third exit: Finished `after_boot.sh` script")
     # The after_boot.sh script will run a script if it is passed via
     # m5 readfile. This is the last exit event before the simulation exits.
     yield True  # End the simulation
 
+
 def workbegin_handler():
     # Here we switch the CPU type to Timing.
     m5.stats.reset()
     print("reset stats at beginning of work")
     yield False
+
 
 def workend_handler():
     print("At workend. Exiting")
@@ -162,16 +146,3 @@ simulator = Simulator(
 simulator.override_outdir(Path("m5out") / simulator.get_id())
 
 simulator.run()
-
-"""
-gem5 -re run.py bfs --fs --pwc_size=small --tlb_entries 16 &
-gem5 -re run.py bfs --fs --pwc_size=small --tlb_entries 32 &
-gem5 -re run.py mm_block_ik --fs --pwc_size=small --tlb_entries 16 &
-gem5 -re run.py mm_block_ik --fs --pwc_size=small --tlb_entries 32 &
-gem5 -re run.py bfs --fs --pwc_size=large --tlb_entries 16 &
-gem5 -re run.py bfs --fs --pwc_size=large --tlb_entries 32 &
-gem5 -re run.py mm_block_ik --fs --pwc_size=large --tlb_entries 16 &
-gem5 -re run.py mm_block_ik --fs --pwc_size=large --tlb_entries 32 &
-gem5 -re run.py bfs &
-gem5 -re run.py mm_block_ik &
-"""
