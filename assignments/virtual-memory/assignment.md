@@ -20,7 +20,7 @@ Title: Virtual Memory Translation Cache Designs
 - [Analysis and Simulation](#analysis-and-simulation)
   - [Step II: Hypothesis: Understanding the Virtual Memory System](#step-ii-hypothesis-understanding-the-virtual-memory-system)
   - [Step III: Basic Performance Analysis](#step-iii-basic-performance-analysis)
-  - [Step III: Design Space Exploration](#step-iii-design-space-exploration)
+  - [Step IV: Design Space Exploration](#step-iv-design-space-exploration)
   - [Answering the Research Question](#answering-the-research-question)
   - [Next Steps (Required 201A, Extra Credit 154B)](#next-steps-required-201a-extra-credit-154b)
 - [Hints](#hints)
@@ -178,7 +178,7 @@ Before running any experiments:
 2. What do you expect to happen to performance as you increase the page walk cache size? Why?
 3. Do you expect increasing the TLB size to have a larger impact on performance than increasing the page walk cache size? Why or why not? Use AMAT to justify your answer.
 
-### Step III-A: Basic Performance Analysis
+### Step III: Basic Performance Analysis
 
 Run both workloads with the small TLB (16 entries) and small page walk cache configuration.
 
@@ -186,7 +186,7 @@ Run both workloads with the small TLB (16 entries) and small page walk cache con
 2. What is the average page walk latency for each workload?
 3. What percentage of execution time is spent handling TLB misses? (Hint: compare the performance of SE mode and FS mode to get an approximation of the time spent handling TLB misses.)
 
-### Step III-B: Design Space Exploration
+### Step IV: Design Space Exploration
 
 Run experiments varying both TLB size and page walk cache configuration.
 
