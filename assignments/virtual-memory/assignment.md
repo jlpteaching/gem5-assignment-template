@@ -143,10 +143,10 @@ So, when you compare the statistics between SE and FS modes, you are comparing t
 
 ### Compare SE and FS modes
 
-1. What is the difference in the number of instructions between SE and FS modes for each workload? Why does it vary?
+1. What is the difference in the number of instructions simulated between SE and FS modes for each workload? Why does it vary?
 2. What is the difference in the number of TLB misses between SE and FS modes for each workload? Why does it vary?
 3. What is the difference in IPC between SE and FS modes for each workload?
-4. What is the difference in the amount of data read from memory *for the page table walks* in SE and FS modes?
+4. What are the differences in PTW memory accesses and dptw cache accesses between SE and FS modes? What can you conclude about page table walks in SE mode by looking at these statistics?
 
 Look at the [Hints](#hints) section on where to get started on reading the `stats.txt`.
 
@@ -176,14 +176,14 @@ Before running any experiments:
 
 1. What do you expect to happen to performance as you increase the TLB size? Why?
 2. What do you expect to happen to performance as you increase the page walk cache size? Why?
-3. Do you expect increasing the TLB size to have a larger impact on performance than increasing the page walk cache size? Why or why not? Use AMAT to justify your answer.
+3. Do you expect increasing the TLB size to have a larger impact on performance than increasing the page walk cache size? Why or why not? Use AMAT to justify your answer (Look at the [Hints](#hints) section for more on calculating AMAT).
 
 ### Step III: Basic Performance Analysis
 
 Run both workloads with the small TLB (16 entries) and small page walk cache configuration.
 
 1. What is the TLB miss rate for each workload?
-2. What is the average page walk latency for each workload?
+2. What is the average page walk latency for each workload, i.e., what is the the AMAT of a TLB miss?
 3. What percentage of execution time is spent handling TLB misses? (Hint: compare the performance of SE mode and FS mode to get an approximation of the time spent handling TLB misses.)
 
 ### Step IV: Design Space Exploration
@@ -228,6 +228,15 @@ board.cache_hierarchy.dptw_caches.overallMissLatency::total
 The TLB stats (hits, misses, accesses).
 Feel free to ignore the intruction TLB (itb).
 
+SE:
+```text
+board.processor.cores.core.mmu.dtb.rdAccesses
+board.processor.cores.core.mmu.dtb.wrAccesses
+board.processor.cores.core.mmu.dtb.rdMisses
+board.processor.cores.core.mmu.dtb.wrMisses
+```
+
+FS:
 ```text
 board.processor.switch.core.mmu.dtb.rdMisses
 board.processor.switch.core.mmu.dtb.wrMisses

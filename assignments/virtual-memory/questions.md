@@ -70,13 +70,13 @@ Please put one command per designated line.
 
 ### [20 points] Step I: SE vs FS Comparison
 
-1. What is the difference in the number of instructions between SE and FS modes for each workload? Why does it vary?
+1. What is the difference in the number of instructions simulated between SE and FS modes for each workload? Why does it vary?
 
 2. What is the difference in the number of TLB misses between SE and FS modes for each workload? Why does it vary?
 
 3. What is the difference in IPC between SE and FS modes for each workload?
 
-4. What is the difference in the amount of data read from memory *for the page table walks* in SE and FS modes?
+4. What are the differences in PTW memory accesses and dptw cache accesses in SE and FS modes? What can you conclude about page table walks in SE mode by looking at these statistics?
 
 ### [15 points] Step II: Hypothesis - Understanding the Virtual Memory System
 
@@ -90,7 +90,7 @@ Please put one command per designated line.
 
 1. What is the TLB miss rate for each workload?
 
-2. What is the average page walk latency for each workload?
+2. What is the average page walk latency for each workload, i.e., what is the the AMAT of a TLB miss?
 
 3. What percentage of execution time is spent handling TLB misses? (Hint: compare the performance of SE mode and FS mode to get an approximation of the time spent handling TLB misses.)
 
