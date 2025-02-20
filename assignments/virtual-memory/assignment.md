@@ -93,8 +93,8 @@ Let's look at the differences when running in SE and FS modes.
 The run script provided (`run.py`) will run the workload in SE mode by default.
 
 ```bash
-./run.py bfs
-./run.py mm_block_ik
+gem5 run.py bfs
+gem5 run.py mm_block_ik
 ```
 
 Run these workloads and note the number of instructions, the time, and the IPC.
@@ -133,8 +133,8 @@ The port number is printed to the terminal when you run the simulation.
 Now you can run the workloads in FS mode:
 
 ```bash
-./run.py bfs --fs
-./run.py mm_block_ik --fs
+gem5 run.py bfs --fs
+gem5 run.py mm_block_ik --fs
 ```
 
 Just like in SE mode, when the application begins the region of interest, the statistics are reset.
@@ -147,6 +147,8 @@ So, when you compare the statistics between SE and FS modes, you are comparing t
 2. What is the difference in the number of TLB misses between SE and FS modes for each workload? Why does it vary?
 3. What is the difference in IPC between SE and FS modes for each workload?
 4. What is the difference in the amount of data read from memory *for the page table walks* in SE and FS modes?
+
+Look at the [Hints](#hints) section on where to get started on reading the `stats.txt`.
 
 ## Experimental Setup
 
@@ -176,7 +178,7 @@ Before running any experiments:
 2. What do you expect to happen to performance as you increase the page walk cache size? Why?
 3. Do you expect increasing the TLB size to have a larger impact on performance than increasing the page walk cache size? Why or why not? Use AMAT to justify your answer.
 
-### Step III: Basic Performance Analysis
+### Step III-A: Basic Performance Analysis
 
 Run both workloads with the small TLB (16 entries) and small page walk cache configuration.
 
@@ -184,7 +186,7 @@ Run both workloads with the small TLB (16 entries) and small page walk cache con
 2. What is the average page walk latency for each workload?
 3. What percentage of execution time is spent handling TLB misses? (Hint: compare the performance of SE mode and FS mode to get an approximation of the time spent handling TLB misses.)
 
-### Step III: Design Space Exploration
+### Step III-B: Design Space Exploration
 
 Run experiments varying both TLB size and page walk cache configuration.
 
