@@ -48,7 +48,7 @@ Please put one command per designated line.
 
 ```
 
-#### Commands used for Step III (Design Space Exploration)
+#### Commands used for Step IV (Design Space Exploration)
 
 ```shell
 
@@ -86,7 +86,7 @@ Please put one command per designated line.
 
 3. Do you expect increasing the TLB size to have a larger impact on performance than increasing the page walk cache size? Why or why not? Use AMAT to justify your answer.
 
-### [15 points] Step III-A: Basic Performance Analysis
+### [15 points] Step III: Basic Performance Analysis
 
 1. What is the TLB miss rate for each workload?
 
@@ -94,7 +94,7 @@ Please put one command per designated line.
 
 3. What percentage of execution time is spent handling TLB misses? (Hint: compare the performance of SE mode and FS mode to get an approximation of the time spent handling TLB misses.)
 
-### [10 points] Step III-B: Design Space Exploration
+### [10 points] Step IV: Design Space Exploration
 
 1. For each workload, what is the performance impact of:
    - Doubling the TLB size (16 to 32 entries)
