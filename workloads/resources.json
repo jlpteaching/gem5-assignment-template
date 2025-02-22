@@ -919,7 +919,7 @@
             }
         },
         "additional_params": {
-            "arguments": ["128", "8"]
+            "arguments": ["256", "8"]
         }
     },
     {
@@ -933,7 +933,7 @@
             "24.1"
         ],
         "url": "file:///workspaces/gem5-assignment-template/workloads/matmul/mm_block_ik-fs",
-        "md5sum": "51627f0c2deb42f52594f97edf89ad59"
+        "md5sum": "035572d6ce67e950de940f1c569ff5d0"
     },
     {
         "category": "workload",

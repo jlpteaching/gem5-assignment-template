@@ -64,5 +64,5 @@ mm-block-ik-x86-gem5: mm.cpp
 	md5sum mm-block-ik-x86-gem5
 
 mm_block_ik-fs: mm-block-ik-x86-gem5
-	../make-binary-readfile.py mm-block-ik-x86-gem5 mm_block_ik-fs --args "128 8"
+	../make-binary-readfile.py mm-block-ik-x86-gem5 mm_block_ik-fs --args "256 8"
 	md5sum mm_block_ik-fs

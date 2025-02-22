@@ -3,4 +3,4 @@ echo "f0VMRgIBAQMAAAAAAAAAAAIAPgABAAAAIFlAAAAAAABAAAAAAAAAALieIwAAAAAAAAAAAEAAOA
 echo 'Binary file created'
 chmod +x mm-block-ik-x86-gem5
 m5 exit
-./mm-block-ik-x86-gem5 128 8
+./mm-block-ik-x86-gem5 256 8
