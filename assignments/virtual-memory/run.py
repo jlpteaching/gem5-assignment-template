@@ -144,15 +144,3 @@ simulator.override_outdir(Path("m5out") / simulator.get_id())
 
 simulator.run()
 
-"""
-gem5 -re run.py bfs --fs --pwc_size=small --tlb_entries 16 &
-gem5 -re run.py bfs --fs --pwc_size=small --tlb_entries 32 &
-gem5 -re run.py mm_block_ik --fs --pwc_size=small --tlb_entries 16 &
-gem5 -re run.py mm_block_ik --fs --pwc_size=small --tlb_entries 32 &
-gem5 -re run.py bfs --fs --pwc_size=large --tlb_entries 16 &
-gem5 -re run.py bfs --fs --pwc_size=large --tlb_entries 32 &
-gem5 -re run.py mm_block_ik --fs --pwc_size=large --tlb_entries 16 &
-gem5 -re run.py mm_block_ik --fs --pwc_size=large --tlb_entries 32 &
-gem5 -re run.py bfs &
-gem5 -re run.py mm_block_ik &
-"""
