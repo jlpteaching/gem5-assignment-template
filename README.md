@@ -18,7 +18,7 @@ Below is the list of assignments in order of increasing difficulty:
 - *Pipelining*: This assignment compares the performance of an in-order CPU with different pipeline widths, latencies, and depths. The goal is to understand the impact of the pipeline on performance.
 - *Out of Order CPU*: This assignment digs into how different parameters of an out-of-order CPU, including width, ROB size, and the number of physical registers, impact performance. This assignment uses a variety of workloads to showcase the differences in how these parameters impact performance.
 - *Blocked matrix-multiply*: This assignment uses blocked matrix multiply to show the importance of algorithm design on the performance of caches. It reinforces the AMAT calculation and the impact of cache size on performance.
-- *Virtual memory*: (Coming soon) This assignment will explore the impact of virtual memory on performance.
+- *Virtual memory*: This assignment compares the impact of larger TLB vs larger page walk caches for an irregular workload (bfs) and a regular workload (blocked matrix multiply from the previous assignment). The assignment also introduces full system simulation.
 - *False sharing*: This assignment looks at the impact of false sharing on performance. It uses a simple parallel workload, shows 6 different implementations, and asks the students to figure out why the performance is different.
 
 ## Using this to create assignments
