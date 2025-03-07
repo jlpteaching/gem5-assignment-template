@@ -59,13 +59,14 @@ In all of these examples `tid` is the thread id (starting at `0` up to the `thre
 `threads` is the number of threads that we're using, and `length` is the number of elements in the array.
 Also, in all examples we will assume that the threads can *race* on the `result` so we must declare it as a `std::atomic` to make sure that all accesses are completed consistently.
 
-You can find the compiled binary for this implementation in X86 under `workloads/array_sum/naive-native`.
-You can use this binary to run the program on real hardware.
+You can find the the makefile to compile the binary under `workloads/array_sum/naive-native`.
+Run `make all-native` to compile the binaries.
+You can use these binaries to run the program on real hardware.
 Here is an example of how you could run the binary on native hardware.
 This example sums up an array of size `32768 elements` with `8 threads`.
 
 ```shell
-./naive-native 32768 8
+./naive-native 16384 4
 ```
 
 **CAUTION**: You **SHOULD NOT** run `workloads/array_sum/naive-gem5` on real hardware.
@@ -76,18 +77,12 @@ Here is an example of how you should create an object of this workload.
 This example creates a workload of this binary that sums up `16384 elements` with `4 threads`.
 
 ```python
-from workloads.array_sum_workload import NaiveArraySumWorkload
-
-workload = NaiveArraySumWorkload(16384, 4)
+    workload = obtain_resource(f"array_sum_naive_run")
+    workload.set_parameter("arguments", [32768, 16])
+    board.set_workload(workload)
 ```
 
 This should take around 1-2 minutes.
-
-To build the native binary for this implementation run the following command in `workloads/array_sum`.
-
-```shell
-make naive-native
-```
 
 To build the gem5 binary for this implementation run the following command in `workloads/array_sum`.
 
@@ -137,9 +132,9 @@ Here is an example of how you should create an object of this workload.
 This example creates a workload of this binary that sums up `16384 elements` with `4 threads`.
 
 ```python
-from workloads.array_sum_workload import ChunkingArraySumWorkload
-
-workload = ChunkingArraySumWorkload(16384, 4)
+    workload = obtain_resource(f"array_sum_chunking_run")
+    workload.set_parameter("arguments", [32768, 16])
+    board.set_workload(workload)
 ```
 
 To build the native binary for this implementation run the following command in `workloads/array_sum`.
@@ -196,9 +191,9 @@ To instantiate an object of this workload you need to pass **array_size** and **
 This example creates a workload of this binary that sums up `16384 elements` with `4 threads`.
 
 ```python
-from workloads.array_sum_workload import NoResultRaceArraySumWorkload
-
-workload = NoResultRaceArraySumWorkload(16384, 4)
+    workload = obtain_resource(f"array_sum_race_optimized_run")
+    workload.set_parameter("arguments", [32768, 16])
+    board.set_workload(workload)
 ```
 
 To build the native binary for this implementation run the following command in `workloads/array_sum`.
@@ -245,9 +240,9 @@ Here is an example of how you should create an object of this workload.
 This example creates a workload of this binary that sums up `16384 elements` with `4 threads`.
 
 ```python
-from workloads.array_sum_workload import ChunkingNoResultRaceArraySumWorkload
-
-workload = ChunkingNoResultRaceArraySumWorkload(16384, 4)
+    workload = obtain_resource(f"array_sum_chunking_race_optimized_run")
+    workload.set_parameter("arguments", [32768, 16])
+    board.set_workload(workload)
 ```
 
 To build the native binary for this implementation run the following command in `workloads/array_sum`.
@@ -297,9 +292,9 @@ Here is an example of how you should create an object of this workload.
 This example creates a workload of this binary that sums up `16384 elements` with `4 threads`.
 
 ```python
-from workloads.array_sum_workload import NoCacheBlockRaceArraySumWorkload
-
-workload = NoCacheBlockRaceArraySumWorkload(16384, 4)
+    workload = obtain_resource(f"array_sum_result_cache_optimized_run")
+    workload.set_parameter("arguments", [32768, 16])
+    board.set_workload(workload)
 ```
 
 To build the native binary for this implementation run the following command in `workloads/array_sum`.
@@ -344,9 +339,9 @@ Here is an example of how you should create an object of this workload.
 This example creates a workload of this binary that sums up `16384 elements` with `4 threads`.
 
 ```python
-from workloads.array_sum_workload import ChunkingNoBlockRaceArraySumWorkload
-
-workload = ChunkingNoBlockRaceArraySumWorkload(16384, 4)
+    workload = obtain_resource(f"array_sum_all_optimizations_run")
+    workload.set_parameter("arguments", [32768, 16])
+    board.set_workload(workload)
 ```
 
 To build the native binary for this implementation run the following command in `workloads/array_sum`.
