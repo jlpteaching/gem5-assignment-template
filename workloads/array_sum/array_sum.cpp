@@ -69,7 +69,7 @@ int main(int argc, char* argv[])
     int length = atoi(argv[1]);
 
     if (length <= 0 or length > 65536) {
-        std::cout << "Array length must be above 0 and less than 65536" << std::endl;
+        std::cout << "Array length must be above 0 and less than or equal to 65536" << std::endl;
         print_usage();
         return 2;
     }
@@ -77,7 +77,8 @@ int main(int argc, char* argv[])
     int threads = atoi(argv[2]);
 
     if (threads <= 0 || threads > std::thread::hardware_concurrency()) {
-        std::cout << "Threads must be above 0 and below 8" << std::endl;
+        std::cout << "Threads must be above 0 and below ";
+        std::cout << std::thread::hardware_concurrency() << std::endl;
         print_usage();
         return 3;
     }

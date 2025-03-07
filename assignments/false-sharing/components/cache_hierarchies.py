@@ -114,6 +114,7 @@ class MESITwoLevelCacheHierarchy(
                 version=i,
                 dcache=cache.L1Dcache,
                 clk_domain=cache.clk_domain,
+                ruby_system=self.ruby_system,
             )
 
             if board.has_io_bus():
@@ -192,5 +193,7 @@ class MESITwoLevelCacheHierarchy(
 
         # Set up a proxy port for the system_port. Used for load binaries and
         # other functional-only things.
-        self.ruby_system.sys_port_proxy = RubyPortProxy()
+        self.ruby_system.sys_port_proxy = RubyPortProxy(
+            ruby_system=self.ruby_system
+        )
         board.connect_system_port(self.ruby_system.sys_port_proxy.in_ports)
