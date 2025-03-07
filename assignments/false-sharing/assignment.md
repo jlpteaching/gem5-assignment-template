@@ -63,7 +63,7 @@ You can find the the makefile to compile the binary under `workloads/array_sum/n
 Run `make all-native` to compile the binaries.
 You can use these binaries to run the program on real hardware.
 Here is an example of how you could run the binary on native hardware.
-This example sums up an array of size `32768 elements` with `8 threads`.
+This example sums up an array of size `16384 elements` with `4 threads`.
 
 ```shell
 ./naive-native 16384 4
@@ -71,14 +71,11 @@ This example sums up an array of size `32768 elements` with `8 threads`.
 
 **CAUTION**: You **SHOULD NOT** run `workloads/array_sum/naive-gem5` on real hardware.
 
-You can import this implementation to your configuration file from `workloads/array_sum_workload.py` as `NaiveArraySumWorkload`.
-To instantiate an object of this workload you need to pass **array_size** and **num_threads** as arguments to `__init__`.
 Here is an example of how you should create an object of this workload.
-This example creates a workload of this binary that sums up `16384 elements` with `4 threads`.
+This workload of this binary that sums up `32768 elements` with `16 threads`.
 
 ```python
     workload = obtain_resource(f"array_sum_naive_run")
-    workload.set_parameter("arguments", [32768, 16])
     board.set_workload(workload)
 ```
 
@@ -118,29 +115,20 @@ However, for this assignment, it won't make much difference since the array size
 You can find the compiled binary for this implementation in X86 under `workloads/array_sum/chunking-native`.
 You can use this binary to run the program on real hardware.
 Here is an example of how you could run the binary on native hardware.
-This example sums up an array of size `32768 elements` with `8 threads`.
+This example sums up an array of size `16384 elements` with `4 threads`.
 
 ```shell
-./chunking-native 32768 8
+./chunking-native 16384 4
 ```
 
 **CAUTION**: You **SHOULD NOT** run `workloads/array_sum/chunking-gem5` on real hardware.
 
-You can import this implementation to your configuration file from `workloads/array_sum_workload.py` as `ChunkingArraySumWorkload`.
-To instantiate an object of this workload you need to pass **array_size** and **num_threads** as arguments to `__init__`.
 Here is an example of how you should create an object of this workload.
-This example creates a workload of this binary that sums up `16384 elements` with `4 threads`.
+This workload of this binary that sums up `32768 elements` with `16 threads`.
 
 ```python
     workload = obtain_resource(f"array_sum_chunking_run")
-    workload.set_parameter("arguments", [32768, 16])
     board.set_workload(workload)
-```
-
-To build the native binary for this implementation run the following command in `workloads/array_sum`.
-
-```shell
-make chunking-native
 ```
 
 To build the gem5 binary for this implementation run the following command in `workloads/array_sum`.
@@ -177,30 +165,22 @@ for (int i=tid; i < length; i += threads) {
 You can find the compiled binary for this implementation in X86 under `workloads/array_sum/res-race-opt-native`.
 You can use this binary to run the program on real hardware.
 Here is an example of how you could run the binary on native hardware.
-This example sums up an array of size `32768 elements` with `8 threads`.
+This example sums up an array of size `16384 elements` with `4 threads`.
 
 ```shell
-./res-race-opt-native 32768 8
+./res-race-opt-native 16384 4
 ```
 
 **CAUTION**: You **SHOULD NOT** run `workloads/array_sum/res-race-opt-gem5` on real hardware.
 
-You can import this implementation to your configuration file from `workloads/array_sum_workload.py` as `NoResultRaceArraySumWorkload`.
-To instantiate an object of this workload you need to pass **array_size** and **num_threads** as arguments to `__init__`.
-**NOTE**: Make sure to use the same number of threads as your processor cores.
-This example creates a workload of this binary that sums up `16384 elements` with `4 threads`.
+Here is an example of how you should create an object of this workload.
+This workload of this binary that sums up `32768 elements` with `16 threads`.
 
 ```python
     workload = obtain_resource(f"array_sum_race_optimized_run")
-    workload.set_parameter("arguments", [32768, 16])
     board.set_workload(workload)
 ```
 
-To build the native binary for this implementation run the following command in `workloads/array_sum`.
-
-```shell
-make res-race-opt-native
-```
 
 To build the gem5 binary for this implementation run the following command in `workloads/array_sum`.
 
@@ -226,29 +206,20 @@ for (int i=tid*chunk_size; i < (tid+1)*chunk_size && i < length; i++) {
 You can find the compiled binary for this implementation in X86 under `workloads/array_sum/chunking-res-race-opt-native`.
 You can use this binary to run the program on real hardware.
 Here is an example of how you could run the binary on native hardware.
-This example sums up an array of size `32768 elements` with `8 threads`.
+This example sums up an array of size `16384 elements` with `4 threads`.
 
 ```shell
-./chunking-res-race-opt-native 32768 8
+./chunking-res-race-opt-native 16384 4
 ```
 
 **CAUTION**: You **SHOULD NOT** run `workloads/array_sum/chunking-res-race-opt-gem5` on real hardware.
 
-You can import this implementation to your configuration file from `workloads/array_sum_workload.py` as `ChunkingNoResultRaceArraySumWorkload`.
-To instantiate an object of this workload you need to pass **array_size** and **num_threads** as arguments to `__init__`.
 Here is an example of how you should create an object of this workload.
-This example creates a workload of this binary that sums up `16384 elements` with `4 threads`.
+This workload of this binary that sums up `32768 elements` with `16 threads`.
 
 ```python
     workload = obtain_resource(f"array_sum_chunking_race_optimized_run")
-    workload.set_parameter("arguments", [32768, 16])
     board.set_workload(workload)
-```
-
-To build the native binary for this implementation run the following command in `workloads/array_sum`.
-
-```shell
-make chunking-res-race-opt-native
 ```
 
 To build the gem5 binary for this implementation run the following command in `workloads/array_sum`.
@@ -278,29 +249,20 @@ for (int i=tid; i < length; i += threads) {
 You can find the compiled binary for this implementation in X86 under `workloads/array_sum/block-race-opt-native`.
 You can use this binary to run the program on real hardware.
 Here is an example of how you could run the binary on native hardware.
-This example sums up an array of size `32768 elements` with `8 threads`.
+This example sums up an array of size `16384 elements` with `4 threads`.
 
 ```shell
-./block-race-opt-native 32768 8
+./block-race-opt-native  16384 4
 ```
 
 **CAUTION**: You **SHOULD NOT** run `workloads/array_sum/block-race-opt-gem5` on real hardware.
 
-You can import this implementation to your configuration file from `workloads/array_sum_workload.py` as `NoCacheBlockRaceArraySumWorkload`.
-To instantiate an object of this workload you need to pass **array_size** and **num_threads** as arguments to `__init__`.
 Here is an example of how you should create an object of this workload.
-This example creates a workload of this binary that sums up `16384 elements` with `4 threads`.
+This workload of this binary that sums up `32768 elements` with `16 threads`.
 
 ```python
     workload = obtain_resource(f"array_sum_result_cache_optimized_run")
-    workload.set_parameter("arguments", [32768, 16])
     board.set_workload(workload)
-```
-
-To build the native binary for this implementation run the following command in `workloads/array_sum`.
-
-```shell
-make block-race-opt-native
 ```
 
 To build the gem5 binary for this implementation run the following command in `workloads/array_sum`.
@@ -325,29 +287,20 @@ for (int i=tid*chunk_size; i < (tid+1)*chunk_size && i < length; i++) {
 You can find the compiled binary for this implementation in X86 under `workloads/array_sum/all-opt-native`.
 You can use this binary to run the program on real hardware.
 Here is an example of how you could run the binary on native hardware.
-This example sums up an array of size `32768 elements` with `8 threads`.
+This example sums up an array of size `16384 elements` with `4 threads`.
 
 ```shell
-./all-opt-native 32768 8
+./all-opt-native 16384 4
 ```
 
 **CAUTION**: You **SHOULD NOT** run `workloads/array_sum/all-opt-gem5` on real hardware.
 
-You can import this implementation to your configuration file from `workloads/array_sum_workload.py` as `ChunkingNoBlockRaceArraySumWorkload`.
-To instantiate an object of this workload you need to pass **array_size** and **num_threads** as arguments to `__init__`.
 Here is an example of how you should create an object of this workload.
-This example creates a workload of this binary that sums up `16384 elements` with `4 threads`.
+This workload of this binary that sums up `32768 elements` with `16 threads`.
 
 ```python
     workload = obtain_resource(f"array_sum_all_optimizations_run")
-    workload.set_parameter("arguments", [32768, 16])
     board.set_workload(workload)
-```
-
-To build the native binary for this implementation run the following command in `workloads/array_sum`.
-
-```shell
-make all-opt-native
 ```
 
 To build the gem5 binary for this implementation run the following command in `workloads/array_sum`.
@@ -358,15 +311,7 @@ make all-opt-gem5
 
 ## Real hardware experiments
 
-On a computer *with at least 4 cores* (preferably 8 or more) run the different parallel algorithms to sum an array described above.
-You can run `grep -m1 "cpu cores" /proc/cpuinfo` to find out how many cores you have.
-It should say something like `cpu cores       : 8`
-
-**NOTE**: We will only support running on x86 Linux machines.
-If you want to use a different system, we probably won't be able to help, and you're not guaranteed the correct results.
-
-On your *real hardware* run the 6 parallel algorithms with 1, 2, 4, 8, 16 threads (up to the maximum threads on your hardware).
-I.e., if you only have 4 cores, don't run 8 and 16.
+On your *codespace* run the 6 parallel algorithms with 1, 2 and 4 threads.
 
 Use the execution time measured by your binary to answer the following questions.
 
@@ -378,20 +323,13 @@ For algorithm 1, does increasing the number of threads improve performance or hu
 
 (a) For algorithm 6, does increasing the number of threads improve performance or hurt performance? Use data to back up your answer.
 
-(b) What is the speedup when you use 2, 4, 8, and 16 threads (only answer with up to the number of cores on your system).
+(b) What is the speedup when you use 2, and 4 threads.
 
 ### Question 3
 
 (a) Using the data for all 6 algorithms, what is the most important optimization, chunking the array, using different result addresses, or putting padding between the result addresses?
 
 (b) Speculate how the hardware implementation is causing this result. What is it about the hardware that causes this optimization to be most important?
-
-## gem5
-
-For those of you who are not familiar with [gem5](https://www.gem5.org/), gem5 is a *cycle-level* simulator that simulates the entire system (cores, memory, caches, devices) at the hardware level.
-
-The *input* to gem5 is a *Python* script that configures the system and runs the simulation.
-Refer to Assignment 0 to learn how to create your configuration script.
 
 ### gem5's output
 
@@ -407,28 +345,28 @@ For this assignment, you will use the same components across your experiments.
 However, for parts of the assignment, you might want to change the number of processor cores or the latency of a crossbar in your cache interconnect.
 Refer to the list below for more information on the components you will be using.
 
-- boards: you will only use `HW5X86Board`.
-You can find its definition in `components/boards.py`.
-- processors: you will only use `HW5O3CPU`.
-You can find its definition in `components/processors.py`.
+- boards: you will only use `X86Board`.
+You can find its definition in `components/__init__.py`.
+- processors: you will only use `O3CPU`.
+You can find its definition in `components/__init__.py`.
 **NOTE**: you will notice that the component creates a processor with an extra core.
 This is a weird gem5 thing.
 Please ignore this.
 However, when you look at your statistics you should ignore statistics for `board.processor.core.cores0` and
 `board.cache_hierarchy.ruby_system.l1_controllers0`.
-- cache hierarchies: you will only use `HW5MESITwoLevelCacheHierarchy`.
+- cache hierarchies: you will only use `MESITwoLevelCacheHierarchy`.
 You can find its definition in `components/cache_hierarchies.py`.
 **NOTE**: you will notice that its `__init__` takes **one** argument.
 You will have to assign different values to `xbar_latency` as instructed in the later parts of this assignment.
-- memories: You will only use `HW5DDR4`.
-You can find its definition in `components/memories.py`.
+- memories: You will only use `DDR4`.
+You can find its definition in `components/__init__.py`.
 - clock frequency: Use `3GHz` as your clock frequency.
 
 ## Analysis and simulation
 
 Now, we are going to use a software simulation framework to look at the details of how the hardware operates to answer the "speculation" part of [question 3](#question-3).
 
-To run your experiments, create a configuration script that allows you to run *any of the 6 implementations* of the workload with *any number of cores* for `HW5O3CPU` with *any latency* for `xbar_latency` in `HW5MESITwoLevelCacheHierarchy`.
+To run your experiments, create a configuration script that allows you to run *any of the 6 implementations* of the workload with *16 cores* for `O3CPU` with *any latency* for `xbar_latency` in `MESITwoLevelCacheHierarchy`.
 
 ### Performance
 
@@ -446,7 +384,7 @@ However, hopefully, we can narrow them down to make sense of them.
 
 First, let's look at cache hits and misses.
 In our system, we may have a bunch of different caches.
-They will be named something like `board.cache_hierarchy.ruby_system.l1_controllers2.L1Dcache` and `board.cache_hierarchy.ruby_system.l1_controllers15.L1Dcache` if, for instance, you use 16 cores (there's one L1 cache per core).
+They will be named something like `board.cache_hierarchy.ruby_system.l1_controllers2.L1Dcache` and `board.cache_hierarchy.ruby_system.l1_controllers15.L1Dcache` (there's one L1 cache per core).
 
 **IMPORTANT:** Ignore `board.cache_hierarchy.ruby_system.l1_controllers0`!! This is *not* a "real" core. (For *reasons*... let's not talk about it. This is a weird gem5 thing.)
 
@@ -503,8 +441,8 @@ This stat has the same format as the `Fwd_GETS` described above.
 ### Getting ready to answer questions
 
 To dig into why we're seeing the performance results on the real hardware, with gem5 we can look at more extreme systems.
-Instead of just using 4 or 8 cores, let's use 16!
-Moreover, let's use `32768` for the size of the array.
+Instead of just using 4 or 8 cores, we will use 16!
+Moreover, we will use `32768` for the size of the array.
 
 For 16 cores, run *each algorithm* and save the stats output.
 I strongly recommend using `--outdir` and using easy-to-understand names.
@@ -563,30 +501,35 @@ You can probably get away with just running algorithm 1 and algorithm 6.
 
 ## Submission
 
-As mentioned before, you are allowed to submit your assignments in **pairs** and in **PDF** format.
-You should submit your report on gradescope (see the webpage for the links).
-In your report answer the questions presented in , [Question 1](#question-1), [Question 2](#question-2),[Question 3](#question-3),[Question 4](#question-4),[Question 5](#question-5),[Question 6](#question-6),[Question 7](#question-7),[Question 8](#question-8), and [Question 9](#question-9).
+You will submit this assignment via GitHub Classroom.
 
-Use clear reasoning and visualization to drive your conclusions.
+1. Accept the assignment by clicking on the link provided in the announcement
+2. Create a Codespace for the assignment on your repository
+3. Fill out the `questions.md` file
+4. Commit your changes
 
-Submit all your code through your assignment repository. Please make sure to include code/scripts for the following.
+Make sure you include both your runscript, an explanation of how to use your
+script, and the answers to the questions in the `questions.md` file.
 
-- `Instruction.md`: should include instructions on how to run your simulations.
-- Automation: code/scripts to run your simulations.
-- Configuration: python file configuring the systems you need to simulate.
+### Explanation of How to Use Your Script
+
+Include a detailed explanation of how to use your script and how you use your
+script to generate your answers. Make sure that all paths are relative to this
+directory (`virtual-memory/`).
+
+- Include a description of what the script does
+- Include the path to the script
+- Include any parameters that need to be passed to the script
+- Include example commands used to gather data
+  - These should be able to be copy-pasted and run without modification
+  - Include any required files in your repository
 
 ## Grading
 
-Like your submission, your grade is split into two parts.
+- **25 points** gem5 runscript and explanation of how to use your script
+- **50 points** for the questions in the report
 
-1. Reproducibility Package (50 points):
-    a. Instruction and automation to run simulations for different sections and dump statistics (10 points)
-        - Instructions (5 points)
-        - Automation (5 points)
-    b. configuration script(s) (40 points)
-2. Report (50 points): the grading breakdown is as follows (they are subject to change, but they show the relative breakdown) :
-
-Total points = 50
+Points Breakdown:
 
 | #Question       | Points (201A) | Points (154B) |
 |-----------------|--------|---|
