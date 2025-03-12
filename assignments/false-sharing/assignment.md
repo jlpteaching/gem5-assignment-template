@@ -344,6 +344,22 @@ The following questions will ask you to consult these outputs and use data to ba
 
 ### Question 4
 
+Run gem5 with both 16 cores and with 1 core. 
+The workload you can get with `obtain_resource` has its parameters set to 32768 and 16 so, to run with 16 cores, you can run:
+
+```python
+   workload = obtain_resource(f"<algorithm>")
+   board.set_workload(workload)
+```
+
+To run the workload with one core, run:
+
+```python
+   workload = obtain_resource(f"<algorithm>")
+   workload.set_parameter("arguments", [32768, 1])
+   board.set_workload(workload)
+```
+
 (a) What is the speedup of algorithm 1 and speedup of algorithm 6 on *16 cores* compared to *1 core* as estimated by gem5?
 
 (b) How does this compare to what you saw on the real system?
